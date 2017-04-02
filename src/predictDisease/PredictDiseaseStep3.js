@@ -3,11 +3,11 @@ import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 
 
-class PredictDiseaseStep2 extends Component {
+class PredictDiseaseStep3 extends Component {
   render() {
         return (
             <View>
-                <Text>Step1</Text>
+                <Text>Step3</Text>
             </View>
         );
     }
@@ -16,4 +16,4 @@ class PredictDiseaseStep2 extends Component {
 export default connect(
   state => ({}),
   {})
-(PredictDiseaseStep2);
+(PredictDiseaseStep3);

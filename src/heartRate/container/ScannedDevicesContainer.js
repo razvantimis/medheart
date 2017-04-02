@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 
 
 import { Container, 
+        Header,
+        Title,
         Content, 
         List, 
         ListItem, 
@@ -17,7 +19,7 @@ import { Container,
         Right,
         Thumbnail } from 'native-base';
 
-import ScannedDeviceView from './ScannedDeviceView'
+import ScannedDeviceView from '../components/ScannedDeviceView'
 import * as bleActions from '../actions/BleActions'
 import { Actions } from 'react-native-router-flux'
 
@@ -57,27 +59,38 @@ class ScannedDevicesComponent extends Component {
   render() {
     return (
       <Container>
+         <Header>
+            <Body>
+                <Title>Header</Title>
+            </Body>
+        </Header>
         <Content>
             <List 
               dataArray={this.props.devices}
               renderRow={this._renderScannedDeviceCell.bind(this)} /> 
-                    
+            <Button 
+                active={this.props.scanning}
+                onPress={this.props.startScan}>
+                  <Text>Scann</Text>
+            </Button>
+            <Button
+                onPress={this.props.stopScan}
+                active={!this.props.scanning}>
+                  <Text>Stop</Text>
+            </Button>
             </Content>
             <Footer >
-                    <FooterTab>
-                        <Button 
-                          active={this.props.scanning}
-                          onPress={this.props.startScan}>
-                            <Text>Scann</Text>
-                        </Button>
-                        <Button
-                          onPress={this.props.stopScan}
-                          active={!this.props.scanning}>
-                            <Text>Stop</Text>
-                        </Button>
-                    </FooterTab>
-                </Footer>
-          
+              <FooterTab>
+                  <Button onPress={()=>Actions.predictDisease()}>
+                      <Text>PredictDisease</Text>
+                  </Button>
+                  <Button onPress={()=>Actions.heartRate()}>
+                      <Text>Heart Rate</Text>
+                  </Button>
+                  
+              </FooterTab>
+            </Footer>
+            
       </Container>
     )
   }
