@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
  
 import MHRouter from './MHRouter';
 import configureStore  from './MHStore';
-import { BleServiceContainer } from './heartRate';
+import { BleService } from './heartRate';
 
 class MHApp extends Component {
   render() {
@@ -13,7 +13,7 @@ class MHApp extends Component {
       <Provider store={configureStore()}>
           <View style={{flex:1}}>
              <MHRouter />
-             <BleServiceContainer/>
+             <BleService/>
           </View>
       </Provider>
     );

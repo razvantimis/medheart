@@ -1,8 +1,9 @@
 // container
-import ScannedDevicesContainer from './container/ScannedDevicesContainer';
-import BleServiceContainer from './container/BleServiceContainer';
+import HeartRateContainer from './container/HeartRateContainer';
+import BleService from './container/BleService';
 
 // reducer
 import BleReducer from './reducers/BleReducer';
+import HeartRateReducer from './reducers/HeartRateReducer'
 
-export { BleReducer, ScannedDevicesContainer , BleServiceContainer }
+export { BleReducer, HeartRateReducer, HeartRateContainer , BleService }

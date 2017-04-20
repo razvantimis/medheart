@@ -21,7 +21,8 @@ class BleService extends Component {
 
   componentWillReceiveProps(newProps) {
     // Handle scanning
-    if (newProps.scanning !== this.props.scanning) {
+    new Promise((resolve,reject)=>{
+      if (newProps.scanning !== this.props.scanning) {
       if (newProps.scanning === true) {
         this.manager.startDeviceScan(null, null, (error, device) => {
           if (error) {
@@ -47,46 +48,48 @@ class BleService extends Component {
       case types.DEVICE_STATE_DISCONNECT:
         this.manager.cancelDeviceConnection(newProps.selectedDeviceId)
           .then((successIdentifier) => {
-            newProps.changeDeviceState(newProps.selectedDeviceId, ble.DEVICE_STATE_DISCONNECTED);
+            newProps.changeDeviceState(newProps.selectedDeviceId, types.DEVICE_STATE_DISCONNECTED);
           }, (rejected) => {
             if (rejected.message !== "Cancelled") {
               newProps.pushError(rejected.message)
             }
-            newProps.changeDeviceState(newProps.selectedDeviceId, ble.DEVICE_STATE_DISCONNECTED);
+            newProps.changeDeviceState(newProps.selectedDeviceId, types.DEVICE_STATE_DISCONNECTED);
           });
-        newProps.changeDeviceState(newProps.selectedDeviceId, ble.DEVICE_STATE_DISCONNECTING);
+        newProps.changeDeviceState(newProps.selectedDeviceId, types.DEVICE_STATE_DISCONNECTING);
         break;
 
       case types.DEVICE_STATE_CONNECT:
-        this.manager.connectToDevice(newProps.selectedDeviceId)
-          .then((device) => {
-            this.subscriptions[device.uuid] = device.onDisconnected((error, disconnectedDevice) => {
-              newProps.pushError("Disconnected from " + (disconnectedDevice.name ? disconnectedDevice.name : disconnectedDevice.uuid))
-              newProps.changeDeviceState(newProps.selectedDeviceId, ble.DEVICE_STATE_DISCONNECTED);
-              this.subscriptions[device.uuid].remove()  
-            })
+        // this.manager.connectToDevice(newProps.selectedDeviceId)
+        //   .then((device) => {
+        //     this.subscriptions[device.uuid] = device.onDisconnected((error, disconnectedDevice) => {
+        //       newProps.pushError("Disconnected from " + (disconnectedDevice.name ? disconnectedDevice.name : disconnectedDevice.uuid))
+        //       newProps.changeDeviceState(newProps.selectedDeviceId, types.DEVICE_STATE_DISCONNECTED);
+        //       this.subscriptions[device.uuid].remove()  
+        //     })
 
-            newProps.changeDeviceState(newProps.selectedDeviceId, ble.DEVICE_STATE_DISCOVERING);
-            var promise = device.discoverAllServicesAndCharacteristics() 
-            return promise
-          })
-          .then((device) => {
-            newProps.changeDeviceState(newProps.selectedDeviceId, ble.DEVICE_STATE_FETCHING);
-            return this.fetchServicesAndCharacteristicsForDevice(device)
-          })
-          .then((services) => {
-            newProps.changeDeviceState(newProps.selectedDeviceId, ble.DEVICE_STATE_CONNECTED);
-            newProps.updateServices(newProps.selectedDeviceId, services);
-          },
-          (rejected) => {
-            newProps.pushError(rejected.message)
-            newProps.changeDeviceState(newProps.selectedDeviceId, ble.DEVICE_STATE_DISCONNECTED);
-          });
+        //     newProps.changeDeviceState(newProps.selectedDeviceId, types.DEVICE_STATE_DISCOVERING);
+        //     var promise = device.discoverAllServicesAndCharacteristics() 
+        //     return promise
+        //   })
+          // .then((device) => {
+          //   newProps.changeDeviceState(newProps.selectedDeviceId, types.DEVICE_STATE_FETCHING);
+          //   return this.fetchServicesAndCharacteristicsForDevice(device)
+          // })
+          // .then((services) => {
+          //   newProps.changeDeviceState(newProps.selectedDeviceId, types.DEVICE_STATE_CONNECTED);
+          //   newProps.updateServices(newProps.selectedDeviceId, services);
+          // },
+          // (rejected) => {
+          //   newProps.pushError(rejected.message)
+          //   newProps.changeDeviceState(newProps.selectedDeviceId, types.DEVICE_STATE_DISCONNECTED);
+          // });
 
-        newProps.changeDeviceState(newProps.selectedDeviceId, ble.DEVICE_STATE_CONNECTING);
+        newProps.changeDeviceState(newProps.selectedDeviceId, types.DEVICE_STATE_CONNECTING);
         break;
     }
 
+    });
+    
     // Handle operations
     // newProps.operations.forEach((value, key) => {
     //   const state = value.get('state')
