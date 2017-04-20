@@ -20,8 +20,7 @@ class ScannedDevices extends Component {
 
   _renderScannedDeviceCell(rowData) {
     const connectToDevice = () => {
-      this.props.changeDeviceState(rowData.id, ble.DEVICE_STATE_CONNECT)
-      // Actions[SceneConst.SERVICES_SCENE]();
+      this.props.changeDeviceState(rowData.id,this.props.state)
     }
     return <ScannedDeviceView name={rowData.name} id={rowData.id} rssi={rowData.rssi} onClick={connectToDevice} />;
   }
@@ -57,7 +56,8 @@ ScannedDevices.propTypes = {
   scanning: PropTypes.bool.isRequired,
   startScan: PropTypes.func.isRequired,
   stopScan: PropTypes.func.isRequired,
-  changeDeviceState: PropTypes.func.isRequired
+  changeDeviceState: PropTypes.func.isRequired,
+  state: PropTypes.string.isRequired
 }
 
 

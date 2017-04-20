@@ -8,7 +8,7 @@ const INITIAL_STATE = {
   errors: [],
   state: types.DEVICE_STATE_DISCONNECTED,
   operations: [],
-  transactionId: 0,
+  transactionId: 0
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -24,7 +24,7 @@ export default (state = INITIAL_STATE, action) => {
       _.remove(devices,(item) => item.name == undefined);
       return {...state,devices: devices };
     case types.CHANGE_DEVICE_STATE:
-      return {...state, scanning: false, state: action.state, selectedDevicedId: action.deviceIdentifier }
+      return {...state, scanning: false, state: action.state, selectedDevicedId: action.deviceIdentifier? state.deviceIdentifier : action.deviceIdentifier }
       
      
     // case types.WRITE_CHARACTERISTIC:

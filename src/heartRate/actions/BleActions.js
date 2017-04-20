@@ -69,7 +69,7 @@ export function monitorCharacteristic(deviceIdentifier, serviceUUID, characteris
 
 export function changeDeviceState(deviceIdentifier, state) {
   return {
-    type: CHANGE_DEVICE_STATE,
+    type: types.CHANGE_DEVICE_STATE,
     deviceIdentifier: deviceIdentifier,
     state: state
   }
