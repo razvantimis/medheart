@@ -1,5 +1,14 @@
 # MedHeart App
-Help people for better life
+Avem doua componente: diagnostic si heart rate
+1.Diagnostic
+Vei putea introduce date dupa care algoritm inteligent iti va oferi un diagnostic
+Vei parcurge 3 pasi, completand cu date medicale si la pasul final vei primi diagnostic
+
+2. Heart Rate
+Te vei connectat cu o bratare fitnes mi band 2
+a) pagina de cautare divies
+b) pagina unde sa face pair si auth
+c) pagina cu pulsul ( asta ramana cat timp nu te deconectez altfel se reia de la primul pas)
 
 ## Heart Rate 
 
