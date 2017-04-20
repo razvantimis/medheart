@@ -23,6 +23,7 @@ class BleService extends Component {
     // Handle scanning
     if (newProps.scanning !== this.props.scanning) {
       if (newProps.scanning === true) {
+        console.log('start scann');
         this.manager.startDeviceScan(null, null, (error, device) => {
           if (error) {
             newProps.pushError(error.message)

@@ -2,7 +2,7 @@ import { ActionConst } from 'react-native-router-flux'
 import * as SceneConst from '../constants/SceneConst.js' 
 
 const defaultState = {
-    'state' : 'root'
+    state : 'root'
 }
 
 export default function (state = defaultState, action) {
