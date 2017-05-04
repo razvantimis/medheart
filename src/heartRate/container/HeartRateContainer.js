@@ -6,7 +6,7 @@ import ScannedDevices from '../components/ScannedDevices';
 import PairingDevice from '../components/PairingDevice';
 import * as bleActions from '../actions/BleActions';
 import * as types from '../actions/types';
-import { Actions } from 'react-native-router-flux'
+
 
 class HeartRateContainer extends Component {
   constructor(props) {
