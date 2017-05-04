@@ -9,6 +9,8 @@ import { Container,
 
 import { HeartRateContainer } from './heartRate';
 
+import myTheme from './themes/redTheme';
+
 class MHDashboard extends Component {
   constructor(props){
     super(props);
@@ -16,7 +18,7 @@ class MHDashboard extends Component {
 
   render() {
     return (
-      <Container>
+      <Container theme={myTheme}>
         <Header hasTabs>
             <Body>
                 <Title>MedHeart</Title>
