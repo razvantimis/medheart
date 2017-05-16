@@ -9,6 +9,8 @@ import { Container,
 
 import { HeartRateContainer } from './heartRate';
 
+import { PredictDiseaseContainer } from './predictDisease';
+
 import myTheme from './themes/redTheme';
 
 class MHDashboard extends Component {
@@ -18,7 +20,7 @@ class MHDashboard extends Component {
 
   render() {
     return (
-      <Container theme={myTheme}>
+      <Container>
         <Header hasTabs>
             <Body>
                 <Title>MedHeart</Title>
@@ -30,7 +32,7 @@ class MHDashboard extends Component {
           </Tab>
       
           <Tab heading="Predict Disease" >
-
+            <PredictDiseaseContainer />
           </Tab>
         </Tabs>
         

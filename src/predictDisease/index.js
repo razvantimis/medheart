@@ -1,5 +1,5 @@
-import PredictDiseaseStep1 from './PredictDiseaseStep1';
-import PredictDiseaseStep2 from './PredictDiseaseStep2';
-import PredictDiseaseStep3 from './PredictDiseaseStep3';
+import PredictDiseaseContainer from './PredictDiseaseContainer';
 
-export { PredictDiseaseStep1, PredictDiseaseStep2, PredictDiseaseStep3 };
+import PredictDiseaseReducer from './PredictDiseaseReducer'
+
+export { PredictDiseaseContainer, PredictDiseaseReducer };

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import { connect } from 'react-redux';
 
 
-class PredictDiseaseStep3 extends Component {
+class PredictDiseaseStepEnd extends Component {
   render() {
         return (
             <View>
@@ -13,7 +12,4 @@ class PredictDiseaseStep3 extends Component {
     }
 }
 
-export default connect(
-  state => ({}),
-  {})
-(PredictDiseaseStep3);
+export default PredictDiseaseStepEnd;

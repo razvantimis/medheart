@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
-import SceneReducer from './SceneReducer';
+
 import { BleReducer, HeartRateReducer } from '../heartRate';
+import { PredictDiseaseReducer } from '../predictDisease';
 
 export default combineReducers({
   ble: BleReducer,
   heartRate: HeartRateReducer,
-  route: SceneReducer
+  predictDisease: PredictDiseaseReducer
 });
