@@ -36,3 +36,36 @@ export function onChangeCholesterol(cholesterol) {
         payload: { cholesterol }
     }
 }
+
+export function onChangeFastingBloodSugar(fastingBloodSugar) {
+    return {
+        type: types.ON_CHANGE_FASTING_BLOOD_SUGAR,
+        payload: { fastingBloodSugar }
+    }
+}
+
+export function onChangeRestingECG(restingECG) {
+    return {
+        type: types.ON_CHANGE_RESTING_ECG,
+        payload: { restingECG }
+    }
+}
+
+export function onChangeMaximumHeartRate(maximumHeartRate) {
+    return {
+        type: types.ON_CHANGE_MAXIMUM_HEARTRATE,
+        payload: { maximumHeartRate }
+    }
+}
+export function onChangeExerciseInducedAngina(exerciseInducedAngina) {
+    return {
+        type: types.ON_CHANGE_EXERCISE_INDUCED_ANGINA,
+        payload: { exerciseInducedAngina }
+    }
+}
+export function onChangeOldPeak(oldPeak) {
+    return {
+        type: types.ON_CHANGE_OLD_PEAK,
+        payload: { oldPeak }
+    }
+}

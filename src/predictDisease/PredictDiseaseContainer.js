@@ -8,7 +8,12 @@ import { onChangeGender,
   onChangeChestPainType, 
   onChangeAge, 
   onChangeRestingBloodPressure,
-  onChangeCholesterol } from './actions'
+  onChangeCholesterol,
+  onChangeFastingBloodSugar,
+  onChangeRestingECG,
+  onChangeMaximumHeartRate,
+  onChangeExerciseInducedAngina,
+  onChangeOldPeak } from './actions'
 
 import PredictDiseaseStepStart from './components/PredictDiseaseStepStart';
 import PredictDiseaseStep2 from './components/PredictDiseaseStep2';
@@ -22,21 +27,55 @@ class PredictDiseaseContainer extends Component {
               onChangeGender, 
               onChangeAge, 
               onChangeRestingBloodPressure,
-              onChangeCholesterol }  = this.props;
-      const { gender, chestPainType, age, restingBloodPressure, cholesterol } = this.props.predict;
+              onChangeCholesterol,
+              onChangeFastingBloodSugar,
+              onChangeRestingECG,
+              onChangeMaximumHeartRate,
+              onChangeExerciseInducedAngina,
+              onChangeOldPeak }  = this.props;
+      const { gender, 
+        chestPainType, 
+        age, 
+        restingBloodPressure, 
+        cholesterol, 
+        fastingBloodSugar,
+        restingECG,
+        maximumHeartRate,
+        exerciseInducedAngina,
+        oldPeak } = this.props.predict;
       switch(step){
         case STEP_START:
           return <PredictDiseaseStepStart 
                       chestPainType={chestPainType} 
                       onChangeChestPainType={onChangeChestPainType}
+                     
                       gender={gender} 
                       onChangeGender = {onChangeGender}
+                     
                       age={age}
                       onChangeAge={onChangeAge}
+                     
                       restingBloodPressure={restingBloodPressure}
                       onChangeRestingBloodPressure={onChangeRestingBloodPressure}
+                     
                       cholesterol={cholesterol}
-                      onChangeCholesterol={onChangeCholesterol} />;
+                      onChangeCholesterol={onChangeCholesterol}
+                     
+                      fastingBloodSugar={fastingBloodSugar}
+                      onChangeFastingBloodSugar={onChangeFastingBloodSugar}
+                     
+                      restingECG={restingECG} 
+                      onChangeRestingECG={onChangeRestingECG}
+                     
+                      maximumHeartRate={maximumHeartRate}
+                      onChangeMaximumHeartRate={onChangeMaximumHeartRate}
+                     
+                      exerciseInducedAngina={exerciseInducedAngina}
+                      onChangeExerciseInducedAngina={onChangeExerciseInducedAngina}
+                      
+                      oldPeak={oldPeak}
+                      onChangeOldPeak={onChangeOldPeak}
+                      />;
         case STEP_2:
           return <PredictDiseaseStep2 />;
         case STEP_END:
@@ -59,6 +98,11 @@ export default connect(
      onChangeGender,
      onChangeAge,
      onChangeRestingBloodPressure,
-     onChangeCholesterol
+     onChangeCholesterol,
+     onChangeFastingBloodSugar,
+     onChangeRestingECG,
+     onChangeMaximumHeartRate,
+     onChangeExerciseInducedAngina,
+     onChangeOldPeak
   })
 (PredictDiseaseContainer);
