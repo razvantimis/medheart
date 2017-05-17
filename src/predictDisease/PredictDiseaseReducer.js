@@ -1,6 +1,7 @@
 import * as types from './actions/types';
 import * as consts from './constants';
 
+import NeuronalNetwork from './neuronalNetwork';
 const INITIAL_STATE = {
     predict: {
         gender: '1', // (M=1)(F=0)
@@ -25,7 +26,11 @@ const INITIAL_STATE = {
         thal: '3' // Normal, fixed defect, reversible defect --3,6,7
     },
     step: consts.STEP_START,
-    predictedProgress: true
+    predictedProgress: true,
+    predicted: {
+        data: null,
+        value: null
+    }
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -108,6 +113,22 @@ export default (state = INITIAL_STATE, action) => {
             let thal = action.payload.thal;
             let predict = {...state.predict, thal};
             return {...state, predict};
+        }
+         case types.ON_PREDICTING:
+        {
+            let predicted = {}
+            predicted.data = new Date();
+            
+            const netw = new NeuronalNetwork();
+            predicted.value = netw.predict(action.payload.predictArray);
+            
+            return {...state, predictedProgress: false, predicted };
+        }
+         case types.RESET_PREDICT:
+        {
+            let predicted = { data: null, value: null}
+           
+            return {...state, predictedProgress: true, predicted, step: consts.STEP_START };
         }
         case types.NEXT_STEP:
         {   

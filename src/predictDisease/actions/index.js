@@ -103,3 +103,22 @@ export function prevStep() {
         payload: null
     }
 }
+export function resetPredict() {
+    return {
+        type: types.RESET_PREDICT,
+        payload: null
+    }
+}
+
+export function onPredicting(predict) {
+    let predictArray = [];
+    
+    for(let key in predict) {
+        let value = parseFloat(predict[key]);
+        predictArray.push(value);
+    }
+    return {
+        type: types.ON_PREDICTING,
+        payload: { predictArray }
+    }
+}

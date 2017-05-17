@@ -17,21 +17,23 @@ import { onChangeGender,
   onChangeSlop,
   onChangeNumberOfVesselsColored,
   onChangeThal,
+  onPredicting,
   nextStep,
-  prevStep } from './actions'
+  prevStep,
+  resetPredict } from './actions'
 
 import PredictDiseaseStepStart from './components/PredictDiseaseStepStart';
 import PredictDiseaseStep2 from './components/PredictDiseaseStep2';
 import PredictDiseaseStepEnd from './components/PredictDiseaseStepEnd';
 
+
+
 class PredictDiseaseContainer extends Component {
 
-    onPredict(){
-      
-    }
     render() {
       const { step, 
               predictedProgress,
+              predicted,
               nextStep,
               prevStep,
               onChangeChestPainType, 
@@ -46,7 +48,9 @@ class PredictDiseaseContainer extends Component {
               onChangeOldPeak,
               onChangeSlop,
               onChangeNumberOfVesselsColored,
-              onChangeThal }  = this.props;
+              onChangeThal,
+              onPredicting,
+              resetPredict }  = this.props;
       const { gender, 
         chestPainType, 
         age, 
@@ -110,7 +114,11 @@ class PredictDiseaseContainer extends Component {
                     prevStep={()=>prevStep()} 
                     />;
         case STEP_END:
-          return <PredictDiseaseStepEnd onPredict={()=> this.onPredict()} predictedProgress={predictedProgress} />;
+          return <PredictDiseaseStepEnd 
+                  onPredicting={()=> onPredicting(this.props.predict)} 
+                  predictedProgress={predictedProgress} 
+                  predicted={predicted}
+                  resetPredict={resetPredict}/>;
         default:
           return <PredictDiseaseStepStart />
       };
@@ -121,7 +129,8 @@ export default connect(
   state => ({
     step: state.predictDisease.step,
     predictedProgress: state.predictDisease.predictedProgress,
-    predict: state.predictDisease.predict
+    predict: state.predictDisease.predict,
+    predicted: state.predictDisease.predicted
   }),
   {
      onChangeChestPainType,
@@ -137,7 +146,9 @@ export default connect(
      onChangeSlop,
      onChangeNumberOfVesselsColored,
      onChangeThal,
+     onPredicting,
      nextStep,
-     prevStep
+     prevStep,
+     resetPredict
   })
 (PredictDiseaseContainer);
