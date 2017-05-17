@@ -69,3 +69,37 @@ export function onChangeOldPeak(oldPeak) {
         payload: { oldPeak }
     }
 }
+export function onChangeSlop(slop) {
+    return {
+        type: types.ON_CHANGE_SLOP,
+        payload: { slop }
+    }
+}
+
+export function onChangeNumberOfVesselsColored(numberOfVesselsColored) {
+    return {
+        type: types.ON_CHANGE_NUMBER_OF_VESSELS_COLORED,
+        payload: { numberOfVesselsColored }
+    }
+}
+
+export function onChangeThal(thal) {
+    return {
+        type: types.ON_CHANGE_THAL,
+        payload: { thal }
+    }
+}
+
+export function nextStep() {
+    return {
+        type: types.NEXT_STEP,
+        payload: null
+    }
+}
+
+export function prevStep() {
+    return {
+        type: types.PREV_STEP,
+        payload: null
+    }
+}

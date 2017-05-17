@@ -1,7 +1,3 @@
-export const STEP_START = 0;
-export const STEP_2 = 4;
-export const STEP_END = 4;
-
 
 export const ON_CHANGE_CHEST_PAIN_TYPE = "onChangeChestPainType";
 export const ON_CHANGE_GENDER = "onChangeGender";
@@ -13,3 +9,9 @@ export const ON_CHANGE_RESTING_ECG = "ON_CHANGE_RESTING_ECG";
 export const ON_CHANGE_MAXIMUM_HEARTRATE = "ON_CHANGE_MAXIMUM_HEARTRATE";
 export const ON_CHANGE_EXERCISE_INDUCED_ANGINA = "ON_CHANGE_EXERCISE_INDUCED_ANGINA";
 export const ON_CHANGE_OLD_PEAK = "ON_CHANGE_OLD_PEAK";
+export const ON_CHANGE_SLOP = "ON_CHANGE_SLOP";
+export const ON_CHANGE_THAL = "ON_CHANGE_THAL";
+export const ON_CHANGE_NUMBER_OF_VESSELS_COLORED = "ON_CHANGE_NUMBER_OF_VESSELS_COLORED";
+
+export const NEXT_STEP = "NEXT_STEP";
+export const PREV_STEP = "PREV_STEP";

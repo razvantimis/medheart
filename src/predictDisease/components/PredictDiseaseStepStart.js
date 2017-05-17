@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Text, StyleSheet, Dimensions } from 'react-native';
+import { Text, Dimensions } from 'react-native';
 import { 
     Container,
     Content, 
@@ -7,7 +7,10 @@ import {
     List,
     ListItem,
     Label,
-    Input } from 'native-base';
+    Input,
+    Footer,
+    FooterTab,
+    Button } from 'native-base';
 
 
 class PredictDiseaseStepStart extends Component {
@@ -20,9 +23,7 @@ class PredictDiseaseStepStart extends Component {
                 cholesterol, onChangeCholesterol,
                 fastingBloodSugar, onChangeFastingBloodSugar,
                 restingECG, onChangeRestingECG,
-                maximumHeartRate, onChangeMaximumHeartRate,
-                exerciseInducedAngina, onChangeExerciseInducedAngina,
-                oldPeak, onChangeOldPeak } = this.props;
+                nextStep } = this.props;
         return (
             <Container>
                 <Content>
@@ -110,39 +111,18 @@ class PredictDiseaseStepStart extends Component {
                                 <Picker.Item label='Definite left ventricular Hypertrophy' value='3' />
                             </Picker>
                         </ListItem>
-                        <ListItem>
-                            <Label>Maximum Heart Rate: </Label>
-                            <Input 
-                                placeholder="Enter Maximum Heart Rate"
-                                keyboardType='numeric'
-                                maxLength={3}
-                                value={maximumHeartRate}
-                                onChangeText={onChangeMaximumHeartRate.bind(this)}/>
-                        </ListItem>
-                        <ListItem>
-                            <Label>Exercise Induced Angina ?: </Label>
-                            <Picker
-                                style={style.picker}
-                                supportedOrientations={['portrait','landscape']}
-                                iosHeader='Select one'
-                                mode='dropdown'
-                                selectedValue={exerciseInducedAngina}
-                                onValueChange={onChangeExerciseInducedAngina.bind(this)}>
-                                <Picker.Item label='Yes' value='1' />
-                                <Picker.Item label='No' value='0' />
-                            </Picker>
-                        </ListItem>
-                         <ListItem>
-                            <Label>ST depression induced by exercise </Label>
-                            <Input 
-                                placeholder="Enter number"
-                                keyboardType='numeric'
-                                maxLength={3}
-                                value={oldPeak}
-                                onChangeText={onChangeOldPeak.bind(this)}/>
-                        </ListItem>
+                        
+                        
+                       
                     </List>
                 </Content>
+                <Footer>
+                    <FooterTab>
+                       <Button onPress={()=> nextStep()}>  
+                            <Text>Next</Text>
+                        </Button>
+                    </FooterTab>
+                </Footer>
             </Container>
             
         );

@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { Container, Content, Header, Body, Title, Icon,Footer ,FooterTab ,Button ,Text } from 'native-base';
 
-import { STEP_START, STEP_2, STEP_END} from './actions/types';
+import { STEP_START, STEP_2, STEP_END} from './constants';
 import { onChangeGender, 
   onChangeChestPainType, 
   onChangeAge, 
@@ -13,7 +13,12 @@ import { onChangeGender,
   onChangeRestingECG,
   onChangeMaximumHeartRate,
   onChangeExerciseInducedAngina,
-  onChangeOldPeak } from './actions'
+  onChangeOldPeak,
+  onChangeSlop,
+  onChangeNumberOfVesselsColored,
+  onChangeThal,
+  nextStep,
+  prevStep } from './actions'
 
 import PredictDiseaseStepStart from './components/PredictDiseaseStepStart';
 import PredictDiseaseStep2 from './components/PredictDiseaseStep2';
@@ -21,8 +26,14 @@ import PredictDiseaseStepEnd from './components/PredictDiseaseStepEnd';
 
 class PredictDiseaseContainer extends Component {
 
+    onPredict(){
+      
+    }
     render() {
       const { step, 
+              predictedProgress,
+              nextStep,
+              prevStep,
               onChangeChestPainType, 
               onChangeGender, 
               onChangeAge, 
@@ -32,7 +43,10 @@ class PredictDiseaseContainer extends Component {
               onChangeRestingECG,
               onChangeMaximumHeartRate,
               onChangeExerciseInducedAngina,
-              onChangeOldPeak }  = this.props;
+              onChangeOldPeak,
+              onChangeSlop,
+              onChangeNumberOfVesselsColored,
+              onChangeThal }  = this.props;
       const { gender, 
         chestPainType, 
         age, 
@@ -42,7 +56,10 @@ class PredictDiseaseContainer extends Component {
         restingECG,
         maximumHeartRate,
         exerciseInducedAngina,
-        oldPeak } = this.props.predict;
+        oldPeak,
+        slop,
+        numberOfVesselsColored,
+        thal } = this.props.predict;
       switch(step){
         case STEP_START:
           return <PredictDiseaseStepStart 
@@ -63,34 +80,47 @@ class PredictDiseaseContainer extends Component {
                      
                       fastingBloodSugar={fastingBloodSugar}
                       onChangeFastingBloodSugar={onChangeFastingBloodSugar}
-                     
+                      
                       restingECG={restingECG} 
                       onChangeRestingECG={onChangeRestingECG}
-                     
-                      maximumHeartRate={maximumHeartRate}
-                      onChangeMaximumHeartRate={onChangeMaximumHeartRate}
-                     
-                      exerciseInducedAngina={exerciseInducedAngina}
-                      onChangeExerciseInducedAngina={onChangeExerciseInducedAngina}
-                      
-                      oldPeak={oldPeak}
-                      onChangeOldPeak={onChangeOldPeak}
+
+                      nextStep={()=>nextStep()}                      
                       />;
         case STEP_2:
-          return <PredictDiseaseStep2 />;
+          return <PredictDiseaseStep2
+                    maximumHeartRate={maximumHeartRate}
+                    onChangeMaximumHeartRate={onChangeMaximumHeartRate}
+                    
+                    exerciseInducedAngina={exerciseInducedAngina}
+                    onChangeExerciseInducedAngina={onChangeExerciseInducedAngina}
+                    
+                    oldPeak={oldPeak}
+                    onChangeOldPeak={onChangeOldPeak}
+
+                    slop={slop}
+                    onChangeSlop={onChangeSlop}
+
+                    numberOfVesselsColored={numberOfVesselsColored}
+                    onChangeNumberOfVesselsColored={onChangeNumberOfVesselsColored}
+
+                    thal={thal}
+                    onChangeThal={onChangeThal}
+
+                    nextStep={()=>nextStep()} 
+                    prevStep={()=>prevStep()} 
+                    />;
         case STEP_END:
-          return <PredictDiseaseStepEnd />;
+          return <PredictDiseaseStepEnd onPredict={()=> this.onPredict()} predictedProgress={predictedProgress} />;
         default:
           return <PredictDiseaseStepStart />
-    
       };
-
     }
 }
 
 export default connect(
   state => ({
     step: state.predictDisease.step,
+    predictedProgress: state.predictDisease.predictedProgress,
     predict: state.predictDisease.predict
   }),
   {
@@ -103,6 +133,11 @@ export default connect(
      onChangeRestingECG,
      onChangeMaximumHeartRate,
      onChangeExerciseInducedAngina,
-     onChangeOldPeak
+     onChangeOldPeak,
+     onChangeSlop,
+     onChangeNumberOfVesselsColored,
+     onChangeThal,
+     nextStep,
+     prevStep
   })
 (PredictDiseaseContainer);
