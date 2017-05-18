@@ -11,7 +11,6 @@ import { HeartRateContainer } from './heartRate';
 
 import { PredictDiseaseContainer } from './predictDisease';
 
-import myTheme from './themes/redTheme';
 
 class MHDashboard extends Component {
   constructor(props){
@@ -20,24 +19,46 @@ class MHDashboard extends Component {
 
   render() {
     return (
-      <Container>
-        <Header hasTabs>
-            <Body>
-                <Title>MedHeart</Title>
-            </Body>
-        </Header>
-        <Tabs >
-          <Tab heading="Heart Rate" >
-            <HeartRateContainer />
-          </Tab>
-      
-          <Tab heading="Predict Disease" >
-            <PredictDiseaseContainer />
-          </Tab>
-        </Tabs>
+        <Container >
+          <Header hasTabs style={style.header}>
+              <Body>
+                  <Title style={{color:'#fff'}} >MedHeart</Title>
+              </Body>
+          </Header>
+          <Tabs tabBarUnderlineStyle={{borderBottomWidth:0.5}} >
+            <Tab heading="Heart Rate" 
+            tabStyle={style.tab.content} textStyle={style.tab.text} 
+            activeTabStyle={{backgroundColor: '#B71C1C'}} activeTextStyle={{color: '#fff', fontWeight: '700'}} >
+              <HeartRateContainer />
+            </Tab>
         
-      </Container>
+            <Tab heading="Predict Disease" 
+            tabStyle={style.tab.content} textStyle={style.tab.text} 
+            activeTabStyle={{backgroundColor: '#B71C1C'}} activeTextStyle={{color: '#fff', fontWeight: '700'}} >
+            
+              <PredictDiseaseContainer />
+            </Tab>
+          </Tabs>
+          
+        </Container>
     );
+  }
+}
+
+const style = {
+  header : {
+    backgroundColor:'#B71C1C',
+
+  },
+  tab: {
+    content: {
+      backgroundColor:'#B71C1C',
+    },
+    text: {
+      fontWeight: '600',
+      color: '#fff'
+    }
+   
   }
 }
 

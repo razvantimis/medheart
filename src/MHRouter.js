@@ -1,8 +1,4 @@
 import React , { Component } from 'react';
-import { connect } from 'react-redux';
-
-
-import * as SceneConst from './constants/SceneConst.js'; 
 
 // components
 
