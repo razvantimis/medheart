@@ -70,18 +70,21 @@ class NeuronalNetwork {
     /**
 	 * Face predictia
 	 * @param inValues
-	 * @return returneaza 1 sau 0 , neuronul cu valoare cea mai mare 
+	 * @return returneaza probabilitatea 
 	 */
   predict(inValues) {
     let rez = this.forwardPropagation(inValues);
     let outputs = rez.outputs;
     let maxPoz = 0;
+    let sum = 0;
     for (let i = 0; i < outputs.length; i++) {
+      sum += outputs[i];
       if (outputs[i] > outputs[maxPoz]) {
         maxPoz = i;
       }
     }
-    return maxPoz;
+
+    return outputs[maxPoz]/sum;
   }
 
   doTest() {
