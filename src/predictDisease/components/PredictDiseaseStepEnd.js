@@ -10,6 +10,8 @@ import {
     Button
 } from 'native-base';
 
+import Heart from './Heart';
+
 class PredictDiseaseStepEnd extends Component {
   componentWillMount(){
     this.props.onPredicting();
@@ -21,9 +23,9 @@ class PredictDiseaseStepEnd extends Component {
     if (predictedProgress) {
       contentPredict =  <Spinner color='red'></Spinner> ;
     } else {
-      contentPredict = (<View>
-                {predicted.value == 1 && <Text> Aveti probleme de inima </Text>}
-                 {predicted.value == 0 && <Text> Nu aveti probleme de inima </Text>}
+      contentPredict = (<View style={{justifyContent: 'center', flex:1,flexDirection: 'column'}}>
+                <Text> Aveti probleme de inima {predicted.value} </Text>
+                <Heart />
                 <Text>{predicted.data.toString()}</Text>
                 </View>);
     }
