@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { View, Text } from 'react-native';
 
 import {
@@ -12,16 +12,16 @@ import {
 
 class PredictDiseaseStepEnd extends Component {
   componentWillMount(){
-      this.props.onPredicting();
+    this.props.onPredicting();
   }
   render() {
     
     const { predictedProgress, predicted, resetPredict } = this.props;
     let contentPredict ;
     if (predictedProgress) {
-        contentPredict =  <Spinner color='red'></Spinner> ;
+      contentPredict =  <Spinner color='red'></Spinner> ;
     } else {
-        contentPredict = (<View>
+      contentPredict = (<View>
                 {predicted.value == 1 && <Text> Aveti probleme de inima </Text>}
                  {predicted.value == 0 && <Text> Nu aveti probleme de inima </Text>}
                 <Text>{predicted.data.toString()}</Text>
@@ -42,7 +42,13 @@ class PredictDiseaseStepEnd extends Component {
         </Footer>
         </Container>
     );
-    }
+  }
 }
+PredictDiseaseStepEnd.propTypes = {
+  predictedProgress: PropTypes.bool.isRequired,
+  predicted: PropTypes.object.isRequired,
+  resetPredict: PropTypes.func.isRequired,
+  onPredicting: PropTypes.func.isRequired
 
+}
 export default PredictDiseaseStepEnd;

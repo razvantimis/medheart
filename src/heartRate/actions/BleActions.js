@@ -29,7 +29,7 @@ export function updateServices(deviceIdentifier, services) {
 
 export function updateCharacteristic(deviceIdentifier, serviceUUID, characteristicUUID, characteristic) {
   return {
-    type: UPDATE_CHARACTERISTIC,
+    type: types.UPDATE_CHARACTERISTIC,
     deviceIdentifier,
     serviceUUID,
     characteristicUUID,
@@ -39,7 +39,7 @@ export function updateCharacteristic(deviceIdentifier, serviceUUID, characterist
 
 export function writeCharacteristic(deviceIdentifier, serviceUUID, characteristicUUID, base64Value) {
   return {
-    type: WRITE_CHARACTERISTIC,
+    type: types.WRITE_CHARACTERISTIC,
     deviceIdentifier: deviceIdentifier,
     serviceUUID: serviceUUID,
     characteristicUUID: characteristicUUID,
@@ -49,7 +49,7 @@ export function writeCharacteristic(deviceIdentifier, serviceUUID, characteristi
 
 export function readCharacteristic(deviceIdentifier, serviceUUID, characteristicUUID) {
   return {
-    type: READ_CHARACTERISTIC,
+    type: types.READ_CHARACTERISTIC,
     deviceIdentifier: deviceIdentifier,
     serviceUUID: serviceUUID,
     characteristicUUID: characteristicUUID 
@@ -58,7 +58,7 @@ export function readCharacteristic(deviceIdentifier, serviceUUID, characteristic
 
 export function monitorCharacteristic(deviceIdentifier, serviceUUID, characteristicUUID, monitor) {
   return {
-    type: MONITOR_CHARACTERISTIC,
+    type: types.MONITOR_CHARACTERISTIC,
     deviceIdentifier,
     serviceUUID,
     characteristicUUID,
@@ -77,7 +77,7 @@ export function changeDeviceState(deviceIdentifier, state) {
 
 export function selectService(deviceIdentifier, serviceUUID) {
   return {
-    type: SELECT_SERVICE,
+    type: types.SELECT_SERVICE,
     deviceIdentifier: deviceIdentifier,
     serviceUUID: serviceUUID
   }
@@ -85,7 +85,7 @@ export function selectService(deviceIdentifier, serviceUUID) {
 
 export function selectCharacteristic(deviceIdentifier, serviceUUID, characteristicUUID) {
   return {
-    type: SELECT_CHARACTERISTIC,
+    type: types.SELECT_CHARACTERISTIC,
     deviceIdentifier: deviceIdentifier,
     serviceUUID: serviceUUID,
     characteristicUUID: characteristicUUID
@@ -107,14 +107,14 @@ export function popError() {
 
 export function executeTransaction(transactionId) {
   return {
-    type: EXECUTE_TRANSACTION,
+    type: types.EXECUTE_TRANSACTION,
     transactionId,
   }
 }
 
 export function completeTransaction(transactionId) {
   return {
-    type: COMPLETE_TRANSACTION,
+    type: types.COMPLETE_TRANSACTION,
     transactionId
   }
 }

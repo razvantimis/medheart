@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View, Text, Dimensions } from 'react-native';
+import React, { Component, PropTypes } from 'react';
+import { Text, Dimensions } from 'react-native';
 import { 
     Container,
     Content, 
@@ -14,14 +14,14 @@ import {
 
 class PredictDiseaseStep2 extends Component {
   render() {
-      const { maximumHeartRate, onChangeMaximumHeartRate,
+    const { maximumHeartRate, onChangeMaximumHeartRate,
           exerciseInducedAngina, onChangeExerciseInducedAngina,
           oldPeak, onChangeOldPeak,
           slop, onChangeSlop,
           numberOfVesselsColored, onChangeNumberOfVesselsColored,
           thal, onChangeThal,
           nextStep, prevStep } = this.props;
-        return (
+    return (
              <Container>
                 <Content>
                     <List>
@@ -115,16 +115,31 @@ class PredictDiseaseStep2 extends Component {
                     </FooterTab>
                 </Footer>
             </Container>
-        );
-    }
+    );
+  }
 }
 
 let width = Dimensions.get('window').width;
 const style = {
-    picker: {
-        width
-    }
+  picker: {
+    width
+  }
    
 };
-
+PredictDiseaseStep2.propTypes = {
+  maximumHeartRate: PropTypes.string,
+  onChangeMaximumHeartRate: PropTypes.func.isRequired,
+  exerciseInducedAngina: PropTypes.string.isRequired,
+  onChangeExerciseInducedAngina: PropTypes.func.isRequired,
+  oldPeak: PropTypes.string,
+  onChangeOldPeak: PropTypes.func.isRequired,
+  slop: PropTypes.string.isRequired,
+  onChangeSlop: PropTypes.func.isRequired,
+  numberOfVesselsColored: PropTypes.string.isRequired,
+  onChangeNumberOfVesselsColored: PropTypes.func.isRequired,
+  thal: PropTypes.string.isRequired,
+  onChangeThal:  PropTypes.func.isRequired,
+  nextStep: PropTypes.func.isRequired,
+  prevStep: PropTypes.func.isRequired
+}
 export default PredictDiseaseStep2;

@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 
 import {
     Container,
@@ -8,15 +8,15 @@ import {
 
 class PairingDevice extends Component {
     
-    render(){
-        return (
+  render(){
+    return (
             <Container>
                 <Content>
                     <Spinner color='red'></Spinner>
                 </Content>
             </Container>
-        );
-    }
+      );
+  }
 }
 
 export default PairingDevice;

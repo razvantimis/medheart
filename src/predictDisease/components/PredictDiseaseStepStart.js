@@ -15,8 +15,8 @@ import {
 
 class PredictDiseaseStepStart extends Component {
 
-    render() {
-        const { chestPainType, onChangeChestPainType,
+  render() {
+    const { chestPainType, onChangeChestPainType,
                 gender, onChangeGender,
                 age, onChangeAge,
                 restingBloodPressure, onChangeRestingBloodPressure,
@@ -24,7 +24,7 @@ class PredictDiseaseStepStart extends Component {
                 fastingBloodSugar, onChangeFastingBloodSugar,
                 restingECG, onChangeRestingECG,
                 nextStep } = this.props;
-        return (
+    return (
             <Container>
                 <Content>
                     <List>
@@ -125,15 +125,15 @@ class PredictDiseaseStepStart extends Component {
                 </Footer>
             </Container>
             
-        );
-    }
+    );
+  }
 }
 
 let width = Dimensions.get('window').width;
 const style = {
-    picker: {
-        width
-    }
+  picker: {
+    width
+  }
    
 };
 
@@ -147,7 +147,12 @@ PredictDiseaseStepStart.propTypes = {
   restingBloodPressure: PropTypes.string,
   onChangeRestingBloodPressure: PropTypes.func.isRequired,
   cholesterol: PropTypes.string,
-  onChangeCholesterol: PropTypes.func.isRequired
+  onChangeCholesterol: PropTypes.func.isRequired,
+  fastingBloodSugar: PropTypes.string,
+  onChangeFastingBloodSugar: PropTypes.func.isRequired,
+  restingECG: PropTypes.string.isRequired,
+  onChangeRestingECG: PropTypes.func.isRequired,
+  nextStep: PropTypes.func.isRequired
 }
 
 export default PredictDiseaseStepStart;

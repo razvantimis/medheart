@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
 import { connect } from 'react-redux';
-import { Container, Content, Header, Body, Title, Icon,Footer ,FooterTab ,Button ,Text } from 'native-base';
 
 import { STEP_START, STEP_2, STEP_END} from './constants';
 import { onChangeGender, 
@@ -30,8 +28,8 @@ import PredictDiseaseStepEnd from './components/PredictDiseaseStepEnd';
 
 class PredictDiseaseContainer extends Component {
 
-    render() {
-      const { step, 
+  render() {
+    const { step, 
               predictedProgress,
               predicted,
               nextStep,
@@ -51,7 +49,7 @@ class PredictDiseaseContainer extends Component {
               onChangeThal,
               onPredicting,
               resetPredict }  = this.props;
-      const { gender, 
+    const { gender, 
         chestPainType, 
         age, 
         restingBloodPressure, 
@@ -64,65 +62,63 @@ class PredictDiseaseContainer extends Component {
         slop,
         numberOfVesselsColored,
         thal } = this.props.predict;
-      switch(step){
-        case STEP_START:
-          return <PredictDiseaseStepStart 
-                      chestPainType={chestPainType} 
-                      onChangeChestPainType={onChangeChestPainType}
-                     
-                      gender={gender} 
-                      onChangeGender = {onChangeGender}
-                     
-                      age={age}
-                      onChangeAge={onChangeAge}
-                     
-                      restingBloodPressure={restingBloodPressure}
-                      onChangeRestingBloodPressure={onChangeRestingBloodPressure}
-                     
-                      cholesterol={cholesterol}
-                      onChangeCholesterol={onChangeCholesterol}
-                     
-                      fastingBloodSugar={fastingBloodSugar}
-                      onChangeFastingBloodSugar={onChangeFastingBloodSugar}
-                      
-                      restingECG={restingECG} 
-                      onChangeRestingECG={onChangeRestingECG}
+    switch(step){
+    case STEP_START:
+      return <PredictDiseaseStepStart 
+              chestPainType={chestPainType} 
+              onChangeChestPainType={onChangeChestPainType}
+              
+              gender={gender} 
+              onChangeGender = {onChangeGender}
+              
+              age={age}
+              onChangeAge={onChangeAge}
+              
+              restingBloodPressure={restingBloodPressure}
+              onChangeRestingBloodPressure={onChangeRestingBloodPressure}
+              
+              cholesterol={cholesterol}
+              onChangeCholesterol={onChangeCholesterol}
+              
+              fastingBloodSugar={fastingBloodSugar}
+              onChangeFastingBloodSugar={onChangeFastingBloodSugar}
+              
+              restingECG={restingECG} 
+              onChangeRestingECG={onChangeRestingECG}
 
-                      nextStep={()=>nextStep()}                      
-                      />;
-        case STEP_2:
-          return <PredictDiseaseStep2
-                    maximumHeartRate={maximumHeartRate}
-                    onChangeMaximumHeartRate={onChangeMaximumHeartRate}
-                    
-                    exerciseInducedAngina={exerciseInducedAngina}
-                    onChangeExerciseInducedAngina={onChangeExerciseInducedAngina}
-                    
-                    oldPeak={oldPeak}
-                    onChangeOldPeak={onChangeOldPeak}
+              nextStep={()=>nextStep()}                      
+              />;
+    case STEP_2:
+      return <PredictDiseaseStep2
+              maximumHeartRate={maximumHeartRate}
+              onChangeMaximumHeartRate={onChangeMaximumHeartRate}
+              
+              exerciseInducedAngina={exerciseInducedAngina}
+              onChangeExerciseInducedAngina={onChangeExerciseInducedAngina}
+              
+              oldPeak={oldPeak}
+              onChangeOldPeak={onChangeOldPeak}
 
-                    slop={slop}
-                    onChangeSlop={onChangeSlop}
+              slop={slop}
+              onChangeSlop={onChangeSlop}
 
-                    numberOfVesselsColored={numberOfVesselsColored}
-                    onChangeNumberOfVesselsColored={onChangeNumberOfVesselsColored}
+              numberOfVesselsColored={numberOfVesselsColored}
+              onChangeNumberOfVesselsColored={onChangeNumberOfVesselsColored}
 
-                    thal={thal}
-                    onChangeThal={onChangeThal}
+              thal={thal}
+              onChangeThal={onChangeThal}
 
-                    nextStep={()=>nextStep()} 
-                    prevStep={()=>prevStep()} 
+              nextStep={()=>nextStep()} 
+              prevStep={()=>prevStep()} 
                     />;
-        case STEP_END:
-          return <PredictDiseaseStepEnd 
-                  onPredicting={()=> onPredicting(this.props.predict)} 
-                  predictedProgress={predictedProgress} 
-                  predicted={predicted}
-                  resetPredict={resetPredict}/>;
-        default:
-          return <PredictDiseaseStepStart />
-      };
+    case STEP_END:
+      return <PredictDiseaseStepEnd 
+              onPredicting={()=> onPredicting(this.props.predict)} 
+              predictedProgress={predictedProgress} 
+              predicted={predicted}
+              resetPredict={resetPredict}/>;
     }
+  }
 }
 
 export default connect(
@@ -133,22 +129,22 @@ export default connect(
     predicted: state.predictDisease.predicted
   }),
   {
-     onChangeChestPainType,
-     onChangeGender,
-     onChangeAge,
-     onChangeRestingBloodPressure,
-     onChangeCholesterol,
-     onChangeFastingBloodSugar,
-     onChangeRestingECG,
-     onChangeMaximumHeartRate,
-     onChangeExerciseInducedAngina,
-     onChangeOldPeak,
-     onChangeSlop,
-     onChangeNumberOfVesselsColored,
-     onChangeThal,
-     onPredicting,
-     nextStep,
-     prevStep,
-     resetPredict
+    onChangeChestPainType,
+    onChangeGender,
+    onChangeAge,
+    onChangeRestingBloodPressure,
+    onChangeCholesterol,
+    onChangeFastingBloodSugar,
+    onChangeRestingECG,
+    onChangeMaximumHeartRate,
+    onChangeExerciseInducedAngina,
+    onChangeOldPeak,
+    onChangeSlop,
+    onChangeNumberOfVesselsColored,
+    onChangeThal,
+    onPredicting,
+    nextStep,
+    prevStep,
+    resetPredict
   })
 (PredictDiseaseContainer);
