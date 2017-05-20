@@ -120,7 +120,7 @@ export default (state = INITIAL_STATE, action) => {
       predicted.data = new Date();
             
       const netw = new NeuronalNetwork();
-      predicted.value = netw.predict(action.payload.predictArray);
+      predicted.value = netw.predict(action.payload.predictArray).toString().substring(2,4);
             
       return {...state, predictedProgress: false, predicted };
     }
