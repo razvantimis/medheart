@@ -23,10 +23,10 @@ class PredictDiseaseStepEnd extends Component {
     if (predictedProgress) {
       contentPredict =  <Spinner color='red'></Spinner> ;
     } else {
-      contentPredict = (<View style={{justifyContent: 'center', flex:1,flexDirection: 'column'}}>
+      contentPredict = (<View style={styles.content}>
                 <Text> Aveti probleme de inima {predicted.value} </Text>
-                <Heart />
-                <Text>{predicted.data.toString()}</Text>
+                <Heart precent={predicted.value} scale={11}/>
+                <Text>In data de {predicted.data.getDate()}/{predicted.data.getMonth()}/{predicted.data.getYear()} </Text>
                 </View>);
     }
 
@@ -52,5 +52,13 @@ PredictDiseaseStepEnd.propTypes = {
   resetPredict: PropTypes.func.isRequired,
   onPredicting: PropTypes.func.isRequired
 
+}
+const styles = {
+  content: {
+    justifyContent: 'center',
+    flex:1,
+    flexDirection: 'column',
+    alignItems:'center'
+  }
 }
 export default PredictDiseaseStepEnd;
