@@ -36,9 +36,9 @@ class PredictDiseaseStepEnd extends Component {
                 { contentPredict }
             </Content>
             <Footer>
-            <FooterTab>
+            <FooterTab style={{backgroundColor:'#D9534F'}}>
                 <Button onPress={()=> resetPredict()}>  
-                    <Text>Reset Predict</Text>
+                    <Text style={{color: 'white', fontSize: 18}}>Reset Predict</Text>
                 </Button>
             </FooterTab>
         </Footer>

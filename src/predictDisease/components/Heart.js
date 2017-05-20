@@ -25,11 +25,10 @@ class Heart extends Component {
         top: 0,
         borderTopLeftRadius: 6*scale,
         borderTopRightRadius: 6*scale,
-        backgroundColor: 'red',
-        borderColor: 'red',
+        backgroundColor: '#dd2421',
+        borderColor: '#dd2421',
         borderWidth: 2,
-        borderStyle: 'solid',
-        backgroundSize: 75
+        borderStyle: 'solid'
       },
       leftHeart: {
         transform: [
@@ -47,7 +46,8 @@ class Heart extends Component {
       },
       text: {
         fontSize: 32, 
-        color: '#fff'
+        color: '#fff',
+        marginBottom: 20
       }
     }
     return (

@@ -104,13 +104,13 @@ class PredictDiseaseStep2 extends Component {
                       </List>
                 </Content>
                   <Footer>
-                    <FooterTab>
+                    <FooterTab style={{backgroundColor:'#D9534F'}}>
                         <Button onPress={()=> prevStep()}>  
-                            <Text>Prev</Text>
+                            <Text style={{color: 'white', fontSize: 18}}>Prev</Text>
                         </Button>
                         
                         <Button onPress={()=> nextStep()}>  
-                            <Text>Finish</Text>
+                            <Text style={{color: 'white', fontSize: 18}}>Finish</Text>
                         </Button>
                     </FooterTab>
                 </Footer>
