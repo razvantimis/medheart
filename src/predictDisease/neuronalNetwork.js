@@ -79,9 +79,8 @@ class NeuronalNetwork {
     let rez = this.forwardPropagation(data);
     let outputs = rez.outputs;
     let maxPoz = 0;
-    let sum = 0.0;
+    
     for (let i = 0; i < outputs.length; i++) {
-      sum += outputs[i];
       if (outputs[i] > outputs[maxPoz]) {
         maxPoz = i;
       }

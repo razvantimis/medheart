@@ -36,9 +36,9 @@ class PredictDiseaseStepEnd extends Component {
                 { contentPredict }
             </Content>
             <Footer>
-            <FooterTab style={{backgroundColor:'#D9534F'}}>
+            <FooterTab style={styles.footerTab}>
                 <Button onPress={()=> resetPredict()}>  
-                    <Text style={{color: 'white', fontSize: 18}}>Reset Predict</Text>
+                    <Text style={styles.footerText}>Reset Predict</Text>
                 </Button>
             </FooterTab>
         </Footer>
@@ -59,6 +59,12 @@ const styles = {
     flex:1,
     flexDirection: 'column',
     alignItems:'center'
+  },
+  footerTab: {
+    backgroundColor:'#D9534F'
+  },
+  footerText: {
+    color: 'white', fontSize: 18
   }
 }
 export default PredictDiseaseStepEnd;
