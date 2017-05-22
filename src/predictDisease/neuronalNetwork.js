@@ -73,22 +73,130 @@ class NeuronalNetwork {
 	 * @return returneaza probabilitatea 
 	 */
   predict(inValues) {
-    let rez = this.forwardPropagation(inValues);
+  
+    
+    let data = this.normalization(inValues);
+    let rez = this.forwardPropagation(data);
     let outputs = rez.outputs;
     let maxPoz = 0;
-    let sum = 0;
+    let sum = 0.0;
     for (let i = 0; i < outputs.length; i++) {
       sum += outputs[i];
       if (outputs[i] > outputs[maxPoz]) {
         maxPoz = i;
       }
     }
+    
+    let ret = 0.0;
+    if(maxPoz == 1) {
+      ret = outputs[maxPoz];
+    }else{
+      ret = (1 - outputs[maxPoz]);
+    }
 
-    return outputs[maxPoz]/sum;
+    return ret;
+  }
+  normalization(inValues){
+    
+    let ageMin = 18.0;
+    let ageMax = 77.0;
+    //let ageFrequent = 60.0;
+	
+  // (M=1)(F=0) min 0 max 1
+    let genderMin = 0.0;
+    let genderMax = 1.0;
+    //let genderFrequent = 1.0;
+	
+	// --Value 1:typical angina
+	// --Value 2: atypical anginal
+	// --Value 3: non-anginal pain
+	// --Value 4: asymptotic
+	// min 1 max 4 . 4 type
+    let chestPainTypeMin = 1.0;
+    let chestPainTypeMax = 4.0;
+    //let chestPainTypeFrequent = 4.0;
+
+	// min 94 and max 200 real
+    let restingBloodPressureMin = 90.0;
+    let restingBloodPressureMax = 200.0;
+    //let restingBloodPressureFrequent = 130.0;
+	
+
+    let cholesterolMin = 120.0;
+    let cholesterolMax = 570.0;
+    //let cholesterolFrequent = 210.0;
+	
+	// (fasting blood sugar > 120 mg/dl) (1 = true; 0 = false)
+    let fastingBloodSugarMin = 0;
+    let fastingBloodSugarMax = 1;
+    //let fastingBloodSugarFrequent = 0;
+	
+  // --Value 0: normal
+	// --Value 1:having ST-T wave abnormality (T wave inversions and/or ST)
+	// --Value 2:showing probable or definite left ventricular Hypertrophy by
+	// Estes’ criteria
+	// EGG min 0 max 2
+    let restingECGMin = 0;
+    let restingECGMax = 2;
+    //let restingECGFrequent = 0;
+	
+  // 40 - 200 bpm min 71 and max 202
+    let maximumHeartRateMin = 70.0;
+    let maximumHeartRateMax = 200.0;
+    //let maximumHeartRateFrequent = 155.0;
+
+	// (1=yes;0=no)
+    let exerciseInducedAnginaMin = 0.0;
+    let exerciseInducedAnginaMax = 1.0;
+    //let exerciseInducedAnginaFrequent = 0.0;
+	
+    let oldPeakMin = 0.0;
+    let oldPeakMax = 6.2;
+    //let oldPeakFrequent = 0.3;
+	
+  // --Value 1: up sloping
+	// --Value 2: flat
+	// --Value 3:down sloping
+	// min 1 max 3
+    let slopMin = 1.0;
+    let slopMax = 3.0;
+    //let slopFrequent = 1;
+	
+  // --(0-3) min 0 , max 3
+    let numberOfVesselsColoredMin = 0.0;
+    let numberOfVesselsColoredMax = 3.0;
+    //let numberOfVesselsColoredFrequent = 0.0;
+	
+	// Normal, fixed defect, reversible defect --3,6,7
+    let thalMin = 3.0;
+    let thalMax = 7.0;
+    //let thalFrequent = 3.0;
+	
+    let max = [ageMax,genderMax, chestPainTypeMax,
+      restingBloodPressureMax, cholesterolMax, fastingBloodSugarMax,
+      restingECGMax, maximumHeartRateMax, exerciseInducedAnginaMax,
+      oldPeakMax, slopMax, numberOfVesselsColoredMax, thalMax];
+    let min = [ageMin,genderMin, chestPainTypeMin,
+      restingBloodPressureMin, cholesterolMin, fastingBloodSugarMin,
+      restingECGMin, maximumHeartRateMin, exerciseInducedAnginaMin,
+      oldPeakMin, slopMin, numberOfVesselsColoredMin, thalMin ];
+		
+    // normalizam datele
+
+    for (let j = 0; j < inValues.length; j++) {
+      let aux = max[j] - min[j];
+      inValues[j] = (inValues[j] - min[j]) / aux;	
+    }
+    return inValues;
+
   }
 
   doTest() {
-    let inValues = [63.0,1.0,1.0,145.0,233.0,1.0,2.0,150.0,0.0,2.3,3.0,0.0,6.0];
+    let inValues = [65.0, 0.0, 3.0, 155.0, 269.0, 0.0, 0.0, 148.0, 0.0, 0.8, 1.0, 0.0, 3.0];
+    //let inValues = [65.0, 0.0, 3.0, 155.0, 269.0, 0.0, 0.0, 148.0, 0.0, 0.8, 1.0, 0.0, 3.0]; //predicted 0
+    //let inValues = [46.0, 1.0, 3.0, 150.0, 231.0, 0.0, 0.0, 147.0, 0.0, 3.6, 2.0, 0.0, 3.0] // predicted 1
+   
+    inValues = this.normalization(inValues);
     let ret = this.predict(inValues);
     return ret;
   }

@@ -121,6 +121,7 @@ export default (state = INITIAL_STATE, action) => {
             
       const netw = new NeuronalNetwork();
       predicted.value = netw.predict(action.payload.predictArray).toString().substring(2,4);
+      if(predicted.value == '00') predicted.value = '0';
             
       return {...state, predictedProgress: false, predicted };
     }
