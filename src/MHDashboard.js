@@ -26,6 +26,13 @@ class MHDashboard extends Component {
               </Body>
           </Header>
           <Tabs tabBarUnderlineStyle={redTheme.headerTab.underline} >
+            <Tab heading="Predict Disease" 
+            tabStyle={redTheme.headerTab.content} textStyle={redTheme.headerTab.text} 
+            activeTabStyle={redTheme.headerTab.activeContent} 
+            activeTextStyle={redTheme.headerTab.activeText} >
+              <PredictDiseaseContainer />
+            </Tab>
+
             <Tab heading="Heart Rate" 
              tabStyle={redTheme.headerTab.content} textStyle={redTheme.headerTab.text} 
             activeTabStyle={redTheme.headerTab.activeContent} 
@@ -33,13 +40,7 @@ class MHDashboard extends Component {
               <HeartRateContainer />
             </Tab>
         
-            <Tab heading="Predict Disease" 
-            tabStyle={redTheme.headerTab.content} textStyle={redTheme.headerTab.text} 
-            activeTabStyle={redTheme.headerTab.activeContent} 
-            activeTextStyle={redTheme.headerTab.activeText} >
             
-              <PredictDiseaseContainer />
-            </Tab>
           </Tabs>
           
         </Container>
