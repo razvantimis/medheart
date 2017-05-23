@@ -47,6 +47,6 @@ export default {
   },
   footerTabText: {
     color: 'white',
-    fontSize: 14
+    fontSize: 16
   }  
 }
