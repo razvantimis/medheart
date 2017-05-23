@@ -10,7 +10,17 @@ a) pagina de cautare divies
 b) pagina unde sa face pair si auth
 c) pagina cu pulsul ( asta ramana cat timp nu te deconectez altfel se reia de la primul pas)
 
-## Heart Rate 
+## Build app 
+
+#IOS
+react-native bundle --entry-file index.ios.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios
+
+
+# Android
+
+cd android && ./gradlew assembleRelease
+or
+react-native run-android --variant=release  for testing
 
 # Mi Band 2 authentication has three steps.
  
