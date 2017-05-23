@@ -44,7 +44,9 @@ class PredictDiseaseStepEnd extends Component {
                   <CardItem>
                     <Body>
                       <Text style={{fontSize:18}}>
-                         Afectiunile cardiace sunt foarte rasmandite, aveti sanse sa faceti o boala de inima, va rog sa consultati un medic  
+                         Procentajul de mai sus reprezinta gradul de risc de a avea o problema cardiaca, 
+                         gradul de risk este corect daca informatile introduse sunt corect,
+                        va rog sa consultati un medic. 
                       </Text>
                     </Body>
                   </CardItem>
@@ -72,7 +74,7 @@ PredictDiseaseStepEnd.propTypes = {
 const styles = {
   content: {
     marginTop: 25,
-    marginBottom: 20,
+    marginBottom: 10,
     justifyContent: 'center',
     flex:1,
     flexDirection: 'column',
