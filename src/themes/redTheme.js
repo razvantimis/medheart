@@ -1,6 +1,6 @@
 
 const primaryColor = '#B71C1C';
-const secondColor = '#D9534F';
+const secondColor = '#dd2421';
 
 export default {
   primaryColor,

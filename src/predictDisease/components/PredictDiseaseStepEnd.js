@@ -14,6 +14,7 @@ import {
 } from 'native-base';
 
 import Heart from './Heart';
+import redTheme from '../../themes/redTheme';
 
 class PredictDiseaseStepEnd extends Component {
   componentWillMount(){
@@ -53,9 +54,9 @@ class PredictDiseaseStepEnd extends Component {
                 </Card>
             </Content>
             <Footer>
-            <FooterTab style={styles.footerTab}>
+            <FooterTab style={redTheme.footerTab}>
                 <Button onPress={()=> resetPredict()}>  
-                    <Text style={styles.footerText}>Reset Predict</Text>
+                    <Text style={redTheme.footerTabText}>Reset Predict</Text>
                 </Button>
             </FooterTab>
         </Footer>
@@ -79,12 +80,6 @@ const styles = {
     flex:1,
     flexDirection: 'column',
     alignItems:'center'
-  },
-  footerTab: {
-    backgroundColor:'#D9534F'
-  },
-  footerText: {
-    color: 'white', fontSize: 18
   }
 }
 export default PredictDiseaseStepEnd;
