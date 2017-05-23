@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Container, 
         Header,
         Title,
@@ -11,6 +10,7 @@ import { HeartRateContainer } from './heartRate';
 
 import { PredictDiseaseContainer } from './predictDisease';
 
+import redTheme from './themes/redTheme';
 
 class MHDashboard extends Component {
   constructor(props){
@@ -19,24 +19,24 @@ class MHDashboard extends Component {
 
   render() {
     return (
-        <Container >
-          <Header hasTabs style={style.header}>
+        <Container>
+          <Header hasTabs androidStatusBarColor={redTheme.primaryColor} style={redTheme.header}>
               <Body>
-                  <Title style={style.headerTitle} >MedHeart</Title>
+                  <Title style={redTheme.headerTitle} >MedHeart</Title>
               </Body>
           </Header>
-          <Tabs tabBarUnderlineStyle={style.tab.underline} >
+          <Tabs tabBarUnderlineStyle={redTheme.headerTab.underline} >
             <Tab heading="Heart Rate" 
-             tabStyle={style.tab.content} textStyle={style.tab.text} 
-            activeTabStyle={style.tab.activeContent} 
-            activeTextStyle={style.tab.activeText} >
+             tabStyle={redTheme.headerTab.content} textStyle={redTheme.headerTab.text} 
+            activeTabStyle={redTheme.headerTab.activeContent} 
+            activeTextStyle={redTheme.headerTab.activeText} >
               <HeartRateContainer />
             </Tab>
         
             <Tab heading="Predict Disease" 
-            tabStyle={style.tab.content} textStyle={style.tab.text} 
-            activeTabStyle={style.tab.activeContent} 
-            activeTextStyle={style.tab.activeText} >
+            tabStyle={redTheme.headerTab.content} textStyle={redTheme.headerTab.text} 
+            activeTabStyle={redTheme.headerTab.activeContent} 
+            activeTextStyle={redTheme.headerTab.activeText} >
             
               <PredictDiseaseContainer />
             </Tab>
@@ -47,40 +47,5 @@ class MHDashboard extends Component {
   }
 }
 
-const style = {
-  headerTitle: {
-    color:'#fff'
-  },
-  header : {
-    backgroundColor:'#B71C1C',
 
-  },
-  tab: {
-    underline: {
-      borderBottomWidth:2.3,
-      borderColor:'#fff',
-      bottom: 0.7,
-      backgroundColor: '#B71C1C'
-    },
-    content: {
-      backgroundColor:'#B71C1C',
-    },
-    activeContent: {
-      backgroundColor: '#B71C1C'
-    },
-    text: {
-      fontWeight: '600',
-      color: '#fff'
-    },
-    activeText: {
-      color: '#fff',
-      fontWeight: '700'
-    }
-   
-  }
-}
-
-export default connect(
-  state => ({}),
-  {})
-(MHDashboard);
+export default MHDashboard;

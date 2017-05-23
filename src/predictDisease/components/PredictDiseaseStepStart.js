@@ -11,7 +11,7 @@ import {
     Footer,
     FooterTab,
     Button } from 'native-base';
-
+import redTheme from '../../themes/redTheme';
 
 class PredictDiseaseStepStart extends Component {
 
@@ -117,9 +117,9 @@ class PredictDiseaseStepStart extends Component {
                     </List>
                 </Content>
                 <Footer>
-                    <FooterTab style={{backgroundColor:'#D9534F'}}>
+                    <FooterTab style={redTheme.footerTab}>
                        <Button onPress={()=> nextStep()} >  
-                            <Text style={{color: 'white', fontSize: 18}} >Next</Text>
+                            <Text style={redTheme.footerTabText} >Next</Text>
                         </Button>
                     </FooterTab>
                 </Footer>
@@ -134,7 +134,6 @@ const style = {
   picker: {
     width
   }
-   
 };
 
 PredictDiseaseStepStart.propTypes = {

@@ -11,7 +11,7 @@ import {
 } from 'native-base';
 
 import ScannedDeviceView from './ScannedDeviceView';
-
+import redTheme from '../../themes/redTheme';
 
 class ScannedDevices extends Component {
   constructor(props) {
@@ -34,16 +34,18 @@ class ScannedDevices extends Component {
             renderRow={this._renderScannedDeviceCell.bind(this)} />
         </Content>
         <Footer>
-          <FooterTab>
+          <FooterTab style={redTheme.footerTab}>
             <Button
+              style={this.props.scanning? redTheme.footerTabButtonActive : redTheme.footerTabButton}
               active={this.props.scanning}
               onPress={this.props.startScan}>
-              <Text>Scann</Text>
+              <Text style={redTheme.footerTabText}>Scann</Text>
             </Button>
             <Button
+              style={!this.props.scanning? redTheme.footerTabButtonActive : redTheme.footerTabButton}
               onPress={this.props.stopScan}
               active={!this.props.scanning}>
-              <Text>Stop</Text>
+              <Text style={redTheme.footerTabText}>Stop</Text>
             </Button>
           </FooterTab>
         </Footer>

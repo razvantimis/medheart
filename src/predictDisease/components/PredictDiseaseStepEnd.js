@@ -7,7 +7,10 @@ import {
     Spinner,
     Footer,
     FooterTab,
-    Button
+    Button,
+    Card,
+    CardItem,
+    Body
 } from 'native-base';
 
 import Heart from './Heart';
@@ -23,17 +26,29 @@ class PredictDiseaseStepEnd extends Component {
     if (predictedProgress) {
       contentPredict =  <Spinner color='red'></Spinner> ;
     } else {
-      contentPredict = (<View style={styles.content}>
-                <Text> Aveti probleme de inima {predicted.value} </Text>
-                <Heart precent={predicted.value} scale={11}/>
-                <Text>In data de {predicted.data.getDate()}/{predicted.data.getMonth()}/{predicted.data.getYear()} </Text>
-                </View>);
+      contentPredict = (
+              <View style={styles.content}>
+                <Text style={{fontSize:20}}>Diagnosticat in data de {predicted.data.getDate()}/{predicted.data.getMonth()}/{predicted.data.getYear()}</Text>
+                <Heart style={{marginTop:10}} precent={predicted.value} scale={10}/>
+              </View>);
     }
 
     return (
         <Container>
             <Content>
                 { contentPredict }
+                <Card>
+                  <CardItem header>
+                      <Text style={{fontSize:22}}>Informati Utile</Text>
+                  </CardItem>
+                  <CardItem>
+                    <Body>
+                      <Text style={{fontSize:18}}>
+                         Afectiunile cardiace sunt foarte rasmandite, aveti sanse sa faceti o boala de inima, va rog sa consultati un medic  
+                      </Text>
+                    </Body>
+                  </CardItem>
+                </Card>
             </Content>
             <Footer>
             <FooterTab style={styles.footerTab}>
@@ -53,8 +68,11 @@ PredictDiseaseStepEnd.propTypes = {
   onPredicting: PropTypes.func.isRequired
 
 }
+
 const styles = {
   content: {
+    marginTop: 25,
+    marginBottom: 20,
     justifyContent: 'center',
     flex:1,
     flexDirection: 'column',

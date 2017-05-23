@@ -12,11 +12,9 @@ class Heart extends Component {
       heart: {
         width: 20*scale,
         height: 20*scale,
-        flex:1,
         flexDirection:'row',
         alignItems:'center',
         justifyContent:'center'
-   
       },
       heartShape: {
         width: 12*scale,

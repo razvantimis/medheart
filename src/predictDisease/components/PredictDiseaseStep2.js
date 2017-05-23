@@ -11,6 +11,7 @@ import {
     Footer,
     FooterTab,
     Button } from 'native-base';
+import redTheme from '../../themes/redTheme';
 
 class PredictDiseaseStep2 extends Component {
   render() {
@@ -104,13 +105,13 @@ class PredictDiseaseStep2 extends Component {
                       </List>
                 </Content>
                   <Footer>
-                    <FooterTab style={{backgroundColor:'#D9534F'}}>
+                    <FooterTab style={redTheme.footerTab}>
                         <Button onPress={()=> prevStep()}>  
-                            <Text style={{color: 'white', fontSize: 18}}>Prev</Text>
+                            <Text style={redTheme.footerTabText}>Prev</Text>
                         </Button>
                         
                         <Button onPress={()=> nextStep()}>  
-                            <Text style={{color: 'white', fontSize: 18}}>Finish</Text>
+                            <Text style={redTheme.footerTabText}>Finish</Text>
                         </Button>
                     </FooterTab>
                 </Footer>
