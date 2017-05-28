@@ -37,7 +37,7 @@ export default {
   },
   // footer
   footerTab: {
-    backgroundColor: secondColor,
+    backgroundColor: primaryColor,
   },
   footerTabButtonActive: {
     backgroundColor: '#c63835',
@@ -48,5 +48,16 @@ export default {
   footerTabText: {
     color: 'white',
     fontSize: 16
-  }  
+  } , 
+  // error component
+  errorComponent: {
+    container: {
+      padding: 20,
+      backgroundColor: primaryColor,
+    },
+    message: {
+      color: 'white',
+      fontWeight: 'bold'
+    }
+  }
 }
