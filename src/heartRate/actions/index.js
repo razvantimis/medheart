@@ -118,3 +118,17 @@ export function completeTransaction(transactionId) {
     transactionId
   }
 }
+
+export function changeAuth(auth){
+  return {
+    type: types.CHANGE_AUTH,
+    payload: { auth }
+  }
+}
+
+export function incrementTryDisconected(){
+  return {
+    type: types.INCREMENT_TRY_DISCONNECTED,
+    payload: {  }
+  }
+}

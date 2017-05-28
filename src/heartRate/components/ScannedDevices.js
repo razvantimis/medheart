@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-
 import {
   Container,
   Content,
@@ -12,6 +11,7 @@ import {
 
 import ScannedDeviceView from './ScannedDeviceView';
 import redTheme from '../../themes/redTheme';
+import ErrorComponent from '../components/ErrorComponent';
 
 class ScannedDevices extends Component {
   constructor(props) {
@@ -27,8 +27,10 @@ class ScannedDevices extends Component {
 
   render() {
     return (
+
       <Container>
         <Content>
+          <ErrorComponent />
           <List
             dataArray={this.props.devices}
             renderRow={this._renderScannedDeviceCell.bind(this)} />

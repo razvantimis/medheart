@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import { TouchableOpacity } from 'react-native';
 
 import { ListItem, 
