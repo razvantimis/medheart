@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { View, Text } from 'react-native';
-
+import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import {
     Container,
     Content,
@@ -15,13 +16,15 @@ import {
 
 import Heart from '../../components/common/Heart';
 import redTheme from '../../themes/redTheme';
-
-class PredictDiseaseStepEnd extends Component {
+import {
+    resetPredict,
+    onPredicting
+} from '../../actions/predictDiseaseActions'
+class PredictDiseaseStep3 extends Component {
   componentWillMount(){
     this.props.onPredicting();
   }
   render() {
-    
     const { predictedProgress, predicted, resetPredict } = this.props;
     let contentPredict ;
     if (predictedProgress) {
@@ -54,17 +57,17 @@ class PredictDiseaseStepEnd extends Component {
                 </Card>
             </Content>
             <Footer>
-            <FooterTab style={redTheme.footerTab}>
-                <Button onPress={()=> resetPredict()}>  
-                    <Text style={redTheme.footerTabText}>Reset Predict</Text>
-                </Button>
-            </FooterTab>
-        </Footer>
+              <FooterTab style={redTheme.footerTab}>
+                  <Button onPress={()=>{ resetPredict(); Actions.step1() }}>  
+                      <Text style={redTheme.footerTabText}>Reset Predict</Text>
+                  </Button>
+              </FooterTab>
+            </Footer>
         </Container>
     );
   }
 }
-PredictDiseaseStepEnd.propTypes = {
+PredictDiseaseStep3.propTypes = {
   predictedProgress: PropTypes.bool.isRequired,
   predicted: PropTypes.object.isRequired,
   resetPredict: PropTypes.func.isRequired,
@@ -82,4 +85,13 @@ const styles = {
     alignItems:'center'
   }
 }
-export default PredictDiseaseStepEnd;
+const mapStateToProps = (state) => {
+    return { predictedProgress: state.predictDisease.predictedProgress,
+      predicted: state.predictDisease.predicted
+      }
+}
+
+export default connect(mapStateToProps, {
+  onPredicting,
+  resetPredict
+})(PredictDiseaseStep3);

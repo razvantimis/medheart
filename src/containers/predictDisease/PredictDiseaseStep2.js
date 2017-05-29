@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Text, Dimensions } from 'react-native';
+import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
 import { 
     Container,
     Content, 
@@ -12,6 +14,17 @@ import {
     FooterTab,
     Button } from 'native-base';
 import redTheme from '../../themes/redTheme';
+
+
+import {
+    onChangeMaximumHeartRate,
+    onChangeExerciseInducedAngina,
+    onChangeOldPeak,
+    onChangeSlop,
+    onChangeNumberOfVesselsColored,
+    onChangeThal,
+    onChangeRestingECG
+} from '../../actions/predictDiseaseActions'
 
 class PredictDiseaseStep2 extends Component {
   render() {
@@ -103,14 +116,15 @@ class PredictDiseaseStep2 extends Component {
                         </ListItem>
                       
                       </List>
+                      
                 </Content>
-                  <Footer>
+                <Footer>
                     <FooterTab style={redTheme.footerTab}>
-                        <Button onPress={()=> prevStep()}>  
+                        <Button onPress={()=> Actions.step1()}>  
                             <Text style={redTheme.footerTabText}>Prev</Text>
                         </Button>
                         
-                        <Button onPress={()=> nextStep()}>  
+                        <Button onPress={()=> Actions.step3({initial: true})}>  
                             <Text style={redTheme.footerTabText}>Finish</Text>
                         </Button>
                     </FooterTab>
@@ -139,8 +153,28 @@ PredictDiseaseStep2.propTypes = {
   numberOfVesselsColored: PropTypes.string.isRequired,
   onChangeNumberOfVesselsColored: PropTypes.func.isRequired,
   thal: PropTypes.string.isRequired,
-  onChangeThal:  PropTypes.func.isRequired,
-  nextStep: PropTypes.func.isRequired,
-  prevStep: PropTypes.func.isRequired
+  onChangeThal:  PropTypes.func.isRequired
 }
-export default PredictDiseaseStep2;
+
+const mapStateToProps = (state) => {
+    return {
+        maximumHeartRate: state.predictDisease.predict.maximumHeartRate,
+        exerciseInducedAngina: state.predictDisease.predict.exerciseInducedAngina,
+        oldPeak: state.predictDisease.predict.oldPeak,
+        slop: state.predictDisease.predict.slop,
+        numberOfVesselsColored: state.predictDisease.predict.numberOfVesselsColored,
+        thal: state.predictDisease.predict.thal,
+        restingECG: state.predictDisease.predict.restingECG,
+    }
+}
+
+
+export default connect(mapStateToProps, {
+    onChangeMaximumHeartRate,
+    onChangeExerciseInducedAngina,
+    onChangeOldPeak,
+    onChangeSlop,
+    onChangeNumberOfVesselsColored,
+    onChangeThal,
+    onChangeRestingECG
+})(PredictDiseaseStep2);

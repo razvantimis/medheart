@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Text, Dimensions } from 'react-native';
+import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import { 
     Container,
     Content, 
@@ -11,9 +13,20 @@ import {
     Footer,
     FooterTab,
     Button } from 'native-base';
+
+import {
+    onChangeChestPainType,
+    onChangeGender,
+    onChangeAge,
+    onChangeRestingBloodPressure,
+    onChangeCholesterol,
+    onChangeFastingBloodSugar,
+    onChangeRestingECG
+} from '../../actions/predictDiseaseActions'
+
 import redTheme from '../../themes/redTheme';
 
-class PredictDiseaseStepStart extends Component {
+class PredictDiseaseStep1 extends Component {
 
   render() {
     const { chestPainType, onChangeChestPainType,
@@ -111,20 +124,17 @@ class PredictDiseaseStepStart extends Component {
                                 <Picker.Item label='Definite left ventricular Hypertrophy' value='3' />
                             </Picker>
                         </ListItem>
-                        
-                        
-                       
                     </List>
+                    
                 </Content>
                 <Footer>
-                    <FooterTab style={redTheme.footerTab}>
-                       <Button onPress={()=> nextStep()} >  
-                            <Text style={redTheme.footerTabText} >Next</Text>
-                        </Button>
-                    </FooterTab>
-                </Footer>
+              <FooterTab style={redTheme.footerTab}>
+                <Button onPress={()=> Actions.step2()} full >  
+                    <Text style={redTheme.footerTabText} >Next</Text>
+                </Button>
+              </FooterTab>
+            </Footer>
             </Container>
-            
     );
   }
 }
@@ -136,7 +146,7 @@ const style = {
   }
 };
 
-PredictDiseaseStepStart.propTypes = {
+PredictDiseaseStep1.propTypes = {
   chestPainType: PropTypes.string.isRequired,
   onChangeChestPainType: PropTypes.func.isRequired,
   gender: PropTypes.string.isRequired,
@@ -150,8 +160,28 @@ PredictDiseaseStepStart.propTypes = {
   fastingBloodSugar: PropTypes.string,
   onChangeFastingBloodSugar: PropTypes.func.isRequired,
   restingECG: PropTypes.string.isRequired,
-  onChangeRestingECG: PropTypes.func.isRequired,
-  nextStep: PropTypes.func.isRequired
+  onChangeRestingECG: PropTypes.func.isRequired
 }
 
-export default PredictDiseaseStepStart;
+
+const mapStateToProps = (state) => {
+    return { 
+        chestPainType: state.predictDisease.predict.chestPainType,
+        gender: state.predictDisease.predict.gender,
+        age: state.predictDisease.predict.age,
+        restingBloodPressure: state.predictDisease.predict.restingBloodPressure,
+        cholesterol: state.predictDisease.predict.cholesterol,
+        fastingBloodSugar: state.predictDisease.predict.fastingBloodSugar,
+        restingECG: state.predictDisease.predict.restingECG,
+      }
+}
+
+export default connect(mapStateToProps, {
+    onChangeChestPainType,
+    onChangeGender,
+    onChangeAge,
+    onChangeRestingBloodPressure,
+    onChangeCholesterol,
+    onChangeFastingBloodSugar,
+    onChangeRestingECG
+})(PredictDiseaseStep1);
