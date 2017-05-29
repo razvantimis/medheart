@@ -13,7 +13,7 @@ import {
     Body
 } from 'native-base';
 
-import Heart from '../../common/Heart';
+import Heart from '../../components/common/Heart';
 import redTheme from '../../themes/redTheme';
 
 class PredictDiseaseStepEnd extends Component {

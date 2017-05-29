@@ -11,7 +11,7 @@ import { BleManager } from 'react-native-ble-plx';
 import * as consts from '../constants';
 import base from 'base64-js';
 
-import Heart from '../../common/Heart';
+import Heart from '../../components/common/Heart';
 import * as types from '../actions/types';
 
 class MonitoringHeart extends Component {
