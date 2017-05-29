@@ -72,11 +72,11 @@ const UUID_CHARACTERISTIC_HEART_RATE_CONTROL_POINT = BASE_UUID.replace('%s','2A3
 const UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT = BASE_UUID.replace('%s', '2A37');
 
 const COMMAND_SET_HR_MANUAL =  0x2;
-const COMMAND_SET__HR_CONTINUOUS = 0x1;
-const startHeartMeasurementManual = [0x15, COMMAND_SET_HR_MANUAL, 1, 0, 1];
+const COMMAND_SET_HR_CONTINUOUS = 0x1;
+const startHeartMeasurementManual = [0x15, COMMAND_SET_HR_MANUAL, 1 ];
 const stopHeartMeasurementManual = [0x15, COMMAND_SET_HR_MANUAL, 0];
-const startHeartMeasurementContinuous = [0x15, COMMAND_SET__HR_CONTINUOUS, 1];
-const stopHeartMeasurementContinuous = [0x15, COMMAND_SET__HR_CONTINUOUS, 0];
+const startHeartMeasurementContinuous = [0x15, COMMAND_SET_HR_CONTINUOUS, 1];
+const stopHeartMeasurementContinuous = [0x15, COMMAND_SET_HR_CONTINUOUS, 0];
 
 // other
 const UUID_CHARACTERISTIC_SERIAL_NUMBER_STRING = BASE_UUID.replace('%s', '2A25');

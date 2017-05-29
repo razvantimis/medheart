@@ -17,15 +17,37 @@ class HeartRateContainer extends Component {
   }
 
   render() {
-    const { devices, scanning, startScan, stopScan, changeDeviceState, deviceState, deviceIdentifier, writeCharacteristic } = this.props;
+    const { devices, scanning, startScan, stopScan, changeDeviceState, scene, deviceIdentifier, writeCharacteristic, changeScene, deviceState, heartRate, updateHeartRate } = this.props;
     
-    switch(deviceState){
+    switch(scene){
     case types.SCANNER_DECIVES:
-      return <ScannedDevices state={types.DEVICE_STATE_CONNECT} devices={devices} scanning={scanning} startScan={startScan} stopScan={stopScan} changeDeviceState={changeDeviceState}/>;
-    case types.PARINING_DEVICE:
-      return <PairingDevice />
+      return <ScannedDevices 
+            nextDeviceState={types.DEVICE_STATE_CONNECT} 
+            devices={devices} 
+            scanning={scanning} 
+            startScan={startScan} 
+            stopScan={stopScan} 
+            changeDeviceState={changeDeviceState}
+            changeScene={changeScene}
+            scene={types.PAIRING_DEVICE}/>;
+    case types.PAIRING_DEVICE:
+      return <PairingDevice 
+              deviceState={deviceState} 
+              deviceFinalStep={types.DEVICE_STATE_AUTH_SUCCES}
+              deviceDisconectedStep={types.DEVICE_STATE_DISCONNECTED}
+              changeScene={changeScene}
+              nextScene={types.HEART_RATE_DASHBOARD} 
+              prevScene={types.SCANNER_DECIVES} />
     case types.HEART_RATE_DASHBOARD:
-      return <MonitoringHeart />
+      return <MonitoringHeart
+              deviceState={deviceState} 
+              prevScene={types.PAIRING_DEVICE}
+              changeScene={changeScene}
+              changeDeviceState={changeDeviceState}
+              selectedDeviceId={deviceIdentifier}
+              heartRate={heartRate}
+              updateHeartRate={updateHeartRate}
+               />
     default:
       return (<ScannedDevices state={types.DEVICE_STATE_CONNECT} devices={devices} scanning={scanning} startScan={startScan} stopScan={stopScan} changeDeviceState={changeDeviceState}/> );
   
@@ -39,11 +61,15 @@ export default connect(
     devices: state.ble.devices,
     deviceIdentifier: state.ble.deviceIdentifier,
     scanning: state.ble.scanning,
-    deviceState: state.heartRate.state
+    scene: state.heartRate.scene,
+    deviceState: state.ble.state,
+    heartRate: state.heartRate.heartRate
   }),
   {
     startScan: actions.startScan,
     stopScan: actions.stopScan,
     changeDeviceState: actions.changeDeviceState,
-    writeCharacteristic: actions.writeCharacteristic
+    writeCharacteristic: actions.writeCharacteristic,
+    changeScene: actions.changeScene,
+    updateHeartRate: actions.updateHeartRate
   })(HeartRateContainer);

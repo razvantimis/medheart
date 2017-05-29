@@ -1,5 +1,7 @@
 import * as types from './types';
 
+const ACTION = (type, payload) => { type, payload };
+
 export function startScan() {
   return {
     type: types.START_SCAN
@@ -127,8 +129,18 @@ export function changeAuth(auth){
 }
 
 export function incrementTryDisconected(){
+  return ACTION(types.INCREMENT_TRY_DISCONNECTED, null);
+}
+export function changeScene(scene){
   return {
-    type: types.INCREMENT_TRY_DISCONNECTED,
-    payload: {  }
+    type: types.CHANGE_SCENE,
+    payload: { scene }
   }
 }
+export function updateHeartRate(heartRate){
+  return {
+    type: types.UPDATE_HEART_RATE,
+    payload: { heartRate }
+  }
+}
+

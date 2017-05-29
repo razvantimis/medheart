@@ -3,11 +3,11 @@ import { View, Text } from 'react-native';
 class Heart extends Component {
   static propTypes = {
     style: PropTypes.object,
-    precent: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
     scale: PropTypes.number.isRequired
   }
   render(){
-    const {precent, scale } = this.props
+    const {value, scale } = this.props
     const styles = {
       heart: {
         width: 20*scale,
@@ -52,7 +52,7 @@ class Heart extends Component {
     <View {...this.props} style={[styles.heart, this.props.style]}>
         <View style={[styles.leftHeart, styles.heartShape]} />
         <View style={[styles.rightHeart, styles.heartShape]} />
-        <Text style={styles.text}>{precent}%</Text>
+        <Text style={styles.text}>{value}</Text>
     </View>
     );
   }

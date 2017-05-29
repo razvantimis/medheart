@@ -95,8 +95,19 @@ class BleService extends Component {
           } else if (data[0] == consts.AUTH_RESPONSE && data[1] == consts.AUTH_REQUEST_RANDOM_AUTH_NUMBER && data[2] == consts.AUTH_SUCCESS){
             // sending the encrypted random key to the band with 2 action
             console.log('sending the encrypted random key to the band with 2 action');
-            console.log('['+data.toString()+']');
-            CipherModule.handleAESAuth('['+data.toString()+']', JSON.stringify(consts.SECRET_KEY),
+            
+
+            let rezultat = '[';
+            for(let i= 0; i < data.byteLength; i++)
+            {
+              if( i > 0 )
+                rezultat += ', ';
+              rezultat += data[i];
+            }
+            rezultat += ']';
+            
+
+            CipherModule.handleAESAuth(rezultat, JSON.stringify(consts.SECRET_KEY),
             (status) => {
               let eValue = new Uint8Array(JSON.parse(status));
               let send = new Uint8Array([ consts.AUTH_SEND_ENCRYPTED_AUTH_NUMBER, consts.AUTH_BYTE, ...eValue ]);
@@ -113,7 +124,7 @@ class BleService extends Component {
             });
           } else if (data[0] == consts.AUTH_RESPONSE && data[1] == consts.AUTH_SEND_ENCRYPTED_AUTH_NUMBER && data[2] == consts.AUTH_SUCCESS){
             console.log('Succes auth');
-            newProps.changeDeviceState(newProps.selectedDeviceId, types.HEART_RATE_MEASURE);
+            newProps.changeDeviceState(newProps.selectedDeviceId, types.DEVICE_STATE_AUTH_SUCCES);
             newProps.changeAuth(false);
           } else if (data[0] == consts.AUTH_RESPONSE && data[1] == consts.AUTH_SEND_ENCRYPTED_AUTH_NUMBER && data[2] == consts.AUTH_FAIL){
             console.log('Auth faild');
@@ -147,10 +158,6 @@ class BleService extends Component {
     }
     case types.START_HEART_RATE_MONITORING: {
       
-    }
-    case types.HEART_RATE_MEASURE :{
-      this.heartRate();
-      break;
     }
     }
 
@@ -253,52 +260,13 @@ class BleService extends Component {
   handleHeartrate(value) {
     if (value.length == 2 && value[0] == 0) {
       let hrValue = (value[1] & 0xff);
-      return hrValue;
+      return hrValue
     } else {
-      return null;
+      return 0;
     }
   }
 
-  heartRate(){
-    let self = this;
-    this.heartMonitoring = this.manager.monitorCharacteristicForDevice(this.props.selectedDeviceId, consts.UUID_SERVICE_HEART_RATE, consts.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT, 
-      function(error, characteristic){
-        console.log(characteristic);
-        console.log(error);
-        let data = base.toByteArray(characteristic.value);
-        console.log(self.handleHeartrate(data))
-
-      }, '60');
-                
-    // let stopHeartMeasurementManual = base.fromByteArray(consts.stopHeartMeasurementManual)
-
-
-
-    // this.manager.writeCharacteristicWithoutResponseForDevice(this.props.selectedDeviceId, consts.UUID_SERVICE_HEART_RATE, consts.UUID_CHARACTERISTIC_HEART_RATE_CONTROL_POINT, stopHeartMeasurementManual,'63')
-    // .then((characteristic)=> {
-    //   console.log(characteristic );
-    //   let data = base.toByteArray(characteristic.value);
-    //   console.log(data);
-    // }).catch((err)=> console.log(err));
-
-    // let stopHeartMeasurementContinuous = base.fromByteArray(consts.stopHeartMeasurementContinuous)
-    // this.manager.writeCharacteristicWithoutResponseForDevice(this.props.selectedDeviceId, consts.UUID_SERVICE_HEART_RATE, consts.UUID_CHARACTERISTIC_HEART_RATE_CONTROL_POINT, stopHeartMeasurementContinuous,'61')
-    // .then((characteristic)=> {
-    //   console.log(characteristic );
-    //   let data = base.toByteArray(characteristic.value);
-    //   console.log(data);
-    // }).catch((err)=> console.log(err));
-
-    let startHeartMeasurementManual = base.fromByteArray(consts.startHeartMeasurementManual)
-    this.manager.writeCharacteristicWithoutResponseForDevice(this.props.selectedDeviceId, consts.UUID_SERVICE_HEART_RATE, consts.UUID_CHARACTERISTIC_HEART_RATE_CONTROL_POINT, startHeartMeasurementManual,'62')
-    .then((characteristic)=> {
-      console.log(characteristic );
-      let data = base.toByteArray(characteristic.value);
-      console.log(data);
-    }).catch((err)=> console.log(err));
-
-  }
-
+ 
   render(){
     return (<Text style={{display: 'none'}}> </Text>);
   }
@@ -392,5 +360,6 @@ export default connect(
     completeTransaction: actions.completeTransaction,
     pushError: actions.pushError,
     changeAuth: actions.changeAuth,
-    incrementTryDisconected: actions.incrementTryDisconected
+    incrementTryDisconected: actions.incrementTryDisconected,
+    updateHeartRate: actions.updateHeartRate
   })(BleService)

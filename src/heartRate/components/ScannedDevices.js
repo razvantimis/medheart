@@ -11,7 +11,7 @@ import {
 
 import ScannedDeviceView from './ScannedDeviceView';
 import redTheme from '../../themes/redTheme';
-import ErrorComponent from '../components/ErrorComponent';
+import ErrorComponent from '../container/ErrorComponent';
 
 class ScannedDevices extends Component {
   constructor(props) {
@@ -20,14 +20,14 @@ class ScannedDevices extends Component {
 
   _renderScannedDeviceCell(rowData) {
     const connectToDevice = () => {
-      this.props.changeDeviceState(rowData.id,this.props.state)
+      this.props.changeScene(this.props.scene);
+      this.props.changeDeviceState(rowData.id,this.props.nextDeviceState)
     }
     return <ScannedDeviceView name={rowData.name} id={rowData.id} rssi={rowData.rssi} onClick={connectToDevice} />;
   }
 
   render() {
     return (
-
       <Container>
         <Content>
           <ErrorComponent />
@@ -61,7 +61,9 @@ ScannedDevices.propTypes = {
   startScan: PropTypes.func.isRequired,
   stopScan: PropTypes.func.isRequired,
   changeDeviceState: PropTypes.func.isRequired,
-  state: PropTypes.string.isRequired
+  changeScene: PropTypes.func.isRequired,
+  nextDeviceState: PropTypes.string.isRequired,
+  scene: PropTypes.string.isRequired
 }
 
 

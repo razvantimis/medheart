@@ -30,7 +30,7 @@ class PredictDiseaseStepEnd extends Component {
       contentPredict = (
               <View style={styles.content}>
                 <Text style={{fontSize:20}}>Diagnosticat in data de {predicted.data.getDate()}/{predicted.data.getMonth()}/{predicted.data.getYear()}</Text>
-                <Heart style={{marginTop:10}} precent={predicted.value} scale={10}/>
+                <Heart style={{marginTop:10}} value={predicted.value+'%'} scale={10}/>
               </View>);
     }
 
