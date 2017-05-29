@@ -121,14 +121,16 @@ class PredictDiseaseContainer extends Component {
   }
 }
 
-export default connect(
-  state => ({
-    step: state.predictDisease.step,
-    predictedProgress: state.predictDisease.predictedProgress,
-    predict: state.predictDisease.predict,
-    predicted: state.predictDisease.predicted
-  }),
-  {
+const mapStateToProps = (state) => {
+    return { step: state.predictDisease.step,
+      predictedProgress: state.predictDisease.predictedProgress,
+      predict: state.predictDisease.predict,
+      predicted: state.predictDisease.predicted
+      }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
     onChangeChestPainType,
     onChangeGender,
     onChangeAge,
@@ -146,5 +148,7 @@ export default connect(
     nextStep,
     prevStep,
     resetPredict
-  })
-(PredictDiseaseContainer);
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PredictDiseaseContainer);
