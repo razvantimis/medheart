@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+/*import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
 
@@ -72,4 +72,4 @@ export default connect(
     writeCharacteristic: actions.writeCharacteristic,
     changeScene: actions.changeScene,
     updateHeartRate: actions.updateHeartRate
-  })(HeartRateContainer);
+  })(HeartRateContainer);*/

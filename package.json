@@ -9,6 +9,7 @@
   "dependencies": {
     "base64-js": "^1.2.0",
     "crypto-js": "^3.1.9-1",
+    "eslint-plugin-react-native": "^2.3.2",
     "lodash": "^4.17.4",
     "native-base": "^2.1.2",
     "react": "16.0.0-alpha.6",
@@ -16,6 +17,7 @@
     "react-native-ble-plx": "^0.4.0",
     "react-native-permissions": "^0.2.7",
     "react-native-router-flux": "^3.39.2",
+    "react-navigation": "^1.0.0-beta.11",
     "react-redux": "^5.0.3",
     "redux": "^3.6.0",
     "redux-logger": "^2.8.1",

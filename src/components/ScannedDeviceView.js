@@ -9,7 +9,7 @@ import { ListItem,
         Button,
         Thumbnail } from 'native-base';
 
-import images from '../../config/images'
+import images from '../config/images'
 
 const ScannedDeviceView = ({name, id, rssi, onClick}) => {
   return (

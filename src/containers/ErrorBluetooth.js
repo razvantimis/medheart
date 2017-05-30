@@ -2,8 +2,8 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import * as ble from '../actions';
-import redTheme from '../../themes/redTheme';
+import * as ble from '../actions/heartMonitor';
+import redTheme from '../themes/redTheme';
 class ErrorComponent extends Component {
   render() {
     const lastError = this.props.errorMessages[this.props.errorMessages.length-1]

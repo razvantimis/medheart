@@ -6,13 +6,13 @@ import { Container,
         Tabs,
         Tab } from 'native-base';
 
-import { HeartRateContainer } from './heartRate';
 
-import { PredictDiseaseContainer } from './predictDisease';
+import PredictDisease from './PredictDisease'
+import HeartMonitor from './HeartMonitor'
 
-import redTheme from './themes/redTheme';
+import redTheme from '../themes/redTheme';
 
-class MHDashboard extends Component {
+class DashboardScreen extends Component {
   constructor(props){
     super(props);
   }
@@ -30,23 +30,23 @@ class MHDashboard extends Component {
             tabStyle={redTheme.headerTab.content} textStyle={redTheme.headerTab.text} 
             activeTabStyle={redTheme.headerTab.activeContent} 
             activeTextStyle={redTheme.headerTab.activeText} >
-              <PredictDiseaseContainer />
+              <PredictDisease />
             </Tab>
 
             <Tab heading="Heart Rate" 
              tabStyle={redTheme.headerTab.content} textStyle={redTheme.headerTab.text} 
             activeTabStyle={redTheme.headerTab.activeContent} 
             activeTextStyle={redTheme.headerTab.activeText} >
-              <HeartRateContainer />
+              <HeartMonitor />
             </Tab>
-        
-            
           </Tabs>
           
         </Container>
     );
   }
 }
+DashboardScreen.navigationOptions = {
+  title: 'MedHeart'
+};
 
-
-export default MHDashboard;
+export default DashboardScreen;

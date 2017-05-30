@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Text, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
 import { 
     Container,
     Content, 
@@ -22,9 +21,9 @@ import {
     onChangeCholesterol,
     onChangeFastingBloodSugar,
     onChangeRestingECG
-} from '../../actions/predictDiseaseActions'
+} from '../actions/predictDiseaseActions'
 
-import redTheme from '../../themes/redTheme';
+import redTheme from '../themes/redTheme';
 
 class PredictDiseaseStep1 extends Component {
 
@@ -35,8 +34,7 @@ class PredictDiseaseStep1 extends Component {
                 restingBloodPressure, onChangeRestingBloodPressure,
                 cholesterol, onChangeCholesterol,
                 fastingBloodSugar, onChangeFastingBloodSugar,
-                restingECG, onChangeRestingECG,
-                nextStep } = this.props;
+                restingECG, onChangeRestingECG, navigation } = this.props;
     return (
             <Container>
                 <Content>
@@ -129,7 +127,7 @@ class PredictDiseaseStep1 extends Component {
                 </Content>
                 <Footer>
               <FooterTab style={redTheme.footerTab}>
-                <Button onPress={()=> Actions.step2()} full >  
+                <Button onPress={()=>navigation.navigate('step2')} full >  
                     <Text style={redTheme.footerTabText} >Next</Text>
                 </Button>
               </FooterTab>
@@ -160,28 +158,29 @@ PredictDiseaseStep1.propTypes = {
   fastingBloodSugar: PropTypes.string,
   onChangeFastingBloodSugar: PropTypes.func.isRequired,
   restingECG: PropTypes.string.isRequired,
-  onChangeRestingECG: PropTypes.func.isRequired
+  onChangeRestingECG: PropTypes.func.isRequired,
+  navigation: PropTypes.object.isRequired
 }
 
 
 const mapStateToProps = (state) => {
-    return { 
-        chestPainType: state.predictDisease.predict.chestPainType,
-        gender: state.predictDisease.predict.gender,
-        age: state.predictDisease.predict.age,
-        restingBloodPressure: state.predictDisease.predict.restingBloodPressure,
-        cholesterol: state.predictDisease.predict.cholesterol,
-        fastingBloodSugar: state.predictDisease.predict.fastingBloodSugar,
-        restingECG: state.predictDisease.predict.restingECG,
-      }
+  return { 
+    chestPainType: state.predictDisease.predict.chestPainType,
+    gender: state.predictDisease.predict.gender,
+    age: state.predictDisease.predict.age,
+    restingBloodPressure: state.predictDisease.predict.restingBloodPressure,
+    cholesterol: state.predictDisease.predict.cholesterol,
+    fastingBloodSugar: state.predictDisease.predict.fastingBloodSugar,
+    restingECG: state.predictDisease.predict.restingECG,
+  }
 }
 
 export default connect(mapStateToProps, {
-    onChangeChestPainType,
-    onChangeGender,
-    onChangeAge,
-    onChangeRestingBloodPressure,
-    onChangeCholesterol,
-    onChangeFastingBloodSugar,
-    onChangeRestingECG
+  onChangeChestPainType,
+  onChangeGender,
+  onChangeAge,
+  onChangeRestingBloodPressure,
+  onChangeCholesterol,
+  onChangeFastingBloodSugar,
+  onChangeRestingECG
 })(PredictDiseaseStep1);

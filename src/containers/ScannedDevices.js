@@ -9,9 +9,9 @@ import {
   FooterTab
 } from 'native-base';
 
-import ScannedDeviceView from './ScannedDeviceView';
-import redTheme from '../../themes/redTheme';
-import ErrorComponent from '../container/ErrorComponent';
+import ScannedDeviceView from '../components/ScannedDeviceView';
+import redTheme from '../themes/redTheme';
+import ErrorBluetooth from './ErrorBluetooth';
 
 class ScannedDevices extends Component {
   constructor(props) {
@@ -30,7 +30,7 @@ class ScannedDevices extends Component {
     return (
       <Container>
         <Content>
-          <ErrorComponent />
+          <ErrorBluetooth />
           <List
             dataArray={this.props.devices}
             renderRow={this._renderScannedDeviceCell.bind(this)} />

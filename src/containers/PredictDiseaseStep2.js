@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { Text, Dimensions } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { 
     Container,
@@ -13,7 +12,7 @@ import {
     Footer,
     FooterTab,
     Button } from 'native-base';
-import redTheme from '../../themes/redTheme';
+import redTheme from '../themes/redTheme';
 
 
 import {
@@ -24,7 +23,7 @@ import {
     onChangeNumberOfVesselsColored,
     onChangeThal,
     onChangeRestingECG
-} from '../../actions/predictDiseaseActions'
+} from '../actions/predictDiseaseActions'
 
 class PredictDiseaseStep2 extends Component {
   render() {
@@ -34,7 +33,7 @@ class PredictDiseaseStep2 extends Component {
           slop, onChangeSlop,
           numberOfVesselsColored, onChangeNumberOfVesselsColored,
           thal, onChangeThal,
-          nextStep, prevStep } = this.props;
+          navigation } = this.props;
     return (
              <Container>
                 <Content>
@@ -120,11 +119,11 @@ class PredictDiseaseStep2 extends Component {
                 </Content>
                 <Footer>
                     <FooterTab style={redTheme.footerTab}>
-                        <Button onPress={()=> Actions.step1()}>  
+                        <Button onPress={()=> navigation.navigate('step1') }>  
                             <Text style={redTheme.footerTabText}>Prev</Text>
                         </Button>
                         
-                        <Button onPress={()=> Actions.step3({initial: true})}>  
+                        <Button onPress={()=> navigation.navigate('step3')}>  
                             <Text style={redTheme.footerTabText}>Finish</Text>
                         </Button>
                     </FooterTab>
@@ -153,28 +152,36 @@ PredictDiseaseStep2.propTypes = {
   numberOfVesselsColored: PropTypes.string.isRequired,
   onChangeNumberOfVesselsColored: PropTypes.func.isRequired,
   thal: PropTypes.string.isRequired,
-  onChangeThal:  PropTypes.func.isRequired
+  onChangeThal:  PropTypes.func.isRequired,
+  navigation: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => {
-    return {
-        maximumHeartRate: state.predictDisease.predict.maximumHeartRate,
-        exerciseInducedAngina: state.predictDisease.predict.exerciseInducedAngina,
-        oldPeak: state.predictDisease.predict.oldPeak,
-        slop: state.predictDisease.predict.slop,
-        numberOfVesselsColored: state.predictDisease.predict.numberOfVesselsColored,
-        thal: state.predictDisease.predict.thal,
-        restingECG: state.predictDisease.predict.restingECG,
-    }
+  const { maximumHeartRate,
+        exerciseInducedAngina,
+        oldPeak,
+        slop,
+        numberOfVesselsColored,
+        thal,
+        restingECG
+     } = state.predictDisease.predict
+  return { maximumHeartRate,
+    exerciseInducedAngina,
+    oldPeak,
+    slop,
+    numberOfVesselsColored,
+    thal,
+    restingECG
+  }
 }
 
 
 export default connect(mapStateToProps, {
-    onChangeMaximumHeartRate,
-    onChangeExerciseInducedAngina,
-    onChangeOldPeak,
-    onChangeSlop,
-    onChangeNumberOfVesselsColored,
-    onChangeThal,
-    onChangeRestingECG
+  onChangeMaximumHeartRate,
+  onChangeExerciseInducedAngina,
+  onChangeOldPeak,
+  onChangeSlop,
+  onChangeNumberOfVesselsColored,
+  onChangeThal,
+  onChangeRestingECG
 })(PredictDiseaseStep2);

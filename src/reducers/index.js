@@ -1,12 +1,13 @@
 import { combineReducers } from 'redux';
 
-import { BleReducer, HeartRateReducer } from '../heartRate';
+import HeartMonitor from './HeartMonitor';
+import Bluetooth from './Bluetooth';
 import PredictDisease from './PredictDisease';
-import Scenes from './Scenes';
+import Navigation from './Navigation';
 
 export default combineReducers({
-  ble: BleReducer,
-  scenes: Scenes,
-  heartRate: HeartRateReducer,
+  ble: Bluetooth,
+  nav: Navigation,
+  heartRate: HeartMonitor,
   predictDisease: PredictDisease
 });

@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
 import {
     Container,
     Content,
@@ -14,18 +13,18 @@ import {
     Body
 } from 'native-base';
 
-import Heart from '../../components/common/Heart';
-import redTheme from '../../themes/redTheme';
+import Heart from '../components/Heart';
+import redTheme from '../themes/redTheme';
 import {
     resetPredict,
     onPredicting
-} from '../../actions/predictDiseaseActions'
+} from '../actions/predictDiseaseActions'
 class PredictDiseaseStep3 extends Component {
   componentWillMount(){
     this.props.onPredicting();
   }
   render() {
-    const { predictedProgress, predicted, resetPredict } = this.props;
+    const { predictedProgress, predicted, resetPredict, navigation } = this.props;
     let contentPredict ;
     if (predictedProgress) {
       contentPredict =  <Spinner color='red'></Spinner> ;
@@ -58,7 +57,10 @@ class PredictDiseaseStep3 extends Component {
             </Content>
             <Footer>
               <FooterTab style={redTheme.footerTab}>
-                  <Button onPress={()=>{ resetPredict(); Actions.step1() }}>  
+                  <Button onPress={()=> {
+                    resetPredict(); 
+                    navigation.navigate('step1')
+                  }}>  
                       <Text style={redTheme.footerTabText}>Reset Predict</Text>
                   </Button>
               </FooterTab>
@@ -71,8 +73,8 @@ PredictDiseaseStep3.propTypes = {
   predictedProgress: PropTypes.bool.isRequired,
   predicted: PropTypes.object.isRequired,
   resetPredict: PropTypes.func.isRequired,
-  onPredicting: PropTypes.func.isRequired
-
+  onPredicting: PropTypes.func.isRequired,
+  navigation: PropTypes.object.isRequired
 }
 
 const styles = {
@@ -86,9 +88,9 @@ const styles = {
   }
 }
 const mapStateToProps = (state) => {
-    return { predictedProgress: state.predictDisease.predictedProgress,
-      predicted: state.predictDisease.predicted
-      }
+  return { predictedProgress: state.predictDisease.predictedProgress,
+    predicted: state.predictDisease.predicted
+  }
 }
 
 export default connect(mapStateToProps, {
