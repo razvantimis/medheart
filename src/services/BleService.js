@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
-import { Text } from 'react-native';
-import { connect } from 'react-redux';
+
 
 import { BleManager } from 'react-native-ble-plx';
 import * as actions from '../actions';
@@ -8,13 +6,12 @@ import * as types from '../actions/types';
 import * as consts from '../constants';
 import base from 'base64-js';
 
-import crypto from 'crypto-js'
 
 import { NativeModules } from 'react-native';
 let CipherModule = NativeModules.CipherModule;
 
-class BleService extends Component {
-  componentWillMount() {
+class BleService  {
+  constructor() {
     this.manager = new BleManager();
     this.subscriptions = {}
     this.authMonitor = null;
@@ -24,9 +21,23 @@ class BleService extends Component {
     })
   }
 
-  componentWillUnmount() {
+  distructing() {
     this.manager.destroy();
     delete this.manager;
+  }
+
+  disconnect(idDevice){
+    this.manager.cancelDeviceConnection(idDevice)
+          .then((successIdentifier) => {
+           // newProps.changeDeviceState(successIdentifier, types.DEVICE_STATE_DISCONNECTED);
+          }, (rejected) => {
+            if (rejected.message !== 'Cancelled') {
+              //newProps.pushError(rejected.message)
+            }
+           // newProps.changeDeviceState(newProps.selectedDeviceId, types.DEVICE_STATE_DISCONNECTED);
+          });
+
+      //newProps.changeDeviceState(newProps.selectedDeviceId, types.DEVICE_STATE_DISCONNECTING);
   }
 
 
@@ -39,17 +50,7 @@ class BleService extends Component {
       break;
     }
     case types.DEVICE_STATE_DISCONNECT:{
-      this.manager.cancelDeviceConnection(newProps.selectedDeviceId)
-          .then((successIdentifier) => {
-            newProps.changeDeviceState(successIdentifier, types.DEVICE_STATE_DISCONNECTED);
-          }, (rejected) => {
-            if (rejected.message !== 'Cancelled') {
-              newProps.pushError(rejected.message)
-            }
-            newProps.changeDeviceState(newProps.selectedDeviceId, types.DEVICE_STATE_DISCONNECTED);
-          });
-
-      newProps.changeDeviceState(newProps.selectedDeviceId, types.DEVICE_STATE_DISCONNECTING);
+      
       break;
     }
     case types.DEVICE_STATE_CONNECT:{

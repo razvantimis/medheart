@@ -43,11 +43,11 @@ export default {
     backgroundColor: '#c63835',
   },
   footerTabButton: {
-    backgroundColor: secondColor
+    backgroundColor: primaryColor
   },
   footerTabText: {
     color: 'white',
-    fontSize: 16
+    fontSize: 14
   } , 
   // error component
   errorComponent: {

@@ -1,30 +1,20 @@
 import React, { Component, PropTypes } from 'react';
-
+import { connect } from 'react-redux';
 import {
     Container,
     Content,
     Spinner
 } from 'native-base';
 
+import { startAuthToMiBand2 } from '../actions/bluetooth';
+
 
 class PairingDevice extends Component {
   static propTypes = {
-    deviceState: PropTypes.string.isRequired,
-    deviceFinalStep: PropTypes.string.isRequired,
-    deviceDisconectedStep: PropTypes.string.isRequired,
-    changeScene: PropTypes.func.isRequired,
-    nextScene: PropTypes.string.isRequired,
-    prevScene: PropTypes.string.isRequired
+    startAuthToMiBand2: PropTypes.func.isRequired
   }
   render(){
-    const { deviceState, deviceFinalStep, changeScene, nextScene, prevScene, deviceDisconectedStep  } = this.props;
-    
-    if(deviceState==deviceFinalStep){
-      changeScene(nextScene);
-    } else if( deviceState == deviceDisconectedStep){
-      changeScene(prevScene);
-    }
-    
+     
     return (
             <Container>
                 <Content>
@@ -35,4 +25,13 @@ class PairingDevice extends Component {
   }
 }
 
-export default PairingDevice;
+
+const mapStateToProps = (state) => {
+  return { 
+  }
+}
+
+
+export default connect(mapStateToProps, {
+  startAuthToMiBand2
+})(PairingDevice);

@@ -9,14 +9,14 @@ import { ListItem,
         Button,
         Thumbnail } from 'native-base';
 
-import images from '../config/images'
+
 
 const ScannedDeviceView = ({name, id, rssi, onClick}) => {
   return (
     <TouchableOpacity onPress={onClick}>
       <ListItem thumbnail>
           <Left>
-              <Thumbnail square size={80} source={require(images.icons.miband2)} />
+              <Thumbnail square size={80} source={require('./img/miband2.png')} />
           </Left>
           <Body>
               <Text>{name}</Text>

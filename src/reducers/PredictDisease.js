@@ -1,7 +1,6 @@
 import * as types from '../actions/types';
 
 
-import NeuronalNetwork from '../services/neuronalNetwork';
 const INITIAL_STATE = {
   predict: {
     gender: '1', // (M=1)(F=0)
@@ -27,7 +26,7 @@ const INITIAL_STATE = {
   },
   predictedProgress: true,
   predicted: {
-    data: null,
+    date: null,
     value: null
   }
 }
@@ -35,154 +34,32 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
 
   switch (action.type) {
-  case types.ON_CHANGE_CHEST_PAIN_TYPE:
-    {
-      let chestPainType = action.payload.chestPainType;
-      let predict = { ...state.predict,
-        chestPainType
-      };
-      return { ...state,
-        predict
-      };
-    }
-  case types.ON_CHANGE_GENDER:
-    {
-      let gender = action.payload.gender;
-      let predict = { ...state.predict,
-        gender
-      };
-      return { ...state,
-        predict
-      };
-    }
-  case types.ON_CHANGE_AGE:
-    {
-      let age = action.payload.age;
-      let predict = { ...state.predict,
-        age
-      };
-      return { ...state,
-        predict
-      };
-    }
-  case types.ON_CHANGE_CHOLESTEROLE:
-    {
-      let cholesterol = action.payload.cholesterol;
-      let predict = { ...state.predict,
-        cholesterol
-      };
-      return { ...state,
-        predict
-      };
-    }
-  case types.ON_CHANGE_RESTING_BLOOD_PRESSURE:
-    {
-      let restingBloodPressure = action.payload.restingBloodPressure;
-      let predict = { ...state.predict,
-        restingBloodPressure
-      };
-      return { ...state,
-        predict
-      };
-    }
-  case types.ON_CHANGE_FASTING_BLOOD_SUGAR:
-    {
-      let fastingBloodSugar = action.payload.fastingBloodSugar;
-      let predict = { ...state.predict,
-        fastingBloodSugar
-      };
-      return { ...state,
-        predict
-      };
-    }
-  case types.ON_CHANGE_RESTING_ECG:
-    {
-      let restingECG = action.payload.restingECG;
-      let predict = { ...state.predict,
-        restingECG
-      };
-      return { ...state,
-        predict
-      };
-    }
-  case types.ON_CHANGE_MAXIMUM_HEARTRATE:
-    {
-      let maximumHeartRate = action.payload.maximumHeartRate;
-      let predict = { ...state.predict,
-        maximumHeartRate
-      };
-      return { ...state,
-        predict
-      };
-    }
-  case types.ON_CHANGE_EXERCISE_INDUCED_ANGINA:
-    {
-      let exerciseInducedAngina = action.payload.exerciseInducedAngina;
-      let predict = { ...state.predict,
-        exerciseInducedAngina
-      };
-      return { ...state,
-        predict
-      };
-    }
-  case types.ON_CHANGE_OLD_PEAK:
-    {
-      let oldPeak = action.payload.oldPeak;
-      let predict = { ...state.predict,
-        oldPeak
-      };
-      return { ...state,
-        predict
-      };
-    }
-  case types.ON_CHANGE_SLOP:
-    {
-      let slop = action.payload.slop;
-      let predict = { ...state.predict,
-        slop
-      };
-      return { ...state,
-        predict
-      };
-    }
-  case types.ON_CHANGE_NUMBER_OF_VESSELS_COLORED:
-    {
-      let numberOfVesselsColored = action.payload.numberOfVesselsColored;
-      let predict = { ...state.predict,
-        numberOfVesselsColored
-      };
-      return { ...state,
-        predict
-      };
-    }
-  case types.ON_CHANGE_THAL:
-    {
-      let thal = action.payload.thal;
-      let predict = { ...state.predict,
-        thal
-      };
-      return { ...state,
-        predict
-      };
-    }
-  case types.ON_PREDICTING:
-    {
-      let predicted = {}
-      predicted.data = new Date();
+  case types.ON_CHANGE_PROPS_PREDICT:{
+    let nameProps = action.payload.nameProps;
+    let value = action.payload.value;
+    let predict = {...state.predict};
+    predict[nameProps] = value;
+    return {...state, predict}
+  }
+  case types.START_PREDTINING: {
+    return {...state, predictedProgress: true}
+  }
+  case types.UPDATE_PREDICTED: {
+    let predicted = {
+      date: action.payload.date,
+      value: action.payload.predicted
+    };
 
-      const netw = new NeuronalNetwork();
-      predicted.value = netw.predict(action.payload.predictArray).toString().substring(2, 4);
-      if (predicted.value == '00') predicted.value = '0';
+    return { ...state,
+      predictedProgress: false,
+      predicted
+    };
 
-      return { ...state,
-        predictedProgress: false,
-        predicted
-      };
-    }
+  }
   case types.RESET_PREDICT:
     {
       let predicted = {
-        data: null,
+        date: null,
         value: null
       }
 
