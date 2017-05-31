@@ -1,7 +1,10 @@
 {
     "parser": "babel-eslint",
     "env": {
-        "browser": true
+        "browser": true,
+        "node": true,
+        "mocha": true,
+        "es6": true
     },
     "plugins": [
         "react",
@@ -14,6 +17,11 @@
     ],
     "rules": {
         "quotes": ["error", "single"],
-        "indent": ["error", 2]
-    }
+        "indent": ["error", 2],
+        "no-console": "off"
+    },
+    "ecmaFeatures":{
+        "modules": true
+    },
+    "allow": ["warn", "error"]
 }

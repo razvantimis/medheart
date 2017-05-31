@@ -1,14 +1,15 @@
+/*eslint no-console: "error"*/
 export const action = (type, payload) => ({type, payload});
 
-export function sleep(ms) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => resolve(ms), ms);
-  });
-}
+// export function sleep(ms) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => resolve(ms), ms);
+//   });
+// }
 
 export function getLogger(tag) {
   return (message) => {
-
+    // custom console
     console.log(`${tag} - ${message}`);
   }
 }
