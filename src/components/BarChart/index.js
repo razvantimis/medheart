@@ -21,14 +21,13 @@ SPDX-License-Identifier: Apache-2.0
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 
-import { Bar } from './Bar'
+import Bar  from './Bar'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f7f7f7',
   },
 });
 
@@ -47,10 +46,10 @@ class BarChartColumnBasic extends Component {
       }],
       [{
         'v': 50,
-        'name': 'test'
+        'name': '8 am'
       }, {
         'v': 20,
-        'name': 'test'
+        'name': '4 pm'
       }], 
       [{
         'v': 0,
@@ -60,10 +59,10 @@ class BarChartColumnBasic extends Component {
         'name': ''
       }], [{
         'v': 70,
-        'name': 'test'
+        'name': '10 am'
       }, {
         'v': 45,
-        'name': 'apple'
+        'name': '6 pm'
       }],
       [{
         'v': 0,
@@ -74,10 +73,10 @@ class BarChartColumnBasic extends Component {
       }],
       [{
         'v': 47,
-        'name': 'test'
+        'name': '12 pm'
       }, {
         'v': 15,
-        'name': 'grape'
+        'name': '8 pm'
       }],[{
         'v': 0,
         'name': ''
@@ -86,16 +85,16 @@ class BarChartColumnBasic extends Component {
         'name': ''
       }],[{
         'v': 30,
-        'name': 'test'
+        'name': '2 pm'
       }, {
         'v': 35,
-        'name': 'grape'
+        'name': '10 pm'
       }]
     ]
 
     let options = {
       width: 300,
-      height: 300,
+      height: 200,
       margin: {
         top: 20,
         left: 25,
