@@ -153,6 +153,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-background-job')
     compile project(':react-native-permissions')
     compile project(':react-native-svg')
     compile fileTree(dir: "libs", include: ["*.jar"])

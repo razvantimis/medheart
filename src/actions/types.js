@@ -33,6 +33,7 @@ export const POP_ERROR = 'POP_ERROR'
 
 // heart rate
 export const UPDATE_HEART_RATE = 'UPDATE_HEART_RATE';
+export const UPDATE_DATA_CHART = 'UPDATE_DATA_CHART';
 
 
 

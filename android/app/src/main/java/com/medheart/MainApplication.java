@@ -3,6 +3,7 @@ package com.medheart;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.pilloxa.backgroundjob.BackgroundJobPackage;
 import com.joshblour.reactnativepermissions.ReactNativePermissionsPackage;
 import com.horcrux.svg.SvgPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -28,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
               new MainReactPackage(),
+            new BackgroundJobPackage(),
             new ReactNativePermissionsPackage(),
             new SvgPackage(),
               new VectorIconsPackage(),

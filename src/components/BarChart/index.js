@@ -18,7 +18,7 @@ SPDX-License-Identifier: Apache-2.0
 
 'use strict'
 
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { View, StyleSheet } from 'react-native';
 
 import Bar  from './Bar'
@@ -32,65 +32,25 @@ const styles = StyleSheet.create({
 });
 
 class BarChartColumnBasic extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: 'Bar (Column) - Basic',
-  });
+  static propTypes = {
+    data: PropTypes.array.isRequired,
+    accessorKey: PropTypes.string.isRequired
+  }
   render() {
-    let data = [
-      [{
-        'v': 0,
-        'name': ''
-      }, {
-        'v': 0,
-        'name': ''
-      }],
-      [{
-        'v': 50,
-        'name': '8 am'
-      }, {
-        'v': 20,
-        'name': '4 pm'
-      }], 
-      [{
-        'v': 0,
-        'name': ''
-      }, {
-        'v': 0,
-        'name': ''
-      }], [{
-        'v': 70,
-        'name': '10 am'
-      }, {
-        'v': 45,
-        'name': '6 pm'
-      }],
-      [{
-        'v': 0,
-        'name': ''
-      }, {
-        'v': 0,
-        'name': ''
-      }],
-      [{
-        'v': 47,
-        'name': '12 pm'
-      }, {
-        'v': 15,
-        'name': '8 pm'
-      }],[{
-        'v': 0,
-        'name': ''
-      }, {
-        'v': 0,
-        'name': ''
-      }],[{
-        'v': 30,
-        'name': '2 pm'
-      }, {
-        'v': 35,
-        'name': '10 pm'
-      }]
-    ]
+    let { data, accessorKey} = this.props;
+    
+    if(data.length == 4){
+      for(let i=0; i < 8;i=i+2){
+        data.splice(i,0,[{
+          'heartRate': 0,
+          'name': ''
+        }, {
+          'heartRate': 0,
+          'name': ''
+        }]);
+      }
+    }
+  
 
     let options = {
       width: 300,
@@ -136,16 +96,15 @@ class BarChartColumnBasic extends Component {
         label: {
           fontFamily: 'Arial',
           fontSize: 14,
-          bold: true,
           fontWeight: true,
-          fill: 'red'
+          fill: 'black'
         }
       }
     }
 
     return (
       <View style={styles.container}>
-        <Bar data={data} options={options} accessorKey='v'/>
+        <Bar data={data} options={options} accessorKey={accessorKey}/>
       </View>
     )
   }

@@ -10,9 +10,14 @@
     "babel-polyfill": "^6.23.0",
     "base64-js": "^1.2.0",
     "lodash": "^4.17.4",
+    "moment": "^2.18.1",
     "native-base": "^2.1.2",
+    "paths-js": "^0.4.5",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.2",
+    "react-native-background-fetch": "^2.0.6",
+    "react-native-background-job": "^1.2.3",
+    "react-native-background-task": "^0.1.0",
     "react-native-ble-plx": "^0.4.0",
     "react-native-permissions": "^0.2.7",
     "react-native-svg": "^5.1.8",
@@ -23,12 +28,12 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
-    "eslint-plugin-react-native": "^2.3.2",
     "babel-eslint": "^7.1.1",
     "babel-jest": "19.0.0",
     "babel-preset-react-native": "1.9.1",
     "eslint": "^3.16.1",
     "eslint-plugin-react": "^6.10.0",
+    "eslint-plugin-react-native": "^2.3.2",
     "jest": "19.0.2",
     "react-test-renderer": "16.0.0-alpha.6"
   },
