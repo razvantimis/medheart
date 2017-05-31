@@ -77,8 +77,8 @@ export default class BarChart extends Component {
 
   getMaxAndMin(values, scale) {
     const axisY = this.props.options.axisY
-		let maxValue = axisY.max || 0
-		let minValue = axisY.min || 0
+    let maxValue = axisY.max || 0
+    let minValue = axisY.min || 0
 
     let max = _.max(values)
     if (max > maxValue) maxValue = max
@@ -112,8 +112,8 @@ export default class BarChart extends Component {
 
     let values = chart.curves.map((curve) => accessor(curve.item))
     let chartArea = {x: {minValue: 0, maxValue: 200, min: 0, max: options.chartWidth},
-                     y: this.getMaxAndMin(values, chart.scale),
-                     margin:options.margin}
+      y: this.getMaxAndMin(values, chart.scale),
+      margin:options.margin}
 
     let textStyle = fontAdapt(options.axisX.label)
     let labelOffset = this.props.options.axisX.label.offset || 20
@@ -134,7 +134,7 @@ export default class BarChart extends Component {
                         </Text>
                     : null}
                 </G>
-            )
+      )
     }, this)
 
     return (<Svg width={options.width} height={options.height}>

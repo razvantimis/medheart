@@ -6,6 +6,7 @@ import {
     Content
 } from 'native-base';
 import Heart from '../components/Heart';
+import BarChart from '../components/BarChart';
 
 import { heartRateMeasure } from '../actions/bluetoothActions';
 
@@ -22,6 +23,8 @@ class HeartMonitor extends Component {
             <TouchableOpacity onPress={()=>this.props.heartRateMeasure()}>
                 <Heart scale={10}  value={this.props.heartRate.toString()}/>
             </TouchableOpacity>
+
+            <BarChart />
         </Content>
     </Container>
     );
