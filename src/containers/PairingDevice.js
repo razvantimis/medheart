@@ -1,30 +1,35 @@
 import React, { Component, PropTypes } from 'react';
-
+import { connect } from 'react-redux';
 import {
     Container,
     Content,
     Spinner
 } from 'native-base';
 
+import { startAuthToMiBand2 } from '../actions/bluetoothActions';
+
 
 class PairingDevice extends Component {
   static propTypes = {
-    deviceState: PropTypes.string.isRequired,
-    deviceFinalStep: PropTypes.string.isRequired,
-    deviceDisconectedStep: PropTypes.string.isRequired,
-    changeScene: PropTypes.func.isRequired,
-    nextScene: PropTypes.string.isRequired,
-    prevScene: PropTypes.string.isRequired
+    startAuthToMiBand2: PropTypes.func.isRequired,
+    isConnected: PropTypes.bool.isRequired,
+    isPairing: PropTypes.bool.isRequired,
+    isAuth: PropTypes.bool.isRequired,
+    navigation: PropTypes.object.isRequired
+  }
+  componentWillReceiveProps(newProps) {
+    if(!newProps.isPairing){
+      newProps.navigation.goBack();
+    } 
+    if(newProps.isConnected && !newProps.isAuth && !newProps.authInProgress ){
+      newProps.startAuthToMiBand2();
+    }
+    if(newProps.isAuth){
+      newProps.navigation.navigate('heartMonitor');
+    }
   }
   render(){
-    const { deviceState, deviceFinalStep, changeScene, nextScene, prevScene, deviceDisconectedStep  } = this.props;
-    
-    if(deviceState==deviceFinalStep){
-      changeScene(nextScene);
-    } else if( deviceState == deviceDisconectedStep){
-      changeScene(prevScene);
-    }
-    
+     
     return (
             <Container>
                 <Content>
@@ -35,4 +40,17 @@ class PairingDevice extends Component {
   }
 }
 
-export default PairingDevice;
+
+const mapStateToProps = (state) => {
+  return { 
+    isConnected: state.ble.isConnected,
+    isAuth: state.ble.isAuth,
+    isPairing: state.ble.isPairing,
+    authInProgress: state.ble.authInProgress
+  }
+}
+
+
+export default connect(mapStateToProps, {
+  startAuthToMiBand2
+})(PairingDevice);

@@ -1,10 +1,14 @@
 
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import * as ble from '../actions/heartMonitor';
+import { popError } from '../actions/bluetoothActions';
 import redTheme from '../themes/redTheme';
 class ErrorComponent extends Component {
+  static propTypes = {
+    errorMessages: PropTypes.array.isRequired,
+    popError: PropTypes.func.isRequired
+  }
   render() {
     const lastError = this.props.errorMessages[this.props.errorMessages.length-1]
 
@@ -13,7 +17,7 @@ class ErrorComponent extends Component {
     }
 
     return (
-      <TouchableOpacity onPress={this.props.pop}>
+      <TouchableOpacity onPress={this.props.popError}>
         <View style={redTheme.errorComponent.container}>
           <Text style={redTheme.errorComponent.message}>{lastError}</Text>
         </View>
@@ -28,6 +32,6 @@ export default connect(
     errorMessages: state.ble.errors
   }),
   {
-    pop: ble.popError
+    popError
   }
 )(ErrorComponent)

@@ -15,7 +15,12 @@ const INITIAL_STATE = {
       name: 'MI Band 2 Alex',
       rssi: -62
     }],
-  deviceIdentifier: null,
+
+  selectedDeviceId: null,
+  isConnected: false,
+  isPairing: false,
+  isAuth: false,
+  authInProgress: false,
   scanning: false,
   errors: [],
   state: types.DEVICE_STATE_DISCONNECTED,
@@ -34,12 +39,31 @@ export default (state = INITIAL_STATE, action) => {
   case types.STOP_SCAN:
     return {...state, scanning: false};
   case types.DEVICE_FOUND:{
-    let devices = _.unionBy(state.devices, [action.device],'id');
+    let devices = _.unionBy(state.devices, [action.payload],'id');
     _.remove(devices,(item) => item.name == undefined);
     return {...state,devices: devices };
   }
-  case types.CHANGE_DEVICE_STATE:
-    return {...state, scanning: false, state: action.state, deviceIdentifier: !action.deviceIdentifier? state.deviceIdentifier : action.deviceIdentifier }
+  case types.DEVICE_STATE_CONNECTING: {
+    return {...state, isPairing: true}
+  }
+  case types.DEVICE_STATE_CONNECTED: {
+    return {...state, isConnected: true, selectedDeviceId: action.payload.selectedDeviceId }
+  }
+  case types.DEVICE_STATE_DISCONNECTED: {
+    return {...state, isConnected: false, isPairing: false, authInProgress: false}
+  }
+  case types.CHANGE_NEEDS_AUTH: {
+    return {...state, needsAuth: action.payload.needsAuth}
+  }
+  case types.DEVICE_STATE_AUTH_SUCCEEDED: {
+    return {...state, isAuth: true, authInProgress: false}
+  }
+  case types.DEVICE_STATE_AUTH_FAILED: {
+    return {...state, isAuth: false, authInProgress: false}
+  }
+  case types.DEVICE_STATE_AUTH_STARTED:{
+    return {...state, authInProgress: true};
+  }
   case types.WRITE_CHARACTERISTIC:{
     let transaction = {
       type: 'write',
@@ -90,16 +114,16 @@ export default (state = INITIAL_STATE, action) => {
   case types.CHANGE_AUTH: {
     return {...state, needsAuth: action.payload.auth}
   }
-
-      
-  case types.PUSH_ERROR:
+  case types.PUSH_ERROR:{
     let errors = [...state.errors];
-    errors.push(action.errorMessage);
+    errors.push(action.payload.errorMessage);
     return {...state, errors: errors}
-  case types.POP_ERROR:
-    errors = [...state.errors];
+  }
+  case types.POP_ERROR:{
+    let errors = [...state.errors];
     errors.pop();
     return {...state, errors: errors}
+  }
   default:
     return state;
   }

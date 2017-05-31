@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
  
 import MHNavigation from './navigation';
-import configureStore  from './config/store';
+import configureStore  from './MHStore';
 
 
 class MHApp extends Component {

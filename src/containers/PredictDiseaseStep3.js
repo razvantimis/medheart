@@ -31,7 +31,7 @@ class PredictDiseaseStep3 extends Component {
     } else {
       contentPredict = (
               <View style={styles.content}>
-                <Text style={{fontSize:20}}>Diagnosticat in data de {predicted.data.getDate()}/{predicted.data.getMonth()}/{predicted.data.getYear()}</Text>
+                <Text style={{fontSize:20}}>Diagnosticat in data de {predicted.date.getDate()}/{predicted.date.getMonth()}/{predicted.date.getYear()}</Text>
                 <Heart style={{marginTop:10}} value={predicted.value+'%'} scale={10}/>
               </View>);
     }

@@ -1,8 +1,12 @@
 import { StackNavigator } from 'react-navigation';
-import ScannedDevices from '../containers/ScannedDevices';
+import ScannedDevicesContainer from '../containers/ScannedDevices';
+import PairingDeviceContainer from '../containers/PairingDevice';
+import HeartMonitorContainer from '../containers/HeartMonitor';
 
 export const HeartMonitor = StackNavigator({
-  scannDevicesScreen: { screen: ScannedDevices }
+  scannDevices: { screen: ScannedDevicesContainer },
+  pairingDevice: { screen: PairingDeviceContainer },
+  heartMonitor: { screen: HeartMonitorContainer },
 },{
   headerMode: 'none',
 });
