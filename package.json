@@ -16,7 +16,7 @@
     "react-native": "0.44.2",
     "react-native-ble-plx": "^0.4.0",
     "react-native-permissions": "^0.2.7",
-    "react-native-router-flux": "^3.39.2",
+    "react-native-svg": "^5.1.8",
     "react-navigation": "^1.0.0-beta.11",
     "react-redux": "^5.0.3",
     "redux": "^3.6.0",
