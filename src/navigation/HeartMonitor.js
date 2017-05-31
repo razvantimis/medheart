@@ -1,4 +1,5 @@
 import { StackNavigator } from 'react-navigation';
+
 import ScannedDevicesContainer from '../containers/ScannedDevices';
 import PairingDeviceContainer from '../containers/PairingDevice';
 import HeartMonitorContainer from '../containers/HeartMonitor';

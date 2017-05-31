@@ -8,9 +8,9 @@ import {
 
 import { startAuthToMiBand2 } from '../actions/bluetoothActions';
 
-
 class PairingDevice extends Component {
   static propTypes = {
+
     startAuthToMiBand2: PropTypes.func.isRequired,
     isConnected: PropTypes.bool.isRequired,
     isPairing: PropTypes.bool.isRequired,
@@ -28,6 +28,7 @@ class PairingDevice extends Component {
       newProps.navigation.navigate('heartMonitor');
     }
   }
+
   render(){
      
     return (
@@ -49,7 +50,6 @@ const mapStateToProps = (state) => {
     authInProgress: state.ble.authInProgress
   }
 }
-
 
 export default connect(mapStateToProps, {
   startAuthToMiBand2

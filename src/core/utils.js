@@ -8,6 +8,7 @@ export function sleep(ms) {
 
 export function getLogger(tag) {
   return (message) => {
+
     console.log(`${tag} - ${message}`);
   }
 }
@@ -23,3 +24,4 @@ export function handleHeartrate(value) {
     return 0;
   }
 }
+

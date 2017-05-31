@@ -7,6 +7,7 @@ import {
     conectToDevice
 } from '../actions/bluetoothActions'
 
+
 import {
   Container,
   Content,
