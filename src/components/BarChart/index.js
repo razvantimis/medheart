@@ -38,10 +38,10 @@ class BarChartColumnBasic extends Component {
   }
   render() {
     let { data, accessorKey} = this.props;
-    
-    if(data.length == 4){
+    let dataProps = [...data]
+    if(dataProps.length == 4){
       for(let i=0; i < 8;i=i+2){
-        data.splice(i,0,[{
+        dataProps.splice(i,0,[{
           'heartRate': 0,
           'name': ''
         }, {
@@ -63,6 +63,7 @@ class BarChartColumnBasic extends Component {
       },
       color: '#B71C1C',
       gutter: 1,
+      tickCount: 30,
       animate: {
         type: 'oneByOne',
         duration: 1000,
@@ -104,7 +105,7 @@ class BarChartColumnBasic extends Component {
 
     return (
       <View style={styles.container}>
-        <Bar data={data} options={options} accessorKey={accessorKey}/>
+        <Bar data={dataProps} options={options} accessorKey={accessorKey}/>
       </View>
     )
   }
