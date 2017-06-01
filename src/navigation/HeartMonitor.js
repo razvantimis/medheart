@@ -10,7 +10,7 @@ export const HeartMonitor = StackNavigator({
   heartMonitor: { screen: HeartMonitorContainer },
 },{
   headerMode: 'none',
-  initialRouteName: 'heartMonitor'
+  initialRouteName: 'scannDevices'
 });
 
 export default HeartMonitor;

@@ -73,10 +73,10 @@ export default (state = INITIAL_STATE, action) => {
     let minute = moment().local().format('mm');
     
     let heartRateNow = action.payload.heartRate;
-    let heartRates = {...state.heartRates};
+    let heartRates = state.heartRates ? {...state.heartRates}: {} ;
     
-    heartRates[date] = {...heartRates[date]};
-    heartRates[date][hour] = [...heartRates[date][hour]];
+    heartRates[date] = heartRates[date] ? {...heartRates[date]}: {};
+    heartRates[date][hour] = heartRates[date][hour]? [...heartRates[date][hour]]: [];
     heartRates[date][hour].push({heartRate: heartRateNow, hour: hour + ':' + minute })
 
 
@@ -86,7 +86,7 @@ export default (state = INITIAL_STATE, action) => {
     let dateNow = moment().local().format('DD/MM/YYYY');
     let dateYesterday =  moment().local().subtract(1, 'days').format('DD/MM/YYYY');
 
-    let hour = 2 //parseInt(moment().local().format('HH'));
+    let hour = parseInt(moment().local().format('HH'));
     if(hour%2 !=0) hour-=1;
     const hours = [8,10,12,14,16,18,20,22,0,2,4,6,8,10,12,14,16,18,20,22,0];
     

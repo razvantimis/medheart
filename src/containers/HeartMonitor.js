@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux'
-import { TouchableOpacity, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import {
     Container,
     Content
@@ -10,9 +10,13 @@ import BarChart from '../components/BarChart';
 import { heartRateMeasure } from '../actions/bluetoothActions';
 import { updateChart } from '../actions/heartMonitorActions';
 
+import {
+  getLogger
+} from '../core/utils'
+
 import BackgroundJob from 'react-native-background-job';
 
-
+const log = getLogger('HeartMonitorContainer');
 
 class HeartMonitor extends Component {
   static propTypes = {
@@ -22,12 +26,15 @@ class HeartMonitor extends Component {
     dataChart: PropTypes.array.isRequired
   }
   componentWillMount(){
-    
+    BackgroundJob.cancelAll();
+    this.props.updateChart();
+    this.props.heartRateMeasure();
+    log('create task background');
     const backgroundJobHeartRate = {
       jobKey: 'heartRate',
       job: () =>{
         this.props.heartRateMeasure();
-        console.log('Running in background heart rate');
+        log('Running in background heart rate');
       }
     };
 
@@ -35,35 +42,42 @@ class HeartMonitor extends Component {
       jobKey: 'chart',
       job: () =>{
         this.props.updateChart();
-        console.log('Running in background update chart');
+        log('Running in background update chart');
       }
     };
+    log('register task background');
     BackgroundJob.register(backgroundJobHeartRate);
     BackgroundJob.register(backgroundJobChart);
 
     var backgroundScheduleHeartRate = {
       jobKey: 'heartRate',
-      timeout: 60000*10
+      timeout: 60000*2,//60000*1,
+      period: 60000*3,
     }
   
     var backgroundScheduleChart = {
       jobKey: 'chart',
-      timeout: 60000*3
+      timeout: 60000*2,//60000*1
+      period: 60000*4,
     }
-
+    log('create schedule background');
     BackgroundJob.schedule(backgroundScheduleHeartRate);
     BackgroundJob.schedule(backgroundScheduleChart);
+  }
+  componentWillUnmount() {
+    BackgroundJob.cancelAll(); 
   }
 
   render(){
     const { dataChart } = this.props;
+    log(JSON.stringify(dataChart))
     return (
     <Container>
         <Content>
             <View style={styles.heart}>
               <Heart scale={10} value={this.props.heartRate.toString()}/>
             </View>
-            <BarChart data={dataChart} accessorKey='heartRate' />
+            { dataChart && dataChart.length > 0 && <BarChart data={dataChart} accessorKey='heartRate' /> }
         </Content>
     </Container>
     );
