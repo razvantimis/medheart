@@ -1,4 +1,5 @@
 import * as types from '../actions/types'
+import * as _ from 'lodash';
 import moment from 'moment';
 import {
   getLogger
@@ -77,8 +78,9 @@ export default (state = INITIAL_STATE, action) => {
     
     heartRates[date] = heartRates[date] ? {...heartRates[date]}: {};
     heartRates[date][hour] = heartRates[date][hour]? [...heartRates[date][hour]]: [];
-    heartRates[date][hour].push({heartRate: heartRateNow, hour: hour + ':' + minute })
-
+    if(heartRateNow !== 0){
+      heartRates[date][hour].push({heartRate: heartRateNow, hour: hour + ':' + minute })
+    }
 
     return {...state, heartRateNow, heartRates }
   }
@@ -90,7 +92,7 @@ export default (state = INITIAL_STATE, action) => {
     if(hour%2 !=0) hour-=1;
     const hours = [8,10,12,14,16,18,20,22,0,2,4,6,8,10,12,14,16,18,20,22,0];
     
-    let dataChart = []
+    
  
     const displayHours = hours.slice(hours.lastIndexOf(hour)-7,hours.lastIndexOf(hour)+1)
     log(JSON.stringify(displayHours));
@@ -101,29 +103,29 @@ export default (state = INITIAL_STATE, action) => {
     
     log(JSON.stringify(heartRatesToDay))
     if(heartRatesToDay && heartRatesToYesterday){
+      let dataChart = [];
+      let sum = 0;
       for(let i=0;i<4;i++){
         let hour1 = displayHours[i];
         let hour2 = displayHours[i+4];
-        log(hour1)
-        log(hour2)
-        
 
         let isYesterday = hour-8<0;
         let heartRate1;
         if(isYesterday && hour1-8>0){
-          heartRate1 = heartRatesToYesterday[hour1] ? heartRatesToYesterday[hour1][0].heartRate: 0;
+          heartRate1 = heartRatesToYesterday[hour1] ? _.max(heartRatesToYesterday[hour1].map((item)=> item.heartRate)): 0;
         } else {
-          heartRate1 = heartRatesToDay[hour1] ? heartRatesToDay[hour1][0].heartRate: 0;
+          heartRate1 = heartRatesToDay[hour1] ? _.max(heartRatesToDay[hour1].map((item)=> item.heartRate)): 0;
         }
         let heartRate2;
         if(isYesterday && hour2-8>9){
-          heartRate2 = heartRatesToYesterday[hour2] ? heartRatesToYesterday[hour2][0].heartRate: 0;
+          heartRate2 = heartRatesToYesterday[hour2] ? _.max(heartRatesToYesterday[hour2].map((item)=> item.heartRate)): 0;
         }else {
-          heartRate2 = heartRatesToDay[hour2] ? heartRatesToDay[hour2][0].heartRate: 0;
+          heartRate2 = heartRatesToDay[hour2] ? _.max(heartRatesToDay[hour2].map((item)=> item.heartRate)): 0;
         }
       
         log(heartRate1)
         log(heartRate2)
+        sum = sum + heartRate1 + heartRate2;
         dataChart.push([{
           'heartRate':heartRate1 ,
           'name': hour1+':00'
@@ -131,9 +133,12 @@ export default (state = INITIAL_STATE, action) => {
           'heartRate': heartRate2,
           'name': hour2+':00'
         }])
-      }  
+      } 
+      if(sum > 0){
+        return {...state, dataChart }
+      } 
     }
-    return {...state, dataChart }
+    return {...state, dataChart: state.dataChart }
 
   }
   default:

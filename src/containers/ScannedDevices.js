@@ -21,10 +21,12 @@ import {
 import ScannedDeviceView from '../components/ScannedDeviceView';
 import redTheme from '../themes/redTheme';
 import ErrorBluetooth from './ErrorBluetooth';
+import BackgroundJob from 'react-native-background-job';
 
 class ScannedDevices extends Component {
   static propTypes = { devices: PropTypes.array.isRequired,
     scanning: PropTypes.bool.isRequired,
+    isConnected: PropTypes.bool.isRequired,
     startScan: PropTypes.func.isRequired,
     stopScan: PropTypes.func.isRequired,
     conectToDevice: PropTypes.func.isRequired,
@@ -32,6 +34,12 @@ class ScannedDevices extends Component {
   }
   constructor(props) {
     super(props);
+  }
+  componentWillMount(){
+    if(this.props.isConnected){
+      BackgroundJob.cancelAll();
+      this.props.navigation.navigate('pairingDevice');
+    }
   }
 
   _renderScannedDeviceCell(rowData) {
@@ -77,7 +85,8 @@ class ScannedDevices extends Component {
 const mapStateToProps = (state) => {
   return { 
     devices: state.ble.devices,
-    scanning: state.ble.scanning
+    scanning: state.ble.scanning,
+    isConnected: state.ble.isConnected
   }
 }
 

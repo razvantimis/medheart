@@ -51,14 +51,14 @@ class HeartMonitor extends Component {
 
     var backgroundScheduleHeartRate = {
       jobKey: 'heartRate',
-      timeout: 60000*2,//60000*1,
+      timeout: 30000,//60000 = 1 min
       period: 60000*3,
     }
   
     var backgroundScheduleChart = {
       jobKey: 'chart',
-      timeout: 60000*2,//60000*1
-      period: 60000*4,
+      timeout: 30000,//60000 = 1 min
+      period: 60000*3,
     }
     log('create schedule background');
     BackgroundJob.schedule(backgroundScheduleHeartRate);
@@ -77,7 +77,7 @@ class HeartMonitor extends Component {
             <View style={styles.heart}>
               <Heart scale={10} value={this.props.heartRate.toString()}/>
             </View>
-            { dataChart && dataChart.length > 0 && <BarChart data={dataChart} accessorKey='heartRate' /> }
+            { dataChart && dataChart.length == 4 && <BarChart data={dataChart} accessorKey='heartRate' /> }
         </Content>
     </Container>
     );

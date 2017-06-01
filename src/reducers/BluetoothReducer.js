@@ -2,28 +2,16 @@ import * as types from '../actions/types';
 import * as _ from 'lodash';
 
 const INITIAL_STATE = {
-  devices: [
-    {
-      id: 'FF:EF:61:C2:34:84',
-      isConnectable: null,
-      name: 'MI Band 2 Razvan',
-      rssi: -68
-    },
-    {
-      id: 'F0:54:E9:F6:46:1A',
-      isConnectable: null,
-      name: 'MI Band 2 Alex',
-      rssi: -62
-    }],
-
+  hashDevices: {},
+  devices: [],
   selectedDeviceId: null,
   isConnected: false,
-  isPairing: false,
   isAuth: false,
+  connectInProgress: false,
   authInProgress: false,
   scanning: false,
+  heartRateMeasureInProgress: false,
   errors: [],
-  state: types.DEVICE_STATE_DISCONNECTED,
   operations: [],
   transactionId: 0,
   needsAuth: true,
@@ -39,21 +27,29 @@ export default (state = INITIAL_STATE, action) => {
   case types.STOP_SCAN:
     return {...state, scanning: false};
   case types.DEVICE_FOUND:{
-    let devices = _.unionBy(state.devices, [action.payload],'id');
+    let hashDevices = {...state.hashDevices}
+    hashDevices[action.payload.id] = action.payload;
+
     _.remove(devices,(item) => item.name == undefined);
-    return {...state,devices: devices };
+
+    let devices = _.toArray(hashDevices);
+
+    return {...state, devices, hashDevices };
   }
   case types.DEVICE_STATE_CONNECTING: {
-    return {...state, isPairing: true}
+    return {...state, connectInProgress: true, isConnected: false }
   }
   case types.DEVICE_STATE_CONNECTED: {
-    return {...state, isConnected: true, selectedDeviceId: action.payload.selectedDeviceId }
+    return {...state, connectInProgress: false, isConnected: true, selectedDeviceId: action.payload.selectedDeviceId }
   }
   case types.DEVICE_STATE_DISCONNECTED: {
-    return {...state, isConnected: false, isPairing: false, authInProgress: false}
+    return {...state, isAuth: false, connectInProgress: false, isMonitoring: false,  isConnected: false, authInProgress: false}
   }
   case types.CHANGE_NEEDS_AUTH: {
     return {...state, needsAuth: action.payload.needsAuth}
+  }
+  case types.DEVICE_STATE_AUTH_STARTED:{
+    return {...state, authInProgress: true, isAuth: false};
   }
   case types.DEVICE_STATE_AUTH_SUCCEEDED: {
     return {...state, isAuth: true, authInProgress: false}
@@ -61,8 +57,11 @@ export default (state = INITIAL_STATE, action) => {
   case types.DEVICE_STATE_AUTH_FAILED: {
     return {...state, isAuth: false, authInProgress: false}
   }
-  case types.DEVICE_STATE_AUTH_STARTED:{
-    return {...state, authInProgress: true};
+  case types.START_HEART_RATE_MEASURE: {
+    return {...state, heartRateMeasureInProgress: true}
+  }
+  case types.STOP_HEART_RATE_MEASURE: {
+    return {...state, heartRateMeasureInProgress: false}
   }
   case types.WRITE_CHARACTERISTIC:{
     let transaction = {
