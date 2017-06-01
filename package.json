@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "install-android": "react-native run-android --variant=release",
+    "build-android": "cd android && sudo ./gradlew assembleRelease"
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
