@@ -18,6 +18,12 @@ import redTheme from '../themes/redTheme';
 
 class PredictDiseaseStep1 extends Component {
 
+  componentWillMount(){
+    if(this.props.predicted.date && this.props.predicted.value){
+      this.props.navigation.navigate('step3');
+    }
+  }
+
   render() {
     const { chestPainType, gender, age, restingBloodPressure, cholesterol,
             fastingBloodSugar, restingECG, navigation, onChangePropsPredict } = this.props;
@@ -104,7 +110,8 @@ PredictDiseaseStep1.propTypes = {
   fastingBloodSugar: PropTypes.string,
   restingECG: PropTypes.string.isRequired,
   onChangePropsPredict: PropTypes.func.isRequired,
-  navigation: PropTypes.object.isRequired
+  navigation: PropTypes.object.isRequired,
+  predicted: PropTypes.object.isRequired
 }
 
 
@@ -117,6 +124,7 @@ const mapStateToProps = (state) => {
     cholesterol: state.predictDisease.predict.cholesterol,
     fastingBloodSugar: state.predictDisease.predict.fastingBloodSugar,
     restingECG: state.predictDisease.predict.restingECG,
+    predicted: state.predictDisease.predicted
   }
 }
 
