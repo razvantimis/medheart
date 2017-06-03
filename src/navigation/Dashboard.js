@@ -4,7 +4,10 @@ import { Container,
         Title,
         Body,
         Tabs,
-        Tab } from 'native-base';
+        Tab,
+        Left,
+        Button,
+        Icon } from 'native-base';
 
 
 import PredictDisease from './PredictDisease'
@@ -21,6 +24,11 @@ class DashboardScreen extends Component {
     return (
         <Container>
           <Header hasTabs androidStatusBarColor={redTheme.primaryColor} style={redTheme.header}>
+              <Left>
+                  <Button transparent onPress={()=>this.props.navigation.navigate('login')}>
+                      <Icon name='arrow-back' />
+                  </Button>
+              </Left>
               <Body>
                   <Title style={redTheme.headerTitle} >MedHeart</Title>
               </Body>

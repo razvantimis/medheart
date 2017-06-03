@@ -3,6 +3,8 @@ package com.medheart;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.polidea.reactnativeble.BlePackage;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.pilloxa.backgroundjob.BackgroundJobPackage;
 import com.joshblour.reactnativepermissions.ReactNativePermissionsPackage;
 import com.horcrux.svg.SvgPackage;
@@ -15,7 +17,6 @@ import com.facebook.soloader.SoLoader;
 import java.util.Arrays;
 import java.util.List;
 
-import com.polidea.reactnativeble.BlePackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -29,6 +30,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
               new MainReactPackage(),
+            new RNDeviceInfo(),
             new BackgroundJobPackage(),
             new ReactNativePermissionsPackage(),
             new SvgPackage(),

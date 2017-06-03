@@ -4,10 +4,13 @@ import { connect } from 'react-redux';
 import { StackNavigator, addNavigationHelpers } from 'react-navigation';
 
 import Dashboard from './Dashboard';
+import LoginContainer from '../containers/LoginContainer'
 
 export const AppNavigator = StackNavigator({
+  login: { screen: LoginContainer },
   dashboard: { screen: Dashboard }
 },{
+  initialRouteName: 'login',
   headerMode: 'none',
 });
 
