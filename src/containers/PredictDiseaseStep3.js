@@ -21,7 +21,9 @@ import {
 } from '../actions/predictDiseaseActions'
 class PredictDiseaseStep3 extends Component {
   componentWillMount(){
-    this.props.onPredicting();
+    if(!this.props.predicted.date && !this.props.predicted.value){
+      this.props.onPredicting();
+    }
   }
   render() {
     const { predictedProgress, predicted, resetPredict, navigation } = this.props;
@@ -29,10 +31,11 @@ class PredictDiseaseStep3 extends Component {
     if (predictedProgress) {
       contentPredict =  <Spinner color='red'></Spinner> ;
     } else {
+      const date = new Date(predicted.date);
       contentPredict = (
               <View style={styles.content}>
-                <Text style={{fontSize:20}}>Diagnosticat in data de {predicted.date.getDate()}/{predicted.date.getMonth()}/{predicted.date.getYear()}</Text>
-                <Heart style={{marginTop:10}} value={predicted.value+'%'} scale={10}/>
+                <Text style={{fontSize:20}}>Diagnosticat in data de {date.getDate()}/{date.getMonth()}/{date.getYear()}</Text>
+                <Heart value={predicted.value+'%'} scale={10}/>
               </View>);
     }
 

@@ -64,7 +64,7 @@ export default (state = INITIAL_STATE, action) => {
       }
 
       return { ...state,
-        predictedProgress: true,
+        predictedProgress: false,
         predicted
       };
     }

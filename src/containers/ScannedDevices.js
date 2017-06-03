@@ -7,6 +7,7 @@ import {
     conectToDevice
 } from '../actions/bluetoothActions'
 
+import { stopTaskBackground } from '../actions/heartMonitorActions';
 
 import {
   Container,
@@ -21,7 +22,7 @@ import {
 import ScannedDeviceView from '../components/ScannedDeviceView';
 import redTheme from '../themes/redTheme';
 import ErrorBluetooth from './ErrorBluetooth';
-import BackgroundJob from 'react-native-background-job';
+
 
 class ScannedDevices extends Component {
   static propTypes = { devices: PropTypes.array.isRequired,
@@ -37,7 +38,6 @@ class ScannedDevices extends Component {
   }
   componentWillMount(){
     if(this.props.isConnected){
-      BackgroundJob.cancelAll();
       this.props.navigation.navigate('pairingDevice');
     }
   }
@@ -53,6 +53,7 @@ class ScannedDevices extends Component {
 
   render() {
     const { scanning, startScan, stopScan, devices} = this.props;
+
     return (
       <Container>
         <Content>
@@ -66,7 +67,7 @@ class ScannedDevices extends Component {
             <Button
               style={scanning? redTheme.footerTabButtonActive : redTheme.footerTabButton}
               active={scanning}
-              onPress={startScan.bind(this)}>
+              onPress={()=> startScan()}>
               <Text style={redTheme.footerTabText}>Scann</Text>
             </Button>
             <Button
