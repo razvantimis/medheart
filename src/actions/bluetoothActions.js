@@ -1,6 +1,5 @@
 import * as types from './types';
 import * as consts from '../core/constantsBluetooth';
-import BackgroundJob from 'react-native-background-job';
 import { action, getLogger, handleHeartrate, sleep } from '../core/utils';
 import * as _ from 'lodash';
 import { BleManager } from 'react-native-ble-plx';
