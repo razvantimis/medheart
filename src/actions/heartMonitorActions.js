@@ -49,8 +49,8 @@ export const stopTaskBackground = (name) => (dispatch, getState) => {
 export const updateChart = () => (dispatch, getState) => {
   const state = getState().heart;
 
-  let dateNow = moment().local().format('DD/MM/YYYY');
-  let dateYesterday = moment().local().subtract(1, 'days').format('DD/MM/YYYY');
+  let dateNow = moment().local().format('DD-MM-YYYY');
+  let dateYesterday = moment().local().subtract(1, 'days').format('DD-MM-YYYY');
 
   let hour = parseInt(moment().local().format('HH'));
   if (hour % 2 != 0) hour -= 1;
