@@ -25,8 +25,12 @@ class LoginContainer extends Component {
     }
   }
   onLogin(){
-    const { onLogin } = this.props;
-    onLogin();
+    const { onLogin, checkUserExists } = this.props;
+    if(this.props.logout === true){
+      checkUserExists();
+    } else {
+      onLogin();
+    }
   }
   componentWillReceiveProps(newProps){
     if(newProps.authorized === true && this.props.authorized !== newProps.authorized){
