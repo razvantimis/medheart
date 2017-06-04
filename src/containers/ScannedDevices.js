@@ -7,7 +7,7 @@ import {
     conectToDevice
 } from '../actions/bluetoothActions'
 
-import { stopTaskBackground } from '../actions/heartMonitorActions';
+
 
 import {
   Container,

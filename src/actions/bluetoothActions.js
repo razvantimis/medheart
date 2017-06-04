@@ -270,7 +270,6 @@ export const disconnectFromDevice = () => (dispatch, getState) => {
 
   manager.cancelDeviceConnection(idDevice).then(
     () => {
-      BackgroundJob.cancelAll();
       dispatch(action(types.DEVICE_STATE_DISCONNECTED));
     },
     rejected => {
@@ -390,7 +389,7 @@ export const heartRateMeasure = () => (dispatch, getState) => {
         } else {
           let data = base.toByteArray(characteristic.value);
           log(handleHeartrate(data));
-          updateOnFirebase(handleHeartrate(data));
+          updateOnFirebase(dispatch, handleHeartrate(data));
           dispatch(
             action(types.UPDATE_HEART_RATE, {
               heartRate: handleHeartrate(data)
@@ -416,9 +415,9 @@ export const pushError = errorMessage => (dispatch, getState) => {
 };
 export const popError = () => action(types.POP_ERROR);
 
-export const updateOnFirebase = heartRate => {
+export const updateOnFirebase = (dispatch, heartRate) => {
   if (heartRate !== 0) {
-    let date = moment().local().format('DD/MM/YYYY').toString();
+    let date = moment().local().format('DD-MM-YYYY');
     let hour = moment().local().format('HH');
     let minute = moment().local().format('mm');
     
@@ -427,6 +426,8 @@ export const updateOnFirebase = heartRate => {
       .database()
       .ref(`users/${DeviceInfo.getUniqueID()}/heartRates/${date}/${hour}`)
       .push()
-      .set(item);
+      .set(item).catch((err)=>{
+        dispatch(action(types.PUSH_ERROR, {errorMessage: err.message }));
+      });
   }
 };

@@ -8,7 +8,7 @@ import {
 import Heart from '../components/Heart';
 import BarChart from '../components/BarChart';
 import { heartRateMeasure } from '../actions/bluetoothActions';
-import { updateChart, startTaskBackground, stopTaskBackground } from '../actions/heartMonitorActions';
+import { updateChart, startTaskBackground } from '../actions/heartMonitorActions';
 import { disconnectFromDevice } from '../actions/bluetoothActions';
 import TimerMixin from 'react-timer-mixin';
 
@@ -19,7 +19,6 @@ class HeartMonitor extends Component {
     heartRate: PropTypes.number.isRequired,
     heartRateMeasure: PropTypes.func.isRequired,
     startTaskBackground: PropTypes.func.isRequired,
-    stopTaskBackground: PropTypes.func.isRequired,
     updateChart: PropTypes.func.isRequired,
     disconnectFromDevice: PropTypes.func.isRequired,
     dataChart: PropTypes.array.isRequired
@@ -41,7 +40,6 @@ class HeartMonitor extends Component {
   componentWillUnmount(){
     TimerMixin.clearInterval(this.intervalChart);
     TimerMixin.clearInterval(this.intervalHeart);
-    this.props.stopTaskBackground(consts.heartRateTask);
   }
   render(){
     const { dataChart } = this.props;
@@ -82,6 +80,5 @@ export default connect(mapStateToProps, {
   heartRateMeasure,
   updateChart,
   disconnectFromDevice,
-  startTaskBackground,
-  stopTaskBackground
+  startTaskBackground
 })(HeartMonitor);
