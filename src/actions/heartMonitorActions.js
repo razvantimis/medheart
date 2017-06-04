@@ -89,7 +89,7 @@ export const updateChart = () => (dispatch, getState) => {
   let heartRatesToYesterday = heartRates[dateYesterday];
 
   log(JSON.stringify(heartRatesToDay));
-  if (heartRatesToDay && heartRatesToYesterday) {
+  if (heartRatesToDay) {
     let dataChart = [];
     let sum = 0;
     for (let i = 0; i < 4; i++) {
