@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.01
   },
   wrapper: {
-    paddingVertical: 100,
+    paddingVertical: 80,
   },
   background: {
     width,

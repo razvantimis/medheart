@@ -21,6 +21,14 @@ export const onLogin = () => (dispatch, getState) => {
   }
 };
 
+export const logout = () => (dispatch) => {
+  firebase.auth().signOut().then(function() {
+    dispatch(action(types.LOGOUT_SUCCES))
+  }, function(error) {
+    dispatch(action(types.PUSH_ERROR, { errorMessage: error.message}))
+  });
+}
+
 export const checkUserExists = () => (dispatch , getState) => {
   const { authorizing  } = getState().user;
   if(!authorizing){

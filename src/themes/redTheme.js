@@ -11,7 +11,6 @@ export default {
   },
   header : {
     backgroundColor: primaryColor,
-    alignItems:'center',
   },
   headerTab: {
     underline: {

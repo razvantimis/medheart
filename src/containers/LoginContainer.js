@@ -16,17 +16,20 @@ class LoginContainer extends Component {
     checkUserExists: PropTypes.func.isRequired,
     authorizing: PropTypes.bool.isRequired,
     authorized: PropTypes.bool.isRequired,
+    logout: PropTypes.bool.isRequired,
     navigation: PropTypes.object.isRequired
   }
   componentWillMount(){
-    this.props.checkUserExists();
+    if(this.props.logout === false){
+      this.props.checkUserExists();
+    }
   }
   onLogin(){
     const { onLogin } = this.props;
     onLogin();
   }
   componentWillReceiveProps(newProps){
-    if(newProps.authorized === true){
+    if(newProps.authorized === true && this.props.authorized !== newProps.authorized){
       this.props.navigation.navigate('dashboard');
     }
 
@@ -62,7 +65,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return { 
     authorized: state.user.authorized,
-    authorizing: state.user.authorizing
+    authorizing: state.user.authorizing,
+    logout: state.user.logout
   }
 }
 

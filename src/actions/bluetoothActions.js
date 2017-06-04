@@ -5,6 +5,9 @@ import { action, getLogger, handleHeartrate, sleep } from '../core/utils';
 import * as _ from 'lodash';
 import { BleManager } from 'react-native-ble-plx';
 import base from 'base64-js';
+import moment from 'moment';
+import DeviceInfo from 'react-native-device-info';
+import firebase from '../MHFireBase';
 
 import { NativeModules } from 'react-native';
 let CipherModule = NativeModules.CipherModule;
@@ -13,11 +16,10 @@ const log = getLogger('bluetooth/action');
 
 let manager = new BleManager();
 
-export const startScan = () => (dispatch) => {
+export const startScan = () => dispatch => {
   log('Starting scan');
   dispatch(action(types.START_SCAN));
   manager.startDeviceScan(null, null, (error, device) => {
-
     if (error) {
       log(error);
       dispatch(
@@ -39,13 +41,13 @@ export const startScan = () => (dispatch) => {
     }
     sleep(500);
   });
-  setTimeout(()=>{
+  setTimeout(() => {
     manager.stopDeviceScan();
     dispatch(action(types.STOP_SCAN));
   }, 30000);
 };
 
-export const stopScan = () => (dispatch) => {
+export const stopScan = () => dispatch => {
   manager.stopDeviceScan();
   dispatch(action(types.STOP_SCAN));
 };
@@ -109,7 +111,7 @@ export const startAuthToMiBand2 = () => (dispatch, getState) => {
       (error, characteristic) => {
         log(characteristic);
         log(error);
-        if(error){
+        if (error) {
           dispatch(
             action(types.PUSH_ERROR, {
               errorMessage: error.message
@@ -388,6 +390,7 @@ export const heartRateMeasure = () => (dispatch, getState) => {
         } else {
           let data = base.toByteArray(characteristic.value);
           log(handleHeartrate(data));
+          updateOnFirebase(handleHeartrate(data));
           dispatch(
             action(types.UPDATE_HEART_RATE, {
               heartRate: handleHeartrate(data)
@@ -407,8 +410,23 @@ export const heartRateMeasure = () => (dispatch, getState) => {
 
 export const pushError = errorMessage => (dispatch, getState) => {
   const errors = getState().ble.errors;
-  if (_.findIndex(errors,errorMessage) == -1) {
+  if (_.findIndex(errors, errorMessage) == -1) {
     dispatch(action(types.PUSH_ERROR, errorMessage));
   }
 };
 export const popError = () => action(types.POP_ERROR);
+
+export const updateOnFirebase = heartRate => {
+  if (heartRate !== 0) {
+    let date = moment().local().format('DD/MM/YYYY').toString();
+    let hour = moment().local().format('HH');
+    let minute = moment().local().format('mm');
+    
+    const item = { heartRate: heartRate, hour: hour + ':' + minute, date };
+    firebase
+      .database()
+      .ref(`users/${DeviceInfo.getUniqueID()}/heartRates/${date}/${hour}`)
+      .push()
+      .set(item);
+  }
+};

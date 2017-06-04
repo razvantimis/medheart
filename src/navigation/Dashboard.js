@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Container, 
         Header,
         Title,
@@ -7,7 +7,10 @@ import { Container,
         Tab,
         Left,
         Button,
-        Icon } from 'native-base';
+        Right } from 'native-base';
+
+import Icon1 from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon2 from 'react-native-vector-icons/MaterialIcons';
 
 
 import PredictDisease from './PredictDisease'
@@ -16,6 +19,9 @@ import HeartMonitor from './HeartMonitor'
 import redTheme from '../themes/redTheme';
 
 class DashboardScreen extends Component {
+  static propTypes = {
+    navigation: PropTypes.object.isRequired
+  }
   constructor(props){
     super(props);
   }
@@ -25,13 +31,18 @@ class DashboardScreen extends Component {
         <Container>
           <Header hasTabs androidStatusBarColor={redTheme.primaryColor} style={redTheme.header}>
               <Left>
-                  <Button transparent onPress={()=>this.props.navigation.navigate('login')}>
-                      <Icon name='arrow-back' />
+                  <Button transparent onPress={()=>this.props.navigation.navigate('account')}>
+                      <Icon1 name='account' size={25} color='white' />
                   </Button>
               </Left>
               <Body>
                   <Title style={redTheme.headerTitle} >MedHeart</Title>
               </Body>
+              <Right>
+                 <Button transparent onPress={()=>this.props.navigation.navigate('alert')}>
+                      <Icon2 name='add-alert' size={25} color= 'white' />
+                  </Button>
+              </Right>
           </Header>
           <Tabs tabBarUnderlineStyle={redTheme.headerTab.underline} >
             <Tab heading="Predict Disease" 
