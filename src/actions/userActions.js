@@ -6,22 +6,27 @@ import firebase from '../MHFireBase';
 const log = getLogger('user/action');
 
 export const onLogin = () => (dispatch, getState) => {
-  dispatch(action(types.USER_START_AUTHORIZING));
-  log('start login');
-  firebase.auth().signInAnonymously().then(() => {
-    const { name } = getState().user;
-    firebase.database().ref(`users/${DeviceInfo.getUniqueID()}`).set({
-      name
+  const { authorizing  } = getState().user;
+  if(!authorizing){
+    dispatch(action(types.USER_START_AUTHORIZING));
+    log('start login');
+    firebase.auth().signInAnonymously().then(() => {
+      const { name } = getState().user;
+      firebase.database().ref(`users/${DeviceInfo.getUniqueID()}`).set({
+        name
+      });
+      log('succes login ' + name);
+      dispatch(action(types.USER_AUTHORIZED));
     });
-    log('succes login ' + name);
-    dispatch(action(types.USER_AUTHORIZED));
-  });
+  }
 };
 
-export const checkUserExists = () => dispatch => {
-  dispatch(action(types.USER_START_AUTHORIZING));
+export const checkUserExists = () => (dispatch , getState) => {
+  const { authorizing  } = getState().user;
+  if(!authorizing){
+    dispatch(action(types.USER_START_AUTHORIZING));
 
-  firebase
+    firebase
     .auth()
     .signInAnonymously()
     .then(() =>
@@ -39,5 +44,10 @@ export const checkUserExists = () => dispatch => {
           }
         })
     )
-    .catch(err => log(err));
+    .catch(err => {
+      log(err);
+      dispatch(action(types.USER_NO_EXIST));
+    });
+  }
+ 
 };
