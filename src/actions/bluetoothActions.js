@@ -101,6 +101,7 @@ export const startAuthToMiBand2 = () => (dispatch, getState) => {
   const authInProgress = bleState.authInProgress;
 
   if (!authInProgress) {
+    log('startAuthToMiBand2: Start')
     dispatch(action(types.DEVICE_STATE_AUTH_STARTED));
 
     const transactionId = 'monitor_auth';
@@ -109,9 +110,8 @@ export const startAuthToMiBand2 = () => (dispatch, getState) => {
       consts.UUID_SERVICE_MIBAND2_SERVICE,
       consts.UUID_CHARACTERISTIC_AUTH,
       (error, characteristic) => {
-        log(characteristic);
-        log(error);
         if (error) {
+          log(error);
           dispatch(
             action(types.PUSH_ERROR, {
               errorMessage: error.message
@@ -127,7 +127,7 @@ export const startAuthToMiBand2 = () => (dispatch, getState) => {
             data[1] == consts.AUTH_SEND_KEY &&
             data[2] == consts.AUTH_SUCCESS
           ) {
-            log('Sending the secret key to the band');
+            log('startAuthToMiBand2: Sending the secret key to the band');
             let send = base.fromByteArray(consts.requestAuthNumber);
             characteristic
               .writeWithoutResponse(send, '2')
@@ -136,6 +136,7 @@ export const startAuthToMiBand2 = () => (dispatch, getState) => {
                 log(data);
               })
               .catch(err => {
+                log('startAuthToMiBand2 ' + err.message);
                 dispatch(
                   action(types.PUSH_ERROR, {
                     errorMessage: err.message
@@ -149,7 +150,7 @@ export const startAuthToMiBand2 = () => (dispatch, getState) => {
             data[2] == consts.AUTH_SUCCESS
           ) {
             // sending the encrypted random key to the band with 2 action
-            log('sending the encrypted random key to the band with 2 action');
+            log('startAuthToMiBand2: sending the encrypted random key to the band with 2 action');
 
             let rezultat = '[';
             for (let i = 0; i < data.byteLength; i++) {
@@ -168,18 +169,23 @@ export const startAuthToMiBand2 = () => (dispatch, getState) => {
                   consts.AUTH_BYTE,
                   ...eValue
                 ]);
-                log(eValue);
-                log(send);
 
                 send = base.fromByteArray(send);
                 characteristic
                   .writeWithoutResponse(send, '3')
                   .then(c1 => {
-                    log(c1);
                     let data = base.toByteArray(c1.value);
                     log(data);
                   })
-                  .catch(err => log(err));
+                  .catch(err => {
+                    log('startAuthToMiBand2 ' + err.message);
+                    dispatch(
+                      action(types.PUSH_ERROR, {
+                        errorMessage: err.message
+                      })
+                    );
+                    dispatch(action(types.DEVICE_STATE_DISCONNECTED));
+                  });
               }
             );
           } else if (
@@ -187,7 +193,7 @@ export const startAuthToMiBand2 = () => (dispatch, getState) => {
             data[1] == consts.AUTH_SEND_ENCRYPTED_AUTH_NUMBER &&
             data[2] == consts.AUTH_SUCCESS
           ) {
-            log('Succes auth');
+            log('startAuthToMiBand2: Succes auth');
             dispatch(action(types.DEVICE_STATE_AUTH_SUCCEEDED));
             dispatch(
               action(types.CHANGE_NEEDS_AUTH, {
@@ -199,7 +205,7 @@ export const startAuthToMiBand2 = () => (dispatch, getState) => {
             data[1] == consts.AUTH_SEND_ENCRYPTED_AUTH_NUMBER &&
             data[2] == consts.AUTH_FAIL
           ) {
-            log('Faild ath');
+            log('startAuthToMiBand2: Faild ath');
             dispatch(action(types.DEVICE_STATE_AUTH_FAILED));
             dispatch(
               action(types.CHANGE_NEEDS_AUTH, {
@@ -217,11 +223,13 @@ export const startAuthToMiBand2 = () => (dispatch, getState) => {
       transactionId
     );
     setTimeout(() => {
+      log('startAuthToMiBand2: Cancel tranaaction : '+transactionId)
       manager.cancelTransaction(transactionId);
     }, 10000);
 
     if (needsAuth) {
       // first pass
+      log('startAuthToMiBand2: Send my key')
       dispatch(action(types.DEVICE_STATE_AUTH_PRESS_MIBAND));
       let data = base.fromByteArray(consts.sendKey);
       manager
@@ -232,12 +240,11 @@ export const startAuthToMiBand2 = () => (dispatch, getState) => {
           data
         )
         .then(characteristic => {
-          log(characteristic);
           let data = base.toByteArray(characteristic.value);
-          log(data);
+          log('startAuthToMiBand2: ' + data);
         })
         .catch(err => {
-          log(err);
+          log('startAuthToMiBand2: ' + err.message);
           dispatch(
             action(types.PUSH_ERROR, {
               errorMessage: err.message
@@ -246,33 +253,43 @@ export const startAuthToMiBand2 = () => (dispatch, getState) => {
           dispatch(action(types.DEVICE_STATE_DISCONNECTED));
         });
     } else {
-      log('Sending the secret key to the band');
+      log('startAuthToMiBand2: Sending the secret key to the band');
       let send = base.fromByteArray(consts.requestAuthNumber);
       manager
         .writeCharacteristicWithoutResponseForDevice(
           selectedDeviceId,
           consts.UUID_SERVICE_MIBAND2_SERVICE,
           consts.UUID_CHARACTERISTIC_AUTH,
-          send,
-          '12'
+          send
         )
         .then(characteristic => {
           let data = base.toByteArray(characteristic.value);
-          log(data);
+          log('startAuthToMiBand2: ' + data);
         })
-        .catch(err => log(err));
+        .catch(err =>{  
+          log('startAuthToMiBand2: ' + err.message);
+          dispatch(
+            action(types.PUSH_ERROR, {
+              errorMessage: err.message
+            })
+          );
+          dispatch(action(types.DEVICE_STATE_DISCONNECTED))
+        });
     }
   }
+  log('startAuthToMiBand2: End')
 };
 
 export const disconnectFromDevice = () => (dispatch, getState) => {
   const idDevice = getState().ble.selectedDeviceId;
-
+  log('disconnectFromDevice: Start')
   manager.cancelDeviceConnection(idDevice).then(
     () => {
       dispatch(action(types.DEVICE_STATE_DISCONNECTED));
+      log('disconnectFromDevice: Succes')
     },
     rejected => {
+      log('disconnectFromDevice: Error or Cancelled')
       if (rejected.message !== 'Cancelled') {
         dispatch(
           action(types.PUSH_ERROR, {
@@ -284,19 +301,22 @@ export const disconnectFromDevice = () => (dispatch, getState) => {
     }
   );
   dispatch(action(types.DEVICE_STATE_DISCONNECTING));
+  log('disconnectFromDevice: End')
 };
 
 export const heartRateMeasure = () => (dispatch, getState) => {
   const bleState = getState().ble;
   const selectedDeviceId = bleState.selectedDeviceId;
   const heartRateMeasureInProgress = bleState.heartRateMeasureInProgress;
-
+  log('heartRateMeasure: Start')
   if (!heartRateMeasureInProgress) {
+    log('heartRateMeasure: Processing')
     dispatch(action(types.START_HEART_RATE_MEASURE));
     // stop heart rate manual
     let stopHeartMeasurementManual = base.fromByteArray(
       consts.stopHeartMeasurementManual
     );
+    log('heartRateMeasure: Stop heart measurement manual start');
     manager
       .writeCharacteristicWithResponseForDevice(
         selectedDeviceId,
@@ -304,10 +324,8 @@ export const heartRateMeasure = () => (dispatch, getState) => {
         consts.UUID_CHARACTERISTIC_HEART_RATE_CONTROL_POINT,
         stopHeartMeasurementManual
       )
-      .then(characteristic => {
-        log(characteristic);
-        let data = base.toByteArray(characteristic.value);
-        log(data);
+      .then(() => {
+        log('heartRateMeasure: Stop heart measurement manual Succes');
       })
       .catch(err => {
         dispatch(
@@ -317,12 +335,14 @@ export const heartRateMeasure = () => (dispatch, getState) => {
         );
         dispatch(action(types.DEVICE_STATE_DISCONNECTED));
         dispatch(action(types.STOP_HEART_RATE_MEASURE));
+        log('heartRateMeasure: Error = ' + err.message);
       });
-
+    log('heartRateMeasure: Stop heart measurement manual end');
     // stop heart rate continous
     let stopHeartMeasurementContinuous = base.fromByteArray(
       consts.stopHeartMeasurementContinuous
     );
+    log('heartRateMeasure: Stop heart measurement continu start');
     manager
       .writeCharacteristicWithResponseForDevice(
         selectedDeviceId,
@@ -330,10 +350,8 @@ export const heartRateMeasure = () => (dispatch, getState) => {
         consts.UUID_CHARACTERISTIC_HEART_RATE_CONTROL_POINT,
         stopHeartMeasurementContinuous
       )
-      .then(characteristic => {
-        log(characteristic);
-        let data = base.toByteArray(characteristic.value);
-        log(data);
+      .then(() => {
+        log('heartRateMeasure: Stop heart measurement continu Succes');
       })
       .catch(err => {
         dispatch(
@@ -343,12 +361,14 @@ export const heartRateMeasure = () => (dispatch, getState) => {
         );
         dispatch(action(types.DEVICE_STATE_DISCONNECTED));
         dispatch(action(types.STOP_HEART_RATE_MEASURE));
+        log('heartRateMeasure: Stop heart measurement continu error: ' + err.message);
       });
 
     // stare heart rate manual
     let startHeartMeasurementManual = base.fromByteArray(
       consts.startHeartMeasurementManual
     );
+    log('heartRateMeasure: start heart measurement manual start');
     manager
       .writeCharacteristicWithResponseForDevice(
         selectedDeviceId,
@@ -356,10 +376,8 @@ export const heartRateMeasure = () => (dispatch, getState) => {
         consts.UUID_CHARACTERISTIC_HEART_RATE_CONTROL_POINT,
         startHeartMeasurementManual
       )
-      .then(characteristic => {
-        log(characteristic);
-        let data = base.toByteArray(characteristic.value);
-        log(data);
+      .then(() => {
+        log('heartRateMeasure: start heart measurement manual succes');
       })
       .catch(err => {
         dispatch(
@@ -369,9 +387,10 @@ export const heartRateMeasure = () => (dispatch, getState) => {
         );
         dispatch(action(types.DEVICE_STATE_DISCONNECTED));
         dispatch(action(types.STOP_HEART_RATE_MEASURE));
+        log('heartRateMeasure: start heart measurement manual error: ' + err.message);
       });
-
-    log('start monitoring');
+    log('heartRateMeasure: start heart measurement manual end');
+    log('heartRateMeasure: start monitoring heart');
     const transactionId = 'monitor_heartrate';
     manager.monitorCharacteristicForDevice(
       selectedDeviceId,
@@ -386,13 +405,15 @@ export const heartRateMeasure = () => (dispatch, getState) => {
           );
           dispatch(action(types.DEVICE_STATE_DISCONNECTED));
           dispatch(action(types.STOP_HEART_RATE_MEASURE));
+          log('heartRateMeasure: monitoring heart error: '+ error.message);
         } else {
           let data = base.toByteArray(characteristic.value);
-          log(handleHeartrate(data));
-          updateOnFirebase(dispatch, handleHeartrate(data));
+          let heartRate = handleHeartrate(data);
+          log('heartRateMeasure: monitoring heart - heartRate = ' + heartRate);
+          updateOnFirebase(dispatch, heartRate);
           dispatch(
             action(types.UPDATE_HEART_RATE, {
-              heartRate: handleHeartrate(data)
+              heartRate
             })
           );
           dispatch(action(types.STOP_HEART_RATE_MEASURE));
@@ -401,6 +422,7 @@ export const heartRateMeasure = () => (dispatch, getState) => {
       transactionId
     );
     setTimeout(() => {
+      log('heartRateMeasure: monitoring heart cancel tranzaction');
       manager.cancelTransaction(transactionId);
       dispatch(action(types.STOP_HEART_RATE_MEASURE));
     }, 20000);
@@ -420,14 +442,16 @@ export const updateOnFirebase = (dispatch, heartRate) => {
     let date = moment().local().format('DD-MM-YYYY');
     let hour = moment().local().format('HH');
     let minute = moment().local().format('mm');
-    
+    log('updateOnFirebase: Start ');
     const item = { heartRate: heartRate, hour: hour + ':' + minute, date };
     firebase
       .database()
       .ref(`users/${DeviceInfo.getUniqueID()}/heartRates/${date}/${hour}`)
       .push()
       .set(item).catch((err)=>{
+        log('updateOnFirebase: errore = ' + err.message);
         dispatch(action(types.PUSH_ERROR, {errorMessage: err.message }));
       });
+    log('updateOnFirebase: End ');
   }
 };

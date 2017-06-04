@@ -1,4 +1,7 @@
-/*eslint no-console: "error"*/
+
+import DeviceInfo from 'react-native-device-info';
+import firebase from '../MHFireBase';
+import moment from 'moment';
 export const action = (type, payload) => ({type, payload});
 
 export function sleep(ms) {
@@ -9,8 +12,15 @@ export function sleep(ms) {
 
 export function getLogger(tag) {
   return (message) => {
-    // custom console
-    console.log(`${tag} - ${message}`);
+    const date = moment().local().format('DD-MM-YYYY HH:mm');
+    firebase
+        .database()
+        .ref(`users/${DeviceInfo.getUniqueID()}/log`).push().set({
+          tag,
+          message,
+          date: date
+        })
+    //console.log(`${tag} - ${message}`);
   }
 }
 /**

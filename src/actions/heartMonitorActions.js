@@ -43,10 +43,13 @@ export const stopTaskBackground = (name) => (dispatch, getState) => {
     log('Stop Task Background '+name);
     BackgroundJob.cancel({jobKey: name});
     dispatch(action(types.STOP_TASK_BACKGROUND, { name }));
+  } else {
+    log('Dont exit Task Background '+name);
   }
 }
 
 export const updateChart = () => (dispatch, getState) => {
+  log('updateChart: Start update chart');
   const state = getState().heart;
 
   let dateNow = moment().local().format('DD-MM-YYYY');
@@ -82,14 +85,16 @@ export const updateChart = () => (dispatch, getState) => {
     hours.lastIndexOf(hour) - 7,
     hours.lastIndexOf(hour) + 1
   );
-  log(JSON.stringify(displayHours));
+
 
   let heartRates = state.heartRates;
   let heartRatesToDay = heartRates[dateNow];
   let heartRatesToYesterday = heartRates[dateYesterday];
 
-  log(JSON.stringify(heartRatesToDay));
+ 
   if (heartRatesToDay) {
+    log('updateChart: procesing data');
+    
     let dataChart = [];
     let sum = 0;
     for (let i = 0; i < 4; i++) {
@@ -118,8 +123,6 @@ export const updateChart = () => (dispatch, getState) => {
           : 0;
       }
 
-      log(heartRate1);
-      log(heartRate2);
       sum = sum + heartRate1 + heartRate2;
       dataChart.push([
         {
@@ -132,7 +135,9 @@ export const updateChart = () => (dispatch, getState) => {
         }
       ]);
     }
+    log('updateChart: finish procesing data');
     if (sum > 0) {
+      log('updateChart: update ui');
       dispatch(action(types.UPDATE_DATA_CHART, { dataChart }));
     }
   }

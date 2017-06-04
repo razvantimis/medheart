@@ -9,13 +9,13 @@ export const onLogin = () => (dispatch, getState) => {
   const { authorizing  } = getState().user;
   if(!authorizing){
     dispatch(action(types.USER_START_AUTHORIZING));
-    log('start login');
+    log('onLogin: start');
     firebase.auth().signInAnonymously().then(() => {
       const { name } = getState().user;
       firebase.database().ref(`users/${DeviceInfo.getUniqueID()}`).set({
         name
       });
-      log('succes login ' + name);
+      log('onLogin: succes login ' + name);
       dispatch(action(types.USER_AUTHORIZED));
     });
   }
@@ -23,14 +23,17 @@ export const onLogin = () => (dispatch, getState) => {
 
 export const logout = () => (dispatch) => {
   firebase.auth().signOut().then(function() {
+    log('logout: succes')
     dispatch(action(types.LOGOUT_SUCCES))
   }, function(error) {
+    log('logout: error = ' + error.message)
     dispatch(action(types.PUSH_ERROR, { errorMessage: error.message}))
   });
 }
 
 export const checkUserExists = () => (dispatch , getState) => {
   const { authorizing  } = getState().user;
+  log('checkUserExists: start');
   if(!authorizing){
     dispatch(action(types.USER_START_AUTHORIZING));
 
@@ -47,6 +50,7 @@ export const checkUserExists = () => (dispatch , getState) => {
           if (val === null) {
             dispatch(action(types.USER_NO_EXIST));
           } else {
+            log('checkUserExists: succes login name = '+val.name)
             dispatch(action(types.UPDATE_USER_NAME, { name: val.name}))
             dispatch(action(types.USER_AUTHORIZED));
           }
@@ -57,5 +61,6 @@ export const checkUserExists = () => (dispatch , getState) => {
       dispatch(action(types.USER_NO_EXIST));
     });
   }
+  log('checkUserExists: end');
  
 };

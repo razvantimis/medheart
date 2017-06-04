@@ -6,7 +6,7 @@ import NeuronalNetwork from '../core/neuronalNetwork';
 const log = getLogger('predictDisease/action');
 
 export const onChangePropsPredict = (nameProps, value) => {
-  log('Change props '+ nameProps + ' with value = '+ value)
+  log('onChangePropsPredict: Change props '+ nameProps + ' with value = '+ value)
   return action(types.ON_CHANGE_PROPS_PREDICT,{nameProps, value})
 }
 
@@ -19,7 +19,7 @@ export function resetPredict() {
 
 export const onPredicting = () => (dispatch, getState) => {
   dispatch(action(types.START_PREDTINING));
-  log('Start predicting');
+  log('onPredicting: Start');
   let predict = getState().predictDisease.predict;
   let predictArray = [];
 
@@ -27,11 +27,11 @@ export const onPredicting = () => (dispatch, getState) => {
     let value = parseFloat(predict[key]);
     predictArray.push(value);
   }
-  log(predictArray);
   let netw = new NeuronalNetwork();
   let predicted = netw.predict(predictArray).toString().substring(2,4);
   let date = new Date();
-  log(predicted);
+  log('onPredicting: ' + predicted);
   dispatch(action(types.UPDATE_PREDICTED,{ predicted, date}))
+  log('onPredicting: End');
 
 }
