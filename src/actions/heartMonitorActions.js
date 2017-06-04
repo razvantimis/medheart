@@ -26,7 +26,7 @@ export const startTaskBackground = (name, func, time) => (dispatch, getState) =>
     BackgroundJob.register(backgroundJobHeartRate);
     var backgroundScheduleHeartRate = {
       jobKey: name,
-      timeout: 15000,
+      timeout: 30000,
       period: time,
       alwaysRunning: true,
       ...optionsTask

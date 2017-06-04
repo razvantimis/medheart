@@ -1,9 +1,9 @@
 export const heartRateTask = 'heartTask';
 export const chartTask = 'chartTask';
 
-const minute = 60000;
-export const periodHeart = minute*3;
-export const periodChart = minute*5;
+const min = 60000;
+export const periodHeart = min;
+export const periodChart = min;
 
 export const optionsTask = {
   notificationTitle: 'MedHeart',

@@ -16,11 +16,10 @@ const log = getLogger('bluetooth/action');
 let manager = new BleManager();
 
 export const startScan = () => dispatch => {
-  log('Starting scan');
+  log('startScan: Starting scan');
   dispatch(action(types.START_SCAN));
   manager.startDeviceScan(null, null, (error, device) => {
     if (error) {
-      log(error);
       dispatch(
         action(types.PUSH_ERROR, {
           errorMessage: error.message
@@ -28,7 +27,6 @@ export const startScan = () => dispatch => {
       );
       dispatch(action(types.STOP_SCAN));
     } else {
-      log(device);
       dispatch(
         action(types.DEVICE_FOUND, {
           id: device.id,
@@ -41,14 +39,18 @@ export const startScan = () => dispatch => {
     sleep(500);
   });
   setTimeout(() => {
+    log('startScan: stop scan timer');
     manager.stopDeviceScan();
     dispatch(action(types.STOP_SCAN));
   }, 30000);
+  log('startScan: end');
 };
 
 export const stopScan = () => dispatch => {
+  log('stopScan: start');
   manager.stopDeviceScan();
   dispatch(action(types.STOP_SCAN));
+  log('stopScan: end');
 };
 
 export const conectToDevice = selectedDeviceId => (dispatch, getState) => {
@@ -304,6 +306,7 @@ export const disconnectFromDevice = () => (dispatch, getState) => {
 };
 
 export const heartRateMeasure = () => (dispatch, getState) => {
+  let manager = new BleManager();
   const bleState = getState().ble;
   const selectedDeviceId = bleState.selectedDeviceId;
   const heartRateMeasureInProgress = bleState.heartRateMeasureInProgress;
@@ -424,7 +427,10 @@ export const heartRateMeasure = () => (dispatch, getState) => {
       log('heartRateMeasure: monitoring heart cancel tranzaction');
       manager.cancelTransaction(transactionId);
       dispatch(action(types.STOP_HEART_RATE_MEASURE));
-    }, 20000);
+    }, 25000);
+    sleep(25000);
+  } else {
+    dispatch(action(types.STOP_HEART_RATE_MEASURE));
   }
 };
 
