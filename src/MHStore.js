@@ -14,7 +14,7 @@ function configureStore() {
       autoRehydrate()
     )
   )
-  persistStore(store, {storage: AsyncStorage})
+  persistStore(store, {storage: AsyncStorage, blacklist: ['nav', 'user']})
   return store
 }
 
