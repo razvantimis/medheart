@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import { Container, 
         Header,
         Title,
@@ -10,8 +11,13 @@ import { Container,
         Right } from 'native-base';
 
 import Icon1 from 'react-native-vector-icons/MaterialCommunityIcons';
-import Icon2 from 'react-native-vector-icons/MaterialIcons';
 
+import { NavigationActions } from 'react-navigation'
+import { logout } from '../actions/userActions';
+
+import { disconnectFromDevice } from '../actions/bluetoothActions'
+import { stopTaskBackground } from '../actions/heartMonitorActions';
+import * as consts from '../core/constantsTask';
 
 import PredictDisease from './PredictDisease'
 import HeartMonitor from './HeartMonitor'
@@ -20,10 +26,31 @@ import redTheme from '../themes/redTheme';
 
 class DashboardScreen extends Component {
   static propTypes = {
-    navigation: PropTypes.object.isRequired
+    navigation: PropTypes.object.isRequired,
+    logout: PropTypes.func.isRequired,
+    stopTaskBackground: PropTypes.func.isRequired,
+    disconnectFromDevice: PropTypes.func.isRequired,
+    authorized: PropTypes.bool.isRequired
   }
   constructor(props){
     super(props);
+  }
+  componentWillReceiveProps(newProps){
+    if(newProps.authorized === false && newProps.authorized !== this.props.authorized){
+      const resetAction = NavigationActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({ routeName: 'login'})
+        ]
+      })
+      this.props.navigation.dispatch(resetAction);
+    }
+  }
+  logout(){
+    const { logout, stopTaskBackground, disconnectFromDevice } = this.props;
+    logout();
+    stopTaskBackground(consts.heartRateTask);
+    disconnectFromDevice();
   }
 
   render() {
@@ -31,15 +58,15 @@ class DashboardScreen extends Component {
         <Container>
           <Header hasTabs androidStatusBarColor={redTheme.primaryColor} style={redTheme.header}>
               <Left>
-                  <Button transparent onPress={()=>this.props.navigation.navigate('account')}>
-                      <Icon1 name='account' size={25} color='white' />
-                  </Button>
+                 
               </Left>
               <Body>
                   <Title style={redTheme.headerTitle} >MedHeart</Title>
               </Body>
               <Right>
-                 
+                  <Button transparent onPress={()=> this.logout() }>
+                      <Icon1 name='exit-to-app' size={27} color='white' />
+                  </Button>
               </Right>
           </Header>
           <Tabs tabBarUnderlineStyle={redTheme.headerTab.underline} >
@@ -66,4 +93,17 @@ DashboardScreen.navigationOptions = {
   title: 'MedHeart'
 };
 
-export default DashboardScreen;
+const mapStateToProps = (state) => {
+  return { 
+    authorized: state.user.authorized,
+  }
+}
+
+export default connect(mapStateToProps,
+  {
+    logout,
+    stopTaskBackground,
+    disconnectFromDevice
+  }
+)(DashboardScreen)
+

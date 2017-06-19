@@ -123,6 +123,9 @@ export default (state = INITIAL_STATE, action) => {
     errors.pop();
     return {...state, errors: errors}
   }
+  case types.RESET_STATE: {
+    return INITIAL_STATE;
+  }
   default:
     return state;
   }

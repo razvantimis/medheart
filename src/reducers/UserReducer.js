@@ -1,6 +1,6 @@
 import * as types from '../actions/types'
 const INITIAL_STATE = {
-  name: 'Pacient',
+  name: 'Default',
   authorizing: false,
   authorized: false,
   logout: false
@@ -18,6 +18,9 @@ export default (state = INITIAL_STATE, action) => {
   }
   case types.LOGOUT_SUCCES: {
     return {...state, authorizing: false, authorized: false, logout: true}
+  }
+  case types.RESET_STATE: {
+    return INITIAL_STATE;
   }
   default:
     return state;

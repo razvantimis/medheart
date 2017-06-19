@@ -46,7 +46,9 @@ export default (state = INITIAL_STATE, action) => {
     taskBackground[action.payload.name] = false;
     return {...state, taskBackground}
   }
-
+  case types.RESET_STATE: {
+    return INITIAL_STATE;
+  }
   default:
     return state;
   }

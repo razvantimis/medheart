@@ -24,11 +24,13 @@ export const onLogin = () => (dispatch, getState) => {
 export const logout = () => (dispatch) => {
   firebase.auth().signOut().then(function() {
     log('logout: succes')
-    dispatch(action(types.LOGOUT_SUCCES))
+    dispatch(action(types.LOGOUT_SUCCES));
+    dispatch(action(types.RESET_STATE));
   }, function(error) {
     log('logout: error = ' + error.message)
     dispatch(action(types.PUSH_ERROR, { errorMessage: error.message}))
   });
+  
 }
 
 export const checkUserExists = () => (dispatch , getState) => {

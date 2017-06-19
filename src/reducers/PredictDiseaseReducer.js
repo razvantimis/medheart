@@ -68,6 +68,9 @@ export default (state = INITIAL_STATE, action) => {
         predicted
       };
     }
+  case types.RESET_STATE: {
+    return INITIAL_STATE;
+  }
   default:
     return state;
   }

@@ -46,6 +46,9 @@ export const USER_NO_EXIST = 'USER_NO_EXIST'
 export const UPDATE_USER_NAME = 'UPDATE_USER_NAME'
 export const LOGOUT_SUCCES = 'LOGOUT_SUCCES'
 
+//GLOBAL
+
+export const RESET_STATE = 'RESET_STATE';
 
 
 
