@@ -3,16 +3,17 @@ const INITIAL_STATE = {
   name: 'Default',
   authorizing: false,
   authorized: false,
-  logout: false
+  logout: false,
+  error: false
 }
 export default (state = INITIAL_STATE, action) => {
   switch(action.type){
   case types.USER_START_AUTHORIZING:
     return {...state, authorizing: true, authorized: false}
   case types.USER_AUTHORIZED:
-    return {...state, authorizing: false, authorized: true, logout: false }
+    return {...state, authorizing: false, authorized: true, logout: false, error: false}
   case types.USER_NO_EXIST:
-    return {...state, authorized: false, authorizing: false}
+    return {...state, authorized: false, authorizing: false, error: true}
   case types.UPDATE_USER_NAME: {
     return {...state, name: action.payload.name}
   }
