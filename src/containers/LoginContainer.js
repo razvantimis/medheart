@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { TouchableOpacity, View , StyleSheet, Text} from 'react-native';
+import { TouchableOpacity, View , StyleSheet, Text, NetInfo, Alert } from 'react-native';
 import { connect } from 'react-redux';
-import {  onLogin, checkUserExists } from '../actions/userActions';
+import { onLogin, checkUserExists } from '../actions/userActions';
 
 import SplashScreen from '../components/SplashScreen';
 import redTheme from '../themes/redTheme';
@@ -19,18 +19,33 @@ class LoginContainer extends Component {
     logout: PropTypes.bool.isRequired,
     navigation: PropTypes.object.isRequired
   }
+
   componentWillMount(){
     if(this.props.logout === false){
-      this.props.checkUserExists();
+      NetInfo.isConnected.fetch().then(isConnected => {
+        if(isConnected){
+          this.props.checkUserExists();
+        } else {
+          Alert.alert('Error', 'Please connect to internet!')
+        }
+      });
     }
   }
+
   onLogin(){
-    const { onLogin, checkUserExists } = this.props;
-    if(this.props.logout === true){
-      checkUserExists();
-    } else {
-      onLogin();
-    }
+    NetInfo.isConnected.fetch().then(isConnected => {
+      if(isConnected){
+        const { onLogin, checkUserExists } = this.props;
+        if(this.props.logout === true){
+          checkUserExists();
+        } else {
+          onLogin();
+        }
+      } else {
+        Alert.alert('Error', 'Please connect to internet!')
+      }
+    });
+    
   }
   componentWillReceiveProps(newProps){
     if(newProps.authorized === true && this.props.authorized !== newProps.authorized){
