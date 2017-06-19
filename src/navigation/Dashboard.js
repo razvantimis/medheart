@@ -39,9 +39,7 @@ class DashboardScreen extends Component {
                   <Title style={redTheme.headerTitle} >MedHeart</Title>
               </Body>
               <Right>
-                 <Button transparent onPress={()=>this.props.navigation.navigate('alert')}>
-                      <Icon2 name='add-alert' size={25} color= 'white' />
-                  </Button>
+                 
               </Right>
           </Header>
           <Tabs tabBarUnderlineStyle={redTheme.headerTab.underline} >
