@@ -28,9 +28,9 @@ export default (state = INITIAL_STATE, action) => {
     let hashDevices = {...state.hashDevices}
     hashDevices[action.payload.id] = action.payload;
 
-    _.remove(devices,(item) => item.name == undefined);
-
     let devices = _.toArray(hashDevices);
+
+    _.remove(devices,(item) => item.name == undefined || item.name != 'MI Band 2' );
 
     return {...state, devices, hashDevices };
   }
