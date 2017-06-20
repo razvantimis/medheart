@@ -19,8 +19,6 @@ const INITIAL_STATE = {
 }
 
 export default (state = INITIAL_STATE, action) => {
-  const transactionId = state.transactionId;
-
   switch (action.type) {
   case types.START_SCAN:
     return {...state, scanning: true, state: types.DEVICE_STATE_SEARCH};
@@ -63,53 +61,7 @@ export default (state = INITIAL_STATE, action) => {
   case types.STOP_HEART_RATE_MEASURE: {
     return {...state, heartRateMeasureInProgress: false}
   }
-  case types.WRITE_CHARACTERISTIC:{
-    let transaction = {
-      type: 'write',
-      state: 'new',
-      deviceIdentifier: action.deviceIdentifier,
-      serviceUUID: action.serviceUUID,
-      characteristicUUID: action.characteristicUUID,
-      base64Value: action.base64Value,
-      transactionId
-    };
-    let operations = [...state.operations];
-    operations.push(transaction);
-
-    return {...state, operations,transactionId: transactionId + 1  }
-  }
-    // case types.READ_CHARACTERISTIC:
-    //   return state.withMutations(state => {
-    //     state.setIn(['operations', transactionId], Map({
-    //       type: 'read',
-    //       state: 'new',
-    //       deviceIdentifier: action.deviceIdentifier,
-    //       serviceUUID: action.serviceUUID,
-    //       characteristicUUID: action.characteristicUUID,
-    //       transactionId
-    //     })).set('transactionId', transactionId + 1);
-    //   });
-    // case types.MONITOR_CHARACTERISTIC:
-    //   const id = action.deviceIdentifier + " " + action.serviceUUID + " " + action.characteristicUUID
-    //   if (!action.monitor) {
-    //     return state.setIn(['operations', id, 'state'], 'cancel')
-    //   }
-    //   return state.setIn(['operations', id], Map({
-    //       type: 'monitor',
-    //       state: 'new',
-    //       deviceIdentifier: action.deviceIdentifier,
-    //       serviceUUID: action.serviceUUID,
-    //       characteristicUUID: action.characteristicUUID,
-    //       transactionId: id
-    //     }));
-  case types.EXECUTE_TRANSACTION:
-      //return state.setIn(['operations', action.transactionId, 'state'], 'inProgress');
-    return state
-  case types.COMPLETE_TRANSACTION:{
-    let operations = [...state.operations];
-    _.remove(operations,(item) => item.transactionId == action.transactionId);
-    return {...state, operations}
-  }
+ 
   case types.CHANGE_AUTH: {
     return {...state, needsAuth: action.payload.auth}
   }
