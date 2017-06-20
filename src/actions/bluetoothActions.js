@@ -284,25 +284,28 @@ export const startAuthToMiBand2 = () => (dispatch, getState) => {
 export const disconnectFromDevice = () => (dispatch, getState) => {
   const idDevice = getState().ble.selectedDeviceId;
   log('disconnectFromDevice: Start')
-  manager.cancelDeviceConnection(idDevice).then(
+  if(idDevice){
+    manager.cancelDeviceConnection(idDevice).then(
     () => {
       dispatch(action(types.DEVICE_STATE_DISCONNECTED));
       log('disconnectFromDevice: Succes')
     },
-    rejected => {
-      log('disconnectFromDevice: Error or Cancelled')
-      if (rejected.message !== 'Cancelled') {
-        dispatch(
-          action(types.PUSH_ERROR, {
-            errorMessage: rejected.message
-          })
-        );
+      rejected => {
+        log('disconnectFromDevice: Error or Cancelled')
+        if (rejected.message !== 'Cancelled') {
+          dispatch(
+            action(types.PUSH_ERROR, {
+              errorMessage: rejected.message
+            })
+          );
+        }
+        dispatch(action(types.DEVICE_STATE_DISCONNECTED));
       }
-      dispatch(action(types.DEVICE_STATE_DISCONNECTED));
-    }
-  );
-  dispatch(action(types.DEVICE_STATE_DISCONNECTING));
-  log('disconnectFromDevice: End')
+    );
+    dispatch(action(types.DEVICE_STATE_DISCONNECTING));
+    log('disconnectFromDevice: End')
+  }
+
 };
 
 export const heartRateMeasure = () => (dispatch, getState) => {
