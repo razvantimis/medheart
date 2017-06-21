@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import {getLogger } from '../core/utils';
 import { connect } from 'react-redux'
 import { StyleSheet, View, Text } from 'react-native';
 import {
@@ -17,13 +16,11 @@ import Icon2 from 'react-native-vector-icons/Entypo';
 import Heart from '../components/Heart';
 import BarChart from '../components/BarChart';
 import { heartRateMeasure } from '../actions/bluetoothActions';
-import { updateChart, startTaskBackground, stopTaskBackground } from '../actions/heartMonitorActions';
+import { updateChart, startTaskBackground, stopTaskBackground, monitoring } from '../actions/heartMonitorActions';
 import { disconnectFromDevice } from '../actions/bluetoothActions';
 import TimerMixin from 'react-timer-mixin';
 
-
 import * as consts from '../core/constantsTask';
-const log = getLogger('HeartMonitor');
 
 class HeartMonitor extends Component {
   state = {
@@ -35,6 +32,7 @@ class HeartMonitor extends Component {
     heartRateMeasure: PropTypes.func.isRequired,
     alertList: PropTypes.array.isRequired,
     startTaskBackground: PropTypes.func.isRequired,
+    monitoring: PropTypes.func.isRequired,
     stopTaskBackground: PropTypes.func.isRequired,
     updateChart: PropTypes.func.isRequired,
     disconnectFromDevice: PropTypes.func.isRequired,
@@ -42,14 +40,19 @@ class HeartMonitor extends Component {
   }
  
   componentDidMount() {
-    this.props.stopTaskBackground(consts.heartRateTask);
-    this.props.startTaskBackground(consts.heartRateTask, ()=> this.props.heartRateMeasure(), consts.periodHeart);
+    //this.props.stopTaskBackground(consts.heartRateTask);
+    //this.props.startTaskBackground(consts.heartRateTask, ()=> this.props.heartRateMeasure(), consts.periodHeart);
     
     TimerMixin.clearInterval(this.intervalChart);
     TimerMixin.clearInterval(this.intervalHeart);
+    TimerMixin.clearInterval(this.intervalMonitoring);
     this.intervalHeart = TimerMixin.setInterval(
       () => this.props.heartRateMeasure(),
       consts.periodHeart
+    );
+    this.intervalMonitoring = TimerMixin.setInterval(
+      () => this.props.monitoring(),
+      consts.periodMonitoring
     );
     this.intervalChart = TimerMixin.setInterval(
       () => this.props.updateChart(),
@@ -137,5 +140,6 @@ export default connect(mapStateToProps, {
   updateChart,
   disconnectFromDevice,
   startTaskBackground,
-  stopTaskBackground
+  stopTaskBackground,
+  monitoring
 })(HeartMonitor);

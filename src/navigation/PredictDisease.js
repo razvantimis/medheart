@@ -1,8 +1,8 @@
 import { StackNavigator } from 'react-navigation';
 
-import PredictDiseaseStep1 from '../containers/PredictDiseaseStep1';
-import PredictDiseaseStep2 from '../containers/PredictDiseaseStep2';
-import PredictDiseaseStep3 from '../containers/PredictDiseaseStep3';
+import PredictDiseaseStep1 from '../containers/PredictDiseaseStep1Container';
+import PredictDiseaseStep2 from '../containers/PredictDiseaseStep2Container';
+import PredictDiseaseStep3 from '../containers/PredictDiseaseStep3Container';
 
 export const PredictDiseaseScreen = StackNavigator({
   step1: { screen: PredictDiseaseStep1 },

@@ -23,22 +23,22 @@ class PredictDiseaseStep2 extends Component {
              <Container>
                 <Content>
                     <Form>
-                         <InputPredict label="Maximum Heart Rate:" 
-                            placeholder='Enter Maximum Heart Rate' 
+                         <InputPredict label="Valoare maximă a pulsului pe o zi" 
+                            placeholder='' 
                             maxLength={3} 
                             nameProps="maximumHeartRate"
                             value={maximumHeartRate}
                             onChangePropsPredict={onChangePropsPredict} />
 
-                        <PickerPredict label='Exercise Induced Angina ?: '
+                        <PickerPredict label='Aveți dureri în piept când faceți sport?'
                              value={exerciseInducedAngina} 
                              nameProps='exerciseInducedAngina'
                              onChangePropsPredict={onChangePropsPredict}>
-                            <Picker.Item label='Yes' value='1' />
-                            <Picker.Item label='No' value='0' />
+                            <Picker.Item label='Da' value='1' />
+                            <Picker.Item label='Nu' value='0' />
                         </PickerPredict>
                        
-                        <InputPredict label="ST depression induced by exercise:" 
+                        <InputPredict label="Valoare ST depression când faceți exerciți:" 
                             placeholder='Enter number' 
                             maxLength={3} 
                             nameProps="oldPeak"
@@ -47,14 +47,14 @@ class PredictDiseaseStep2 extends Component {
                         
                         <PickerPredict label='Slop:'
                              value={slop} 
-                             nameProps='slop'
+                             nameProps='Panta ST'
                              onChangePropsPredict={onChangePropsPredict}>
                             <Picker.Item label='Up sloping' value='1' />
                             <Picker.Item label='Flat' value='2' />
                             <Picker.Item label='Down sloping' value='3' />
                          </PickerPredict>
                          
-                         <PickerPredict label='Number Of Vessels Colored:'
+                         <PickerPredict label='Numărul vaselor colorate în urma fluoroscopiei:'
                              value={numberOfVesselsColored} 
                              nameProps='numberOfVesselsColored'
                              onChangePropsPredict={onChangePropsPredict}>
@@ -64,7 +64,7 @@ class PredictDiseaseStep2 extends Component {
                             <Picker.Item label='3' value='3' />
                          </PickerPredict>
 
-                         <PickerPredict label='Thallium scan: '
+                         <PickerPredict label='rezultatul testului Thallium scan: '
                              value={thal} 
                              nameProps='thal'
                              onChangePropsPredict={onChangePropsPredict}>
@@ -78,11 +78,11 @@ class PredictDiseaseStep2 extends Component {
                 <Footer>
                     <FooterTab style={redTheme.footerTab}>
                         <Button onPress={()=> navigation.navigate('step1') }>  
-                            <Text style={redTheme.footerTabText}>Prev</Text>
+                            <Text style={redTheme.footerTabText}>Înapoi</Text>
                         </Button>
                         
                         <Button onPress={()=> navigation.navigate('step3')}>  
-                            <Text style={redTheme.footerTabText}>Finish</Text>
+                            <Text style={redTheme.footerTabText}>Înaite</Text>
                         </Button>
                     </FooterTab>
                 </Footer>

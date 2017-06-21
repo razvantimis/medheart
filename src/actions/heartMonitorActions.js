@@ -7,6 +7,29 @@ import * as _ from 'lodash';
 import moment from 'moment';
 const log = getLogger('heartActions');
 
+export const monitoring = () => (dispatch, getState) => {
+  log('start monitoring')
+  let heartRateThree = getState().heart.heartRateThree;
+  if(heartRateThree.length == 3 && heartRateThree[0] != 0 && heartRateThree[1] != 0 && heartRateThree[2] != 0  ){
+    let heartRate = heartRateThree[2];
+    let RR1 = heartRateThree[0]/60;
+    let RR2 = heartRateThree[1]/60;
+    let RR3 = heartRateThree[2]/60;
+    log(RR1 + '  ' + RR2 + '  ' + RR3);
+
+    if( (RR1 > 1.15*RR2 && RR3 < 1.15*RR2) || (Math.abs(RR1 - RR2) < 0.3 && RR1 < 0.8 && RR2 < 0.8 && 0.6 *(RR1+RR2)< RR3) || (Math.abs(RR2 - RR2) < 0.3 && RR3 < 0.8 && RR2 < 0.8 && 0.6 *(RR3+RR2)< RR1) ){
+      // depistarea contracții ventriculare premature
+      dispatch(action(types.SEND_ALERT,{date: new Date(), heartRate, message:'Sa depistat o contracții ventriculare premature'}));
+    } else if( RR2 > 2.2 && RR3 < 3 && (Math.abs(RR1-RR2) < 0.2 || Math.abs(RR2- RR3) < 0.2)){
+      // blocărilor la nivelul inimii
+      dispatch(action(types.SEND_ALERT,{date: new Date(), heartRate, message:'Sa depistat o blocăre la nivelul inimii'}));
+    } else if ( heartRate < 60 || heartRate > 100){
+      dispatch(action(types.SEND_ALERT,{date: new Date(), heartRate, message:'Sa depistat o anomalie a ritmului cardiac'}));
+    }
+
+
+  }
+}
 export const startTaskBackground = (name, func, time) => (dispatch, getState) => {
   
   const taskBackground = getState().heart.taskBackground;
@@ -142,3 +165,8 @@ export const updateChart = () => (dispatch, getState) => {
     }
   }
 };
+
+
+export const onChangeEmail = (email) => (dispatch) => {
+  dispatch(action(types.ON_CHANGE_EMAIL,{email}));
+}

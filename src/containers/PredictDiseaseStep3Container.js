@@ -45,14 +45,14 @@ class PredictDiseaseStep3 extends Component {
                 { contentPredict }
                 <Card>
                   <CardItem header>
-                      <Text style={{fontSize:22}}>Informati Utile</Text>
+                      <Text style={{fontSize:22}}>Informații Utile</Text>
                   </CardItem>
                   <CardItem>
                     <Body>
                       <Text style={{fontSize:18}}>
-                         Procentajul de mai sus reprezinta gradul de risc de a avea o problema cardiaca, 
-                         gradul de risk este corect daca informatile introduse sunt corect,
-                        va rog sa consultati un medic. 
+                         Procentajul afișat mai sus semnifică gradul de risc dea avea o problemă cardiacă.{"\n"}
+                         Pentru o acuratețe sporită vă rugăm să introduceți corect datele cerute.
+                         Vă rugăm să consultați un medic pentru mai multe detali.
                       </Text>
                     </Body>
                   </CardItem>
@@ -64,7 +64,7 @@ class PredictDiseaseStep3 extends Component {
                     resetPredict(); 
                     navigation.navigate('step1')
                   }}>  
-                      <Text style={redTheme.footerTabText}>Reset Predict</Text>
+                      <Text style={redTheme.footerTabText}>Rediagnosticare</Text>
                   </Button>
               </FooterTab>
             </Footer>

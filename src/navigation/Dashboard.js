@@ -70,14 +70,14 @@ class DashboardScreen extends Component {
               </Right>
           </Header>
           <Tabs tabBarUnderlineStyle={redTheme.headerTab.underline} >
-            <Tab heading="Predict Disease" 
+            <Tab heading="Diagnostic" 
             tabStyle={redTheme.headerTab.content} textStyle={redTheme.headerTab.text} 
             activeTabStyle={redTheme.headerTab.activeContent} 
             activeTextStyle={redTheme.headerTab.activeText} >
               <PredictDisease />
             </Tab>
 
-            <Tab heading="Heart Rate" 
+            <Tab heading="Monitorizare" 
              tabStyle={redTheme.headerTab.content} textStyle={redTheme.headerTab.text} 
             activeTabStyle={redTheme.headerTab.activeContent} 
             activeTextStyle={redTheme.headerTab.activeText} >

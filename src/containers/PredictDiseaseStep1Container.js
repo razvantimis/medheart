@@ -31,21 +31,21 @@ class PredictDiseaseStep1 extends Component {
             <Container>
                 <Content>
                     <Form>
-                        <InputPredict label="Age:" 
-                            placeholder='Enter Age' 
+                        <InputPredict label="Vârstă:" 
+                            placeholder='45' 
                             maxLength={2} 
                             nameProps="age"
                             value={age}
                             onChangePropsPredict={onChangePropsPredict} />
-                        <PickerPredict label='Gender:'
+                        <PickerPredict label='Genul:'
                              value={gender} 
                              nameProps='gender'
                              onChangePropsPredict={onChangePropsPredict}>
-                            <Picker.Item label='Man' value='1' />
-                            <Picker.Item label='Woman' value='0' />
+                            <Picker.Item label='Bărbat' value='1' />
+                            <Picker.Item label='Femeie' value='0' />
                         </PickerPredict>
 
-                        <PickerPredict label='Chest Pain Type:'
+                        <PickerPredict label='Tipul dureri de piept:'
                              value={chestPainType} 
                              nameProps='chestPainType'
                              onChangePropsPredict={onChangePropsPredict}>
@@ -55,29 +55,29 @@ class PredictDiseaseStep1 extends Component {
                             <Picker.Item label='asymptotic' value='4' />
                         </PickerPredict>
 
-                         <InputPredict label="Resting Blood Pressure:" 
-                            placeholder='Enter resting blood pressure' 
+                         <InputPredict label="Tensiunea arterială:" 
+                            placeholder='123' 
                             maxLength={3} 
                             nameProps="restingBloodPressure"
                             value={restingBloodPressure}
                             onChangePropsPredict={onChangePropsPredict} />
 
-                       <InputPredict label="Cholesterol mg/dl:" 
-                            placeholder='Enter cholesterol' 
+                       <InputPredict label="Colesterol mg/dl:" 
+                            placeholder='' 
                             maxLength={3} 
                             nameProps="cholesterol"
                             value={cholesterol}
                             onChangePropsPredict={onChangePropsPredict} />
                         
                         
-                        <PickerPredict label='Fasting blood sugar > 120 mg/dl:'
+                        <PickerPredict label='Aveți glicemia mai mare de 120 mg/dl?'
                              value={fastingBloodSugar} 
                              nameProps='fastingBloodSugar'
                              onChangePropsPredict={onChangePropsPredict}>
-                            <Picker.Item label='True' value='1' />
-                            <Picker.Item label='False' value='0' />
+                            <Picker.Item label='Adevărat' value='1' />
+                            <Picker.Item label='Fals' value='0' />
                         </PickerPredict>
-                        <PickerPredict label='Resting electrocardiographic:'
+                        <PickerPredict label='Rezultatul EKG:'
                              value={restingECG} 
                              nameProps='restingECG'
                              onChangePropsPredict={onChangePropsPredict}>
@@ -91,7 +91,7 @@ class PredictDiseaseStep1 extends Component {
                 <Footer>
               <FooterTab style={redTheme.footerTab}>
                 <Button onPress={()=>navigation.navigate('step2')} full >  
-                    <Text style={redTheme.footerTabText} >Next</Text>
+                    <Text style={redTheme.footerTabText} >Înainte</Text>
                 </Button>
               </FooterTab>
             </Footer>

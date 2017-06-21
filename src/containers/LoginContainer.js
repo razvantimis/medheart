@@ -53,7 +53,7 @@ class LoginContainer extends Component {
       <SplashScreen>
          {!authorizing && <TouchableOpacity activeOpacity={.8} onPress={()=> this.onLogin()}>
                           <View style={styles.button}>
-                            <Text style={styles.buttonText}>Start</Text>
+                            <Text style={styles.buttonText}>Începeți</Text>
                           </View>
                       </TouchableOpacity>
          }

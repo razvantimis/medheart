@@ -7,8 +7,6 @@ import {
     conectToDevice
 } from '../actions/bluetoothActions'
 
-
-
 import {
   Container,
   Content,
@@ -68,13 +66,13 @@ class ScannedDevices extends Component {
               style={scanning? redTheme.footerTabButtonActive : redTheme.footerTabButton}
               active={scanning}
               onPress={()=> startScan()}>
-              <Text style={redTheme.footerTabText}>Scann</Text>
+              <Text style={redTheme.footerTabText}>Scanare</Text>
             </Button>
             <Button
               style={!scanning? redTheme.footerTabButtonActive : redTheme.footerTabButton}
               onPress={stopScan.bind(this)}
               active={!scanning}>
-              <Text style={redTheme.footerTabText}>Stop</Text>
+              <Text style={redTheme.footerTabText}>Opriți</Text>
             </Button>
           </FooterTab>
         </Footer>
