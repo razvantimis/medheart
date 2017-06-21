@@ -57,13 +57,13 @@ class DashboardScreen extends Component {
     return (
         <Container>
           <Header hasTabs androidStatusBarColor={redTheme.primaryColor} style={redTheme.header}>
-              <Left>
+              <Left style={{flex: 1}}>
                  
               </Left>
-              <Body>
+              <Body style={{flex: 1}}>
                   <Title style={redTheme.headerTitle} >MedHeart</Title>
               </Body>
-              <Right>
+              <Right style={{flex: 1}}>
                   <Button transparent onPress={()=> this.logout() }>
                       <Icon1 name='exit-to-app' size={27} color='white' />
                   </Button>
