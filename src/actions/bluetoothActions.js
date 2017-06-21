@@ -446,12 +446,14 @@ export const heartRateMeasure = () => async (dispatch, getState) => {
   const selectedDeviceId = bleState.selectedDeviceId;
   const heartRateMeasureInProgress = bleState.heartRateMeasureInProgress;
   
-  await manager.cancelDeviceConnection(selectedDeviceId);
-  initOperation(selectedDeviceId);
 
-  await sleep(10000);
+  
   log('heartRateMeasure: Start')
   if (!heartRateMeasureInProgress) {
+    await manager.cancelDeviceConnection(selectedDeviceId);
+    initOperation(selectedDeviceId);
+    await sleep(10000);
+    
     log('heartRateMeasure: Processing')
     dispatch(action(types.START_HEART_RATE_MEASURE));
     // stop heart rate manual
