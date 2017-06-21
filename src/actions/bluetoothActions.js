@@ -406,10 +406,10 @@ const initOperation = (selectedDeviceId) => {
           },
           transactionId
         );
-        setTimeout(() => {
-          log('startAuthToMiBand2: Cancel tranaaction : '+transactionId)
-          manager.cancelTransaction(transactionId);
-        }, 10000);
+        // setTimeout(() => {
+        //   log('startAuthToMiBand2: Cancel tranaaction : '+transactionId)
+        //   manager.cancelTransaction(transactionId);
+        // }, 10000);
 
        
         log('startAuthToMiBand2: Sending the secret key to the band');
@@ -470,12 +470,6 @@ export const heartRateMeasure = () => async (dispatch, getState) => {
         log('heartRateMeasure: Stop heart measurement manual Succes');
       })
       .catch(err => {
-        dispatch(
-          action(types.PUSH_ERROR, {
-            errorMessage: err.message
-          })
-        );
-        dispatch(action(types.DEVICE_STATE_DISCONNECTED));
         dispatch(action(types.STOP_HEART_RATE_MEASURE));
         log('heartRateMeasure: Error = ' + err.message);
       });
@@ -496,12 +490,6 @@ export const heartRateMeasure = () => async (dispatch, getState) => {
         log('heartRateMeasure: Stop heart measurement continu Succes');
       })
       .catch(err => {
-        dispatch(
-          action(types.PUSH_ERROR, {
-            errorMessage: err.message
-          })
-        );
-        dispatch(action(types.DEVICE_STATE_DISCONNECTED));
         dispatch(action(types.STOP_HEART_RATE_MEASURE));
         log('heartRateMeasure: Stop heart measurement continu error: ' + err.message);
       });
@@ -522,12 +510,6 @@ export const heartRateMeasure = () => async (dispatch, getState) => {
         log('heartRateMeasure: start heart measurement manual succes');
       })
       .catch(err => {
-        dispatch(
-          action(types.PUSH_ERROR, {
-            errorMessage: err.message
-          })
-        );
-        dispatch(action(types.DEVICE_STATE_DISCONNECTED));
         dispatch(action(types.STOP_HEART_RATE_MEASURE));
         log('heartRateMeasure: start heart measurement manual error: ' + err.message);
       });
@@ -540,12 +522,6 @@ export const heartRateMeasure = () => async (dispatch, getState) => {
       consts.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT,
       function(error, characteristic) {
         if (error) {
-          dispatch(
-            action(types.PUSH_ERROR, {
-              errorMessage: error.message
-            })
-          );
-          dispatch(action(types.DEVICE_STATE_DISCONNECTED));
           dispatch(action(types.STOP_HEART_RATE_MEASURE));
           log('heartRateMeasure: monitoring heart error: '+ error.message);
         } else {

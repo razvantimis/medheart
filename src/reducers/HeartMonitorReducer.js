@@ -5,13 +5,43 @@ import moment from 'moment';
 const INITIAL_STATE = {
   heartRateNow: 0,
   heartRates: {
-    '20-06-2017':{
-      '12': [ { heartRate: 50, hour:'12:05'} ],
+    '21-06-2017':{
+      '10': [ { heartRate: 50, hour:'10:05'} ],
     }
   },
   
   dataChart: [],
-  taskBackground: {}
+  taskBackground: {},
+  alertList: [
+    {
+      date: new Date(),
+      heartRate: 120
+    },
+    {
+      date: new Date(),
+      heartRate: 120
+    },
+    {
+      date: new Date(),
+      heartRate: 120
+    },
+    {
+      date: new Date(),
+      heartRate: 120
+    },
+    {
+      date: new Date(),
+      heartRate: 120
+    },
+    {
+      date: new Date(),
+      heartRate: 120
+    },
+    {
+      date: new Date(),
+      heartRate: 120
+    }
+  ]
 }
 
 
