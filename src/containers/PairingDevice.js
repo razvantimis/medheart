@@ -24,7 +24,7 @@ class PairingDevice extends Component {
   }
   check(newProps){
     if(!newProps.connectInProgress && !newProps.authInProgress && !newProps.isConnected ){
-      newProps.navigation.goBack();
+      //newProps.navigation.goBack();
     } 
     if(newProps.isConnected && !newProps.isAuth && !newProps.authInProgress ){
       this.props.startAuthToMiBand2();

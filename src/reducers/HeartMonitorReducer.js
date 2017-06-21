@@ -5,7 +5,7 @@ import moment from 'moment';
 const INITIAL_STATE = {
   heartRateNow: 0,
   heartRates: {
-    '04-06-2017':{
+    '20-06-2017':{
       '12': [ { heartRate: 50, hour:'12:05'} ],
     }
   },

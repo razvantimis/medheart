@@ -59,20 +59,20 @@ export const conectToDevice = selectedDeviceId => (dispatch, getState) => {
   manager
     .connectToDevice(selectedDeviceId)
     .then(device => {
-      device.onDisconnected((error, disconnectedDevice) => {
-        if (getState().ble.isConnected) {
-          dispatch(
-            action(types.PUSH_ERROR, {
-              errorMessage: 'Disconnected from ' +
-                (disconnectedDevice.name
-                  ? disconnectedDevice.name
-                  : disconnectedDevice.uuid)
-            })
-          );
-          dispatch(action(types.DEVICE_STATE_DISCONNECTED));
-        }
-      });
-      dispatch(action(types.DEVICE_STATE_DISCOVERING));
+      // device.onDisconnected((error, disconnectedDevice) => {
+      //   if (getState().ble.isConnected) {
+      //     dispatch(
+      //       action(types.PUSH_ERROR, {
+      //         errorMessage: 'Disconnected from ' +
+      //           (disconnectedDevice.name
+      //             ? disconnectedDevice.name
+      //             : disconnectedDevice.uuid)
+      //       })
+      //     );
+      //     dispatch(action(types.DEVICE_STATE_DISCONNECTED));
+      //   }
+      // });
+      //dispatch(action(types.DEVICE_STATE_DISCOVERING));
       var promise = device.discoverAllServicesAndCharacteristics();
       return promise;
     })
@@ -307,12 +307,149 @@ export const disconnectFromDevice = () => (dispatch, getState) => {
   }
 
 };
+const initOperation = (selectedDeviceId) => {
+  manager
+    .connectToDevice(selectedDeviceId)
+    .then(device => {
+      var promise = device.discoverAllServicesAndCharacteristics();
+      return promise;
+    })
+    .then(
+      () => {
+        // auth
+        const transactionId = 'monitor_auth';
+        manager.monitorCharacteristicForDevice(
+          selectedDeviceId,
+          consts.UUID_SERVICE_MIBAND2_SERVICE,
+          consts.UUID_CHARACTERISTIC_AUTH,
+          (error, characteristic) => {
+            if (error) {
+              log(error);
+          
+            } else {
+              let data = base.toByteArray(characteristic.value);
+              log(data);
 
-export const heartRateMeasure = () => (dispatch, getState) => {
+              if (
+                data[0] == consts.AUTH_RESPONSE &&
+                data[1] == consts.AUTH_SEND_KEY &&
+                data[2] == consts.AUTH_SUCCESS
+              ) {
+                log('startAuthToMiBand2: Sending the secret key to the band');
+                let send = base.fromByteArray(consts.requestAuthNumber);
+                characteristic
+                  .writeWithoutResponse(send, '2')
+                  .then(characteristic => {
+                    let data = base.toByteArray(characteristic.value);
+                    log(data);
+                  })
+                  .catch(err => {
+                    log('startAuthToMiBand2 ' + err.message);
+                    
+                  });
+              } else if (
+                data[0] == consts.AUTH_RESPONSE &&
+                data[1] == consts.AUTH_REQUEST_RANDOM_AUTH_NUMBER &&
+                data[2] == consts.AUTH_SUCCESS
+              ) {
+                // sending the encrypted random key to the band with 2 action
+                log('startAuthToMiBand2: sending the encrypted random key to the band with 2 action');
+
+                let rezultat = '[';
+                for (let i = 0; i < data.byteLength; i++) {
+                  if (i > 0) rezultat += ', ';
+                  rezultat += data[i];
+                }
+                rezultat += ']';
+
+                CipherModule.handleAESAuth(
+                  rezultat,
+                  JSON.stringify(consts.SECRET_KEY),
+                  status => {
+                    let eValue = new Uint8Array(JSON.parse(status));
+                    let send = new Uint8Array([
+                      consts.AUTH_SEND_ENCRYPTED_AUTH_NUMBER,
+                      consts.AUTH_BYTE,
+                      ...eValue
+                    ]);
+
+                    send = base.fromByteArray(send);
+                    characteristic
+                      .writeWithoutResponse(send, '3')
+                      .then(c1 => {
+                        let data = base.toByteArray(c1.value);
+                        log(data);
+                      })
+                      .catch(err => {
+                        log('startAuthToMiBand2 ' + err.message);
+                    
+                      });
+                  }
+                );
+              } else if (
+                data[0] == consts.AUTH_RESPONSE &&
+                data[1] == consts.AUTH_SEND_ENCRYPTED_AUTH_NUMBER &&
+                data[2] == consts.AUTH_SUCCESS
+              ) {
+                log('startAuthToMiBand2: Succes auth');
+             
+              } else if (
+                data[0] == consts.AUTH_RESPONSE &&
+                data[1] == consts.AUTH_SEND_ENCRYPTED_AUTH_NUMBER &&
+                data[2] == consts.AUTH_FAIL
+              ) {
+                log('startAuthToMiBand2: Faild ath');
+               
+               
+              }
+            }
+          },
+          transactionId
+        );
+        setTimeout(() => {
+          log('startAuthToMiBand2: Cancel tranaaction : '+transactionId)
+          manager.cancelTransaction(transactionId);
+        }, 10000);
+
+       
+        log('startAuthToMiBand2: Sending the secret key to the band');
+        let send = base.fromByteArray(consts.requestAuthNumber);
+        manager
+          .writeCharacteristicWithoutResponseForDevice(
+            selectedDeviceId,
+            consts.UUID_SERVICE_MIBAND2_SERVICE,
+            consts.UUID_CHARACTERISTIC_AUTH,
+            send
+          )
+          .then(characteristic => {
+            let data = base.toByteArray(characteristic.value);
+            log('startAuthToMiBand2: ' + data);
+          })
+          .catch(err =>{  
+            log('startAuthToMiBand2: ' + err.message);
+            
+          });
+        
+      
+    
+
+      },
+      rejected => {
+        log('reject : '+rejected)
+      }
+    );
+}
+
+export const heartRateMeasure = () => async (dispatch, getState) => {
   let manager = new BleManager();
   const bleState = getState().ble;
   const selectedDeviceId = bleState.selectedDeviceId;
   const heartRateMeasureInProgress = bleState.heartRateMeasureInProgress;
+  
+  await manager.cancelDeviceConnection(selectedDeviceId);
+  initOperation(selectedDeviceId);
+
+  await sleep(10000);
   log('heartRateMeasure: Start')
   if (!heartRateMeasureInProgress) {
     log('heartRateMeasure: Processing')
@@ -426,12 +563,7 @@ export const heartRateMeasure = () => (dispatch, getState) => {
       },
       transactionId
     );
-    setTimeout(() => {
-      log('heartRateMeasure: monitoring heart cancel tranzaction');
-      manager.cancelTransaction(transactionId);
-      dispatch(action(types.STOP_HEART_RATE_MEASURE));
-    }, 25000);
-    sleep(25000);
+
   } else {
     dispatch(action(types.STOP_HEART_RATE_MEASURE));
   }
