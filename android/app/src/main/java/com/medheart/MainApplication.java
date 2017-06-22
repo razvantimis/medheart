@@ -3,6 +3,7 @@ package com.medheart;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.tkporter.sendsms.SendSMSPackage;
 import com.polidea.reactnativeble.BlePackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.pilloxa.backgroundjob.BackgroundJobPackage;
@@ -30,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
               new MainReactPackage(),
+            SendSMSPackage.getInstance(),
             new RNDeviceInfo(),
             new BackgroundJobPackage(),
             new ReactNativePermissionsPackage(),

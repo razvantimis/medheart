@@ -8,7 +8,7 @@ const INITIAL_STATE = {
       '10': [ { heartRate: 50, hour:'10:05'} ],
     }
   },
-  email: '',
+  telephone: '',
   heartRateThree: [30, 10, 20],
   dataChart: [],
   taskBackground: {},
@@ -63,8 +63,8 @@ export default (state = INITIAL_STATE, action) => {
     alertList.push(action.payload);
     return {...state, alertList}
   }
-  case types.ON_CHANGE_EMAIL:{
-    return {...state, email: action.payload.email}
+  case types.ON_CHANGE_TELEPHONE:{
+    return {...state, telephone: action.payload.telephone}
   }
   case types.RESET_STATE: {
     return INITIAL_STATE;

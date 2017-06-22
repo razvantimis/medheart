@@ -16,25 +16,25 @@ import {
     Input
 } from 'native-base';
 import redTheme from '../themes/redTheme';
-import { onChangeEmail } from '../actions/heartMonitorActions';
+import { onChangeTelephone } from '../actions/heartMonitorActions';
 
-class PairingDevice extends Component {
+class InfoMonitoringContainer extends Component {
   static propTypes = {
-    email: PropTypes.string.isRequired,
-    onChangeEmail: PropTypes.func.isRequired,
+    telephone: PropTypes.string.isRequired,
+    onChangeTelephone: PropTypes.func.isRequired,
     navigation: PropTypes.object.isRequired
   }
   componentWillMount(){
     this.check(this.props);
   }
   check(newProps){
-    if(newProps.email !== ''){
+    if(newProps.telephone !== ''){
       newProps.navigation.navigate('scannDevices');
     }
   }
 
   render(){
-    const { email, onChangeEmail } = this.props;
+    const { telephone, onChangeTelephone } = this.props;
     return (
             <Container>
                 <Content>
@@ -50,7 +50,7 @@ class PairingDevice extends Component {
                            Componenta constă în măsurarea pulsului și depistarea anomaliilor pe baza pulsului, în cazul depistări unei anomalie, aplicație va trimite un email de alertă.
                            {"\n"}{"\n"}
                            Pentru a putea folosi acest modul, aveți nevoie de o brățară xiaomi mini band 2. {"\n"}{"\n"}
-                           Va rog să va setați mail persoanei de contact:
+                           Va rog să va setați numărul de telefon al persoanei de contact:
                           </Text>
                     
                         </Body>
@@ -58,10 +58,10 @@ class PairingDevice extends Component {
                       </CardItem>
                        <Form>
                           <Item>   
-                            <Label>Email:</Label>
-                            <Input placeholder='admin@gmail.com'
-                                value={email}
-                                onChangeText={(text)=> onChangeEmail(text)}
+                            <Label>Număr de telefon:</Label>
+                            <Input placeholder='074 635 9070'
+                                value={telephone}
+                                onChangeText={(text)=> onChangeTelephone(text)}
                             />
                           </Item>
                         </Form>
@@ -85,10 +85,10 @@ class PairingDevice extends Component {
 
 const mapStateToProps = (state) => {
   return { 
-    email: state.heart.email
+    telephone: state.heart.telephone
   }
 }
 
 export default connect(mapStateToProps, {
-  onChangeEmail
-})(PairingDevice);
+  onChangeTelephone
+})(InfoMonitoringContainer);

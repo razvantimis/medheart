@@ -2,6 +2,7 @@ import { action } from '../core/utils';
 import * as types from './types';
 import { getLogger } from '../core/utils';
 import { optionsTask } from '../core/constantsTask';
+import SendSMS from 'react-native-sms'
 import BackgroundJob from 'react-native-background-job';
 import * as _ from 'lodash';
 import moment from 'moment';
@@ -10,6 +11,7 @@ const log = getLogger('heartActions');
 export const monitoring = () => (dispatch, getState) => {
   log('start monitoring')
   let heartRateThree = getState().heart.heartRateThree;
+  let telephone = getState().heart.telephone;
   if(heartRateThree.length == 3 && heartRateThree[0] != 0 && heartRateThree[1] != 0 && heartRateThree[2] != 0  ){
     let heartRate = heartRateThree[2];
     let RR1 = heartRateThree[0]/60;
@@ -19,17 +21,30 @@ export const monitoring = () => (dispatch, getState) => {
 
     if( (RR1 > 1.15*RR2 && RR3 < 1.15*RR2) || (Math.abs(RR1 - RR2) < 0.3 && RR1 < 0.8 && RR2 < 0.8 && 0.6 *(RR1+RR2)< RR3) || (Math.abs(RR2 - RR2) < 0.3 && RR3 < 0.8 && RR2 < 0.8 && 0.6 *(RR3+RR2)< RR1) ){
       // depistarea contracții ventriculare premature
+      sendSms(telephone, 'Alerta pulsul: '+heartRate+'- Sa depistat o contracții ventriculare premature')
       dispatch(action(types.SEND_ALERT,{date: new Date(), heartRate, message:'Sa depistat o contracții ventriculare premature'}));
     } else if( RR2 > 2.2 && RR3 < 3 && (Math.abs(RR1-RR2) < 0.2 || Math.abs(RR2- RR3) < 0.2)){
       // blocărilor la nivelul inimii
+      sendSms(telephone, 'Alerta pulsul: '+heartRate+'- Sa depistat o blocăre la nivelul inimii')
       dispatch(action(types.SEND_ALERT,{date: new Date(), heartRate, message:'Sa depistat o blocăre la nivelul inimii'}));
     } else if ( heartRate < 60 || heartRate > 100){
+      sendSms(telephone, 'Alerta pulsul: '+heartRate+'- Sa depistat o anomalie a ritmului cardiac')
       dispatch(action(types.SEND_ALERT,{date: new Date(), heartRate, message:'Sa depistat o anomalie a ritmului cardiac'}));
     }
-
-
   }
 }
+
+
+const sendSms = async (telephone, message) => {
+  SendSMS.send({
+    body: message.toString(),
+    recipients: [telephone.toString()],
+    successTypes: ['sent', 'queued']
+  }, (completed, cancelled, error) => {
+    log('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
+  });
+}
+
 export const startTaskBackground = (name, func, time) => (dispatch, getState) => {
   
   const taskBackground = getState().heart.taskBackground;
@@ -167,6 +182,6 @@ export const updateChart = () => (dispatch, getState) => {
 };
 
 
-export const onChangeEmail = (email) => (dispatch) => {
-  dispatch(action(types.ON_CHANGE_EMAIL,{email}));
+export const onChangeTelephone = (telephone) => (dispatch) => {
+  dispatch(action(types.ON_CHANGE_TELEPHONE,{telephone}));
 }

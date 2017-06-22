@@ -153,6 +153,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-sms')
     compile project(':react-native-ble-plx')
     compile project(':react-native-device-info')
     compile project(':react-native-background-job')
