@@ -12,10 +12,7 @@ const INITIAL_STATE = {
   scanning: false,
   heartRateMeasureInProgress: false,
   errors: [],
-  operations: [],
-  transactionId: 0,
-  needsAuth: true,
-  tryDisconected: 0
+  needsAuth: true
 }
 
 export default (state = INITIAL_STATE, action) => {
