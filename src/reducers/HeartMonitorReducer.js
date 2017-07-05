@@ -8,7 +8,7 @@ const INITIAL_STATE = {
       '10': [ { heartRate: 50, hour:'10:05'} ],
     }
   },
-  telephone: '',
+  telephone: '0040701294772',
   heartRateThree: [30, 10, 20],
   dataChart: [],
   taskBackground: {},

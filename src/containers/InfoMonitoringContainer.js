@@ -25,7 +25,7 @@ class InfoMonitoringContainer extends Component {
     navigation: PropTypes.object.isRequired
   }
   componentWillMount(){
-    this.check(this.props);
+    //this.check(this.props);
   }
   check(newProps){
     if(newProps.telephone !== ''){
@@ -59,8 +59,7 @@ class InfoMonitoringContainer extends Component {
                        <Form>
                           <Item>   
                             <Label>Număr de telefon:</Label>
-                            <Input placeholder='074 635 9070'
-                                value={telephone}
+                            <Input value={telephone}
                                 onChangeText={(text)=> onChangeTelephone(text)}
                             />
                           </Item>

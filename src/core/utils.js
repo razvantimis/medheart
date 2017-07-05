@@ -12,15 +12,15 @@ export function sleep(ms) {
 
 export function getLogger(tag) {
   return (message) => {
-    const date = moment().local().format('DD-MM-YYYY HH:mm');
-    firebase
-        .database()
-        .ref(`users/${DeviceInfo.getUniqueID()}/log`).push().set({
-          tag,
-          message,
-          date: date
-        })
-    //console.log(`${tag} - ${message}`);
+    // const date = moment().local().format('DD-MM-YYYY HH:mm');
+    // firebase
+    //     .database()
+    //     .ref(`users/${DeviceInfo.getUniqueID()}/log`).push().set({
+    //       tag,
+    //       message,
+    //       date: date
+    //     })
+    console.log(`${tag} - ${message}`);
   }
 }
 /**

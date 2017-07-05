@@ -441,109 +441,113 @@ const initOperation = (selectedDeviceId) => {
 }
 
 export const heartRateMeasure = () => async (dispatch, getState) => {
-  let manager = new BleManager();
-  const bleState = getState().ble;
-  const selectedDeviceId = bleState.selectedDeviceId;
-  const heartRateMeasureInProgress = bleState.heartRateMeasureInProgress;
-  
-
-  
-  log('heartRateMeasure: Start')
-  if (!heartRateMeasureInProgress) {
-    await manager.cancelDeviceConnection(selectedDeviceId);
-    initOperation(selectedDeviceId);
-    await sleep(10000);
+  try{
+    let manager = new BleManager();
+    const bleState = getState().ble;
+    const selectedDeviceId = bleState.selectedDeviceId;
+    const heartRateMeasureInProgress = bleState.heartRateMeasureInProgress;
     
-    log('heartRateMeasure: Processing')
-    dispatch(action(types.START_HEART_RATE_MEASURE));
-    // stop heart rate manual
-    let stopHeartMeasurementManual = base.fromByteArray(
-      consts.stopHeartMeasurementManual
-    );
-    log('heartRateMeasure: Stop heart measurement manual start');
-    manager
-      .writeCharacteristicWithResponseForDevice(
-        selectedDeviceId,
-        consts.UUID_SERVICE_HEART_RATE,
-        consts.UUID_CHARACTERISTIC_HEART_RATE_CONTROL_POINT,
-        stopHeartMeasurementManual
-      )
-      .then(() => {
-        log('heartRateMeasure: Stop heart measurement manual Succes');
-      })
-      .catch(err => {
-        dispatch(action(types.STOP_HEART_RATE_MEASURE));
-        log('heartRateMeasure: Error = ' + err.message);
-      });
-    log('heartRateMeasure: Stop heart measurement manual end');
-    // stop heart rate continous
-    let stopHeartMeasurementContinuous = base.fromByteArray(
-      consts.stopHeartMeasurementContinuous
-    );
-    log('heartRateMeasure: Stop heart measurement continu start');
-    manager
-      .writeCharacteristicWithResponseForDevice(
-        selectedDeviceId,
-        consts.UUID_SERVICE_HEART_RATE,
-        consts.UUID_CHARACTERISTIC_HEART_RATE_CONTROL_POINT,
-        stopHeartMeasurementContinuous
-      )
-      .then(() => {
-        log('heartRateMeasure: Stop heart measurement continu Succes');
-      })
-      .catch(err => {
-        dispatch(action(types.STOP_HEART_RATE_MEASURE));
-        log('heartRateMeasure: Stop heart measurement continu error: ' + err.message);
-      });
 
-    // stare heart rate manual
-    let startHeartMeasurementManual = base.fromByteArray(
-      consts.startHeartMeasurementManual
-    );
-    log('heartRateMeasure: start heart measurement manual start');
-    manager
-      .writeCharacteristicWithResponseForDevice(
+    
+    log('heartRateMeasure: Start')
+    if (!heartRateMeasureInProgress) {
+      await manager.cancelDeviceConnection(selectedDeviceId);
+      initOperation(selectedDeviceId);
+      await sleep(10000);
+      
+      log('heartRateMeasure: Processing')
+      dispatch(action(types.START_HEART_RATE_MEASURE));
+      // stop heart rate manual
+      let stopHeartMeasurementManual = base.fromByteArray(
+        consts.stopHeartMeasurementManual
+      );
+      log('heartRateMeasure: Stop heart measurement manual start');
+      manager
+        .writeCharacteristicWithResponseForDevice(
+          selectedDeviceId,
+          consts.UUID_SERVICE_HEART_RATE,
+          consts.UUID_CHARACTERISTIC_HEART_RATE_CONTROL_POINT,
+          stopHeartMeasurementManual
+        )
+        .then(() => {
+          log('heartRateMeasure: Stop heart measurement manual Succes');
+        })
+        .catch(err => {
+          dispatch(action(types.STOP_HEART_RATE_MEASURE));
+          log('heartRateMeasure: Error = ' + err.message);
+        });
+      log('heartRateMeasure: Stop heart measurement manual end');
+      // stop heart rate continous
+      let stopHeartMeasurementContinuous = base.fromByteArray(
+        consts.stopHeartMeasurementContinuous
+      );
+      log('heartRateMeasure: Stop heart measurement continu start');
+      manager
+        .writeCharacteristicWithResponseForDevice(
+          selectedDeviceId,
+          consts.UUID_SERVICE_HEART_RATE,
+          consts.UUID_CHARACTERISTIC_HEART_RATE_CONTROL_POINT,
+          stopHeartMeasurementContinuous
+        )
+        .then(() => {
+          log('heartRateMeasure: Stop heart measurement continu Succes');
+        })
+        .catch(err => {
+          dispatch(action(types.STOP_HEART_RATE_MEASURE));
+          log('heartRateMeasure: Stop heart measurement continu error: ' + err.message);
+        });
+
+      // stare heart rate manual
+      let startHeartMeasurementManual = base.fromByteArray(
+        consts.startHeartMeasurementManual
+      );
+      log('heartRateMeasure: start heart measurement manual start');
+      manager
+        .writeCharacteristicWithResponseForDevice(
+          selectedDeviceId,
+          consts.UUID_SERVICE_HEART_RATE,
+          consts.UUID_CHARACTERISTIC_HEART_RATE_CONTROL_POINT,
+          startHeartMeasurementManual
+        )
+        .then(() => {
+          log('heartRateMeasure: start heart measurement manual succes');
+        })
+        .catch(err => {
+          dispatch(action(types.STOP_HEART_RATE_MEASURE));
+          log('heartRateMeasure: start heart measurement manual error: ' + err.message);
+        });
+      log('heartRateMeasure: start heart measurement manual end');
+      log('heartRateMeasure: start monitoring heart');
+      const transactionId = 'monitor_heartrate';
+      manager.monitorCharacteristicForDevice(
         selectedDeviceId,
         consts.UUID_SERVICE_HEART_RATE,
-        consts.UUID_CHARACTERISTIC_HEART_RATE_CONTROL_POINT,
-        startHeartMeasurementManual
-      )
-      .then(() => {
-        log('heartRateMeasure: start heart measurement manual succes');
-      })
-      .catch(err => {
-        dispatch(action(types.STOP_HEART_RATE_MEASURE));
-        log('heartRateMeasure: start heart measurement manual error: ' + err.message);
-      });
-    log('heartRateMeasure: start heart measurement manual end');
-    log('heartRateMeasure: start monitoring heart');
-    const transactionId = 'monitor_heartrate';
-    manager.monitorCharacteristicForDevice(
-      selectedDeviceId,
-      consts.UUID_SERVICE_HEART_RATE,
-      consts.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT,
-      function(error, characteristic) {
-        if (error) {
-          dispatch(action(types.STOP_HEART_RATE_MEASURE));
-          log('heartRateMeasure: monitoring heart error: '+ error.message);
-        } else {
-          let data = base.toByteArray(characteristic.value);
-          let heartRate = handleHeartrate(data);
-          log('heartRateMeasure: monitoring heart - heartRate = ' + heartRate);
-          updateOnFirebase(dispatch, heartRate);
-          dispatch(
-            action(types.UPDATE_HEART_RATE, {
-              heartRate
-            })
-          );
-          dispatch(action(types.STOP_HEART_RATE_MEASURE));
-        }
-      },
-      transactionId
-    );
+        consts.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT,
+        function(error, characteristic) {
+          if (error) {
+            dispatch(action(types.STOP_HEART_RATE_MEASURE));
+            log('heartRateMeasure: monitoring heart error: '+ error.message);
+          } else {
+            let data = base.toByteArray(characteristic.value);
+            let heartRate = handleHeartrate(data);
+            log('heartRateMeasure: monitoring heart - heartRate = ' + heartRate);
+            updateOnFirebase(dispatch, heartRate);
+            dispatch(
+              action(types.UPDATE_HEART_RATE, {
+                heartRate
+              })
+            );
+            dispatch(action(types.STOP_HEART_RATE_MEASURE));
+          }
+        },
+        transactionId
+      );
 
-  } else {
-    dispatch(action(types.STOP_HEART_RATE_MEASURE));
+    } else {
+      dispatch(action(types.STOP_HEART_RATE_MEASURE));
+    }
+  } catch( exception ){
+    log(exception);
   }
 };
 

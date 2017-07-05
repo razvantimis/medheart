@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux'
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
 import {
     Container,
     Content,
@@ -16,7 +16,7 @@ import Icon2 from 'react-native-vector-icons/Entypo';
 import Heart from '../components/Heart';
 import BarChart from '../components/BarChart';
 import { heartRateMeasure } from '../actions/bluetoothActions';
-import { updateChart, startTaskBackground, stopTaskBackground, monitoring } from '../actions/heartMonitorActions';
+import { updateChart, startTaskBackground, stopTaskBackground, monitoring, sendSms } from '../actions/heartMonitorActions';
 import { disconnectFromDevice } from '../actions/bluetoothActions';
 import TimerMixin from 'react-timer-mixin';
 
@@ -32,20 +32,25 @@ class HeartMonitor extends Component {
     heartRateMeasure: PropTypes.func.isRequired,
     alertList: PropTypes.array.isRequired,
     startTaskBackground: PropTypes.func.isRequired,
+    sendSms: PropTypes.func.isRequired,
     monitoring: PropTypes.func.isRequired,
     stopTaskBackground: PropTypes.func.isRequired,
     updateChart: PropTypes.func.isRequired,
     disconnectFromDevice: PropTypes.func.isRequired,
-    dataChart: PropTypes.array.isRequired
+    dataChart: PropTypes.array.isRequired,
+    telephone: PropTypes.string.isRequired
   }
  
   componentDidMount() {
     //this.props.stopTaskBackground(consts.heartRateTask);
     //this.props.startTaskBackground(consts.heartRateTask, ()=> this.props.heartRateMeasure(), consts.periodHeart);
-    
-    TimerMixin.clearInterval(this.intervalChart);
-    TimerMixin.clearInterval(this.intervalHeart);
-    TimerMixin.clearInterval(this.intervalMonitoring);
+    if(this.intervalChart != undefined)
+      TimerMixin.clearInterval(this.intervalChart);
+    if(this.intervalHeart)
+      TimerMixin.clearInterval(this.intervalHeart);
+    if(this.intervalMonitoring)
+      TimerMixin.clearInterval(this.intervalMonitoring);
+
     this.intervalHeart = TimerMixin.setInterval(
       () => this.props.heartRateMeasure(),
       consts.periodHeart
@@ -68,7 +73,7 @@ class HeartMonitor extends Component {
   }
   _renderAlerteCell(item){
     const date = new Date(item.date);
-    console.log(item);
+    //console.log(item);
     return (
       <ListItem iconLeft style={{display: 'flex', justifyContent: 'center', borderBottomColor: redTheme.primaryColor}}>
         <Icon1 size={30} color={redTheme.primaryColor} name='add-alert' style={{marginRight: 10}} />
@@ -76,14 +81,18 @@ class HeartMonitor extends Component {
       </ListItem>)
   }
   render(){
-    const { dataChart, alertList } = this.props;
+    const { dataChart, alertList, sendSms, telephone, heartRate } = this.props;
     console.log(alertList);
     let graph = this.state.graph;
     return (
     <Container>
         <Content contentContainerStyle={{ flex: 1}}>
             <View style={styles.view}>
-              <Heart scale={8} value={this.props.heartRate.toString()}/>
+              {/*<TouchableHighlight onPress={()=> {
+                sendSms(telephone, 'TEST - Alerta pulsul: '+heartRate+'- Sa depistat o contracții ventriculare premature')
+              }}>*/}
+                <Heart scale={8} value={heartRate.toString()}/>
+              {/*</TouchableHighlight>*/}
               { dataChart && dataChart.length == 4 && graph && <BarChart data={dataChart} accessorKey='heartRate' /> }
               { !graph &&
                <List
@@ -105,7 +114,8 @@ class HeartMonitor extends Component {
                 <Button 
                   style={!graph? redTheme.footerTabButtonActive : redTheme.footerTabButton}
                   onPress={()=>{
-                    this.setState({graph:false})
+                    this.setState({graph:false});
+                    sendSms(telephone, 'TEST - Alerta pulsul: ' + heartRate + '- Sa depistat o contracții ventriculare');
                   }}
                   active={!graph}>
                     <Icon1 size={30} color='white' name='add-alert' />
@@ -131,7 +141,8 @@ const mapStateToProps = (state) => {
   return { 
     heartRate: state.heart.heartRateNow,
     dataChart: state.heart.dataChart,
-    alertList: state.heart.alertList
+    alertList: state.heart.alertList,
+    telephone: state.heart.telephone
   }
 }
 
@@ -141,5 +152,6 @@ export default connect(mapStateToProps, {
   disconnectFromDevice,
   startTaskBackground,
   stopTaskBackground,
-  monitoring
+  monitoring,
+  sendSms
 })(HeartMonitor);
