@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux'
-import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import {
     Container,
     Content,
@@ -44,13 +44,13 @@ class HeartMonitor extends Component {
   componentDidMount() {
     //this.props.stopTaskBackground(consts.heartRateTask);
     //this.props.startTaskBackground(consts.heartRateTask, ()=> this.props.heartRateMeasure(), consts.periodHeart);
-    if(this.intervalChart != undefined)
-      TimerMixin.clearInterval(this.intervalChart);
-    if(this.intervalHeart)
-      TimerMixin.clearInterval(this.intervalHeart);
-    if(this.intervalMonitoring)
-      TimerMixin.clearInterval(this.intervalMonitoring);
-
+    //if(this.intervalChart != undefined)
+    TimerMixin.clearInterval(this.intervalChart);
+    //if(this.intervalHeart)
+    TimerMixin.clearInterval(this.intervalHeart);
+    //if(this.intervalMonitoring)
+    TimerMixin.clearInterval(this.intervalMonitoring);
+    
     this.intervalHeart = TimerMixin.setInterval(
       () => this.props.heartRateMeasure(),
       consts.periodHeart
@@ -70,6 +70,7 @@ class HeartMonitor extends Component {
   }
   componentWillUnmount(){
   
+
   }
   _renderAlerteCell(item){
     const date = new Date(item.date);
@@ -115,7 +116,7 @@ class HeartMonitor extends Component {
                   style={!graph? redTheme.footerTabButtonActive : redTheme.footerTabButton}
                   onPress={()=>{
                     this.setState({graph:false});
-                    sendSms(telephone, 'TEST - Alerta pulsul: ' + heartRate + '- Sa depistat o contracții ventriculare');
+                    sendSms(telephone, 'TEST - Alerta pulsul: ' + heartRate + ' - Sa depistat o contracții ventriculare');
                   }}
                   active={!graph}>
                     <Icon1 size={30} color='white' name='add-alert' />

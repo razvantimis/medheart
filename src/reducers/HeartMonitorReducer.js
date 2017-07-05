@@ -4,8 +4,12 @@ import moment from 'moment';
 const INITIAL_STATE = {
   heartRateNow: 0,
   heartRates: {
-    '21-06-2017':{
+    '05-07-2017':{
       '10': [ { heartRate: 50, hour:'10:05'} ],
+    },
+    '06-07-2017':{
+      '10': [ { heartRate: 50, hour:'10:05'} ],
+      '8': [ { heartRate: 50, hour:'10:05'} ],
     }
   },
   telephone: '0040701294772',

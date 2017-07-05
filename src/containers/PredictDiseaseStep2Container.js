@@ -64,7 +64,7 @@ class PredictDiseaseStep2 extends Component {
                             <Picker.Item label='3' value='3' />
                          </PickerPredict>
 
-                         <PickerPredict label='rezultatul testului Thallium scan: '
+                         <PickerPredict label='Rezultatul testului Thallium scan: '
                              value={thal} 
                              nameProps='thal'
                              onChangePropsPredict={onChangePropsPredict}>
