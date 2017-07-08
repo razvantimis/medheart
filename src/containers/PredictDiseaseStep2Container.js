@@ -54,7 +54,7 @@ class PredictDiseaseStep2 extends Component {
                             <Picker.Item label='Down sloping' value='3' />
                          </PickerPredict>
                          
-                         <PickerPredict label='Numărul vaselor colorate în urma fluoroscopiei:'
+                         <PickerPredict label='Numărul vaselor colorate la fluoroscopie:'
                              value={numberOfVesselsColored} 
                              nameProps='numberOfVesselsColored'
                              onChangePropsPredict={onChangePropsPredict}>
