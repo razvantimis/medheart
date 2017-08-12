@@ -6,6 +6,9 @@ The aim of the app is to combine these two components. In the case of increasing
 <img src="./screenshots/scan.jpg" width="200px" height="350px"></img>
 <img src="./screenshots/heart-rate.jpg" width="200px" height="350px"></img>
 <img src="./screenshots/step1.jpg" width="200px" height="350px"></img>
+<br>
+
+<a href="https://play.google.com/store/apps/details?id=com.medheart" alt="Link app store"><img src="./screenshots/play-store.png" width="150px" height="60px"></img></a>
 ### Build App
 
 ```sh
