@@ -1,68 +1,30 @@
 # MedHeart App
-Avem doua componente: diagnostic si heart rate
-1.Diagnostic
-Vei putea introduce date dupa care algoritm inteligent iti va oferi un diagnostic
-Vei parcurge 3 pasi, completand cu date medicale si la pasul final vei primi diagnostic
+It's a medical app used for diagnosing heart diseases. It has two main components: one for diagnosing a heart disease using artificial neural networks and one for monitoring the heart beats using a fitness bracelet. As a bracelet I've used the Xiaomi Band 2.
+The aim of the app is to combine these two components. In the case of increasing heart beats for a patient with a high risk of a heart disease (as predicted by the ANN), an alert (e- mail or SMS) will be sent to the patient or to his contact person. It was made using React Native, Redux & Native base.
 
-2. Heart Rate
-Te vei connectat cu o bratare fitnes mi band 2
-a) pagina de cautare divies
-b) pagina unde sa face pair si auth
-c) pagina cu pulsul ( asta ramana cat timp nu te deconectez altfel se reia de la primul pas)
+![Sign up](./screenshots/start.jpg "Start")
+![Create post](./screenshots/scan.jpg "Scanning devices")
+![Show post](./screenshots/heart-rate.jpg "Heart Rate")
+![Followers](./screenshots/step1.jpg "Predicted")
 
-## Build app 
+### Build App
 
-#IOS
-react-native bundle --entry-file index.ios.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios
+```sh
+$ git clone git@github.com:razvantimis/medheart.git
 
+$ cd medheart/
 
-# Android
+$ npm install -g yarn 
 
-cd android && ./gradlew assembleRelease
-or
-react-native run-android --variant=release  for testing
+$ yarn install
 
-# Mi Band 2 authentication has three steps.
- 
-Step 1: sending a "secret" key to the band.
-  
-AUTH_SEND_KEY = 0x01;
-  
-Step 2: requesting a random authentication key from the band.
-  
-AUTH_REQUEST_RANDOM_AUTH_NUMBER = 0x02;
-   
-Step 3: sending the encrypted random authentication key to the band.
+$ react-native link
 
-AUTH_SEND_ENCRYPTED_AUTH_NUMBER = 0x03;
-
-
-Received in response to any authentication requests (byte 0 in the byte[] value.
-
-AUTH_RESPONSE = 0x10;
-
-Received in response to any authentication requests (byte 2 in the byte[] value. 0x01 means success.
-AUTH_SUCCESS = 0x01;
- 
-In some logs it's 0x0...
- 
- AUTH_BYTE = 0x8;
-
-
-# Mi band 2 Caracteristici
-
-Support
-
-BASE_UID = "0000%s-0000-1000-8000-00805f9b34fb"
-
-UUID_SERVICE_MIBAND_SERVICE = "FEE0"
-UUID_SERVICE_MIBAND2_SERVICE = "0000%FEE1%-0000-1000-8000-00805f9b34fb"
-UUID_SERVICE_HEART_RATE = "0000%180D%-0000-1000-8000-00805f9b34fb"
-
-UUID_SERVICE_DEVICE_INFORMATION = "180A"
-UUID_SERVICE_GENERIC_ACCESS = "1800"
-UUID_SERVICE_GENERIC_ATTRIBUTE = "1801"
+$ react-native run-android
+```
 
 
 
-## Predicted heart disease
+
+
+
