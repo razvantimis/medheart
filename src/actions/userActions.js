@@ -10,14 +10,14 @@ export const onLogin = () => (dispatch, getState) => {
   if(!authorizing){
     dispatch(action(types.USER_START_AUTHORIZING));
     log('onLogin: start');
-    firebase.auth().signInAnonymously().then(() => {
-      const { name } = getState().user;
-      firebase.database().ref(`users/${DeviceInfo.getUniqueID()}`).set({
-        name
-      });
-      log('onLogin: succes login ' + name);
-      dispatch(action(types.USER_AUTHORIZED));
-    });
+    // firebase.auth().signInAnonymously().then(() => {
+    //   const { name } = getState().user;
+    //   firebase.database().ref(`users/${DeviceInfo.getUniqueID()}`).set({
+    //     name
+    //   });
+    //   log('onLogin: succes login ' + name);
+    dispatch(action(types.USER_AUTHORIZED));
+    // });
   }
 };
 
