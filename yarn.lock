@@ -1728,10 +1728,6 @@ fast-levenshtein@~2.0.4:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
 
-fast-plist@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/fast-plist/-/fast-plist-0.1.2.tgz#a45aff345196006d406ca6cdcd05f69051ef35b8"
-
 faye-websocket@0.9.3:
   version "0.9.3"
   resolved "https://registry.yarnpkg.com/faye-websocket/-/faye-websocket-0.9.3.tgz#482a505b0df0ae626b969866d3bd740cdb962e83"
@@ -2945,9 +2941,9 @@ lodash@^3.5.0:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
-lodash@^4.0.0, lodash@^4.10.1, lodash@^4.11.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.16.6, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1:
-  version "4.17.4"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
+lodash@^4.0.0, lodash@^4.10.1, lodash@^4.11.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.16.6, lodash@^4.17.13, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1:
+  version "4.17.13"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.13.tgz#0bdc3a6adc873d2f4e0c4bac285df91b64fc7b93"
 
 lodash@~4.11.1:
   version "4.11.2"
@@ -3397,7 +3393,7 @@ pinkie@^2.0.0:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
 
-plist@2.0.1, plist@^2.0.1:
+plist@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/plist/-/plist-2.0.1.tgz#0a32ca9481b1c364e92e18dc55c876de9d01da8b"
   dependencies:
@@ -3539,21 +3535,9 @@ react-devtools-core@^2.0.8:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
-react-native-background-fetch@^2.0.6:
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-2.0.6.tgz#d3b7250039fa24063ad0fb526a7a49c12d49cd84"
-  dependencies:
-    fast-plist "^0.1.2"
-    plist "^2.0.1"
-    xcode "^0.9.1"
-
 react-native-background-job@^1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/react-native-background-job/-/react-native-background-job-1.2.3.tgz#20fa7e9c88947519de95df4d7b7e368c0bc55941"
-
-react-native-background-task@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-background-task/-/react-native-background-task-0.1.0.tgz#7e66615bc1af770078553df2ec7fdecb4b4a1c12"
 
 react-native-ble-plx@^0.4.0:
   version "0.4.0"
@@ -3600,6 +3584,10 @@ react-native-keyboard-aware-scroll-view@0.2.7:
 react-native-permissions@^0.2.7:
   version "0.2.7"
   resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-0.2.7.tgz#92eae05894ed99235707e20ecb8fbf7d765752ae"
+
+react-native-sms@^1.4.2:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/react-native-sms/-/react-native-sms-1.9.0.tgz#362d94f75664d45144433d820155d9da66adf053"
 
 react-native-svg@^5.1.8:
   version "5.1.8"
